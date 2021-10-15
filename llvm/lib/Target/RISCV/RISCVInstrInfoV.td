@@ -359,6 +359,8 @@ class VAMONoWd<RISCVAMOOP amoop, RISCVWidth width, string opcodestr>
 //===----------------------------------------------------------------------===//
 // Combination of instruction classes.
 // Use these multiclasses to define instructions more easily.
+// 命令クラスの組み合わせ。
+// これらのマルチクラスを使用して、より簡単に命令を定義します。
 //===----------------------------------------------------------------------===//
 multiclass VALU_IV_V_X_I<string opcodestr, bits<6> funct6, Operand optype = simm5, string vw = "v"> {
   def V  : VALUVV<funct6, OPIVV, opcodestr # "." # vw # "v">,
@@ -930,6 +932,7 @@ def VS8R_V : VWholeStore<7, "vs8r.v", VRM8>,
              Sched<[WriteVST8R, ReadVST8R, ReadVSTX]>;
 
 // Vector Single-Width Integer Add and Subtract
+// ベクトル 単一幅の整数の加算・減算
 defm VADD_V : VALU_IV_V_X_I<"vadd", 0b000000>;
 defm VSUB_V : VALU_IV_V_X<"vsub", 0b000010>;
 defm VRSUB_V : VALU_IV_X_I<"vrsub", 0b000011>;

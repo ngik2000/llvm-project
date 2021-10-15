@@ -166,6 +166,11 @@ def GPRNoX0X2 : RegisterClass<"RISCV", [XLenVT], 32, (add
 // stack on some microarchitectures. Also remove the reserved registers X0, X2,
 // X3, and X4 as it reduces the number of register classes that get synthesized
 // by tablegen.
+
+//JALRにX1やX5を使用しないでください。これは、マイクロアーキテクチャによっては、
+//リターンアドレススタックをポップするヒントになるからです。
+//また、予約済みのレジスタX0、X2、X3、X4を削除すると、tablegenで合成される
+//レジスタクラスの数が減ります。
 def GPRJALR : RegisterClass<"RISCV", [XLenVT], 32, (add
     (sequence "X%u", 10, 17),
     (sequence "X%u", 6, 7),

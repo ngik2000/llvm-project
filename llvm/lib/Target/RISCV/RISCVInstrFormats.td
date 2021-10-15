@@ -21,12 +21,27 @@
 //  inserted into the instruction. e.g. although JAL's immediate is logically
 //  a 21-bit value (where the LSB is always zero), we describe it as an imm20
 //  to match how it is encoded.
+
+//これらの命令フォーマットの定義は、RISC-V User-Level ISA仕様の記述と可能な限り一致
+//するように構成されている。例えば、仕様書では、MSB（第31ビット）を左に、LSB（第0ビット）
+//を右に配置した命令が記述されている。
+//
+//これは、各命令クラスのパラメータの順番にも反映されている。
+//
+//乖離している部分としては、即値の記述がある。
+//仕様書では、即値の符号化を、表現された論理値に対するビットスライシング演算の観点から
+//記述している。例えば、JALの即値は論理的には21ビットの値（LSBは常に0）ですが、
+//エンコード方法に合わせてimm20と記述しています。
 //
 //===----------------------------------------------------------------------===//
 
 // Format specifies the encoding used by the instruction. This is used by
 // RISCVMCCodeEmitter to determine which form of fixup to use. These
 // definitions must be kept in-sync with RISCVBaseInfo.h.
+
+// Formatは、命令が使用するエンコーディングを指定します。
+// これは，RISCVMCCodeEmitterが，どの形式のfixupを使用するかを決定するために使用されます．
+// これらの定義は、RISCVBaseInfo.h と同期していなければなりません。
 class InstFormat<bits<5> val> {
   bits<5> Value = val;
 }
@@ -141,6 +156,10 @@ class RVInst<dag outs, dag ins, string opcodestr, string argstr,
   // instructions to not match without killing the whole decode process. It is
   // mainly used for ARM, but Tablegen expects this field to exist or it fails
   // to build the decode table.
+
+  //SoftFailは逆アセンブラが使用できるフィールドで、デコードプロセス全体を終了させずに
+  //命令が一致しない場合の方法を提供します。これは主にARMで使用されますが、Tablegenは
+  //このフィールドが存在しないとデコードテーブルの構築に失敗します。
   field bits<32> SoftFail = 0;
   let Size = 4;
 
