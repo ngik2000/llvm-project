@@ -36,6 +36,11 @@ enum NodeType : unsigned {
   /// condition code in op #2, a XLenVT constant from the ISD::CondCode enum.
   /// The lhs and rhs are XLenVT integers. The true and false values can be
   /// integer or floating point.
+  
+  /// Select with condition operator - これは、条件式の lhs と rhs (ops #0 と #1)
+  /// を op #2 の条件コード (SD::CondCode enum の XLenVT 定数) と比較したブール値に
+  /// 基づいて、真の値と偽の値 (ops #3 と #4) を選択します。
+  /// lhsとrhsはXLenVTの整数です。trueとfalseの値は、整数または浮動小数点です。
   SELECT_CC,
   BR_CC,
   BuildPairF64,
