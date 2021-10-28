@@ -50,6 +50,10 @@ void RISCVDAGToDAGISel::PreprocessISelDAG() {
     // Lower SPLAT_VECTOR_SPLIT_I64 to two scalar stores and a stride 0 vector
     // load. Done after lowering and combining so that we have a chance to
     // optimize this to VMV_V_X_VL when the upper bits aren't needed.
+    //
+    // SPLAT_VECTOR_SPLIT_I64を2つのスカラ・ストアとストライド0のベクター・ロードに下げます。
+    // 下げて結合した後に行うことで、上位ビットが必要ない場合にVMV_V_X_VLに最適化するチャンスが
+    // あります。
     if (N->getOpcode() != RISCVISD::SPLAT_VECTOR_SPLIT_I64_VL)
       continue;
 

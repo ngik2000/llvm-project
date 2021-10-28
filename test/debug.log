@@ -1,0 +1,1059 @@
+Args: ../build/bin/llc test_dag.ll --debug
+
+Features:
+CPU:generic-rv64
+TuneCPU:generic-rv64
+
+MergeICmpsLegacyPass: test
+                Looking for trivial roots
+Found a new trivial root: %0
+Last visited node: %0
+                Looking for non-trivial roots
+Total: 1, Num: 2
+Discovered CFG nodes:
+0: nullptr
+1: nullptr
+2: %0
+Found roots: %0
+---- Branch Probability Info : test ----
+
+Computing probabilities for
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0:
+loop-detection
+compute-mass-in-function
+ - node:
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - : float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - : float = 1.0, int = 8
+
+********** Begin Constant Hoisting **********
+********** Function: test
+********** End Constant Hoisting **********
+---- Branch Probability Info : test ----
+
+                Looking for trivial roots
+Found a new trivial root: %0
+Last visited node: %0
+                Looking for non-trivial roots
+Total: 1, Num: 2
+Discovered CFG nodes:
+0: nullptr
+1: nullptr
+2: %0
+Found roots: %0
+Computing probabilities for
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0:
+loop-detection
+compute-mass-in-function
+ - node:
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - : float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - : float = 1.0, int = 8
+
+[SafeStack] Function: test
+[SafeStack]     safestack is not requested for this function
+                Looking for trivial roots
+Found a new trivial root: %0
+Last visited node: %0
+                Looking for non-trivial roots
+Total: 1, Num: 2
+Discovered CFG nodes:
+0: nullptr
+1: nullptr
+2: %0
+Found roots: %0
+---- Branch Probability Info : test ----
+
+Computing probabilities for
+
+
+
+=== test
+Creating new node: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+Creating new node: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+Creating new node: t6: i64,ch = CopyFromReg t0, Register:i64 %2
+Creating new node: t7: i32 = truncate t2
+Creating new node: t8: i32 = truncate t4
+Creating new node: t9: i32 = add nsw t7, t8
+Creating constant: t10: i32 = Constant<1>
+Creating new node: t11: i32 = mul t9, Constant:i32<1>
+Creating new node: t12: i64 = any_extend t11
+Creating new node: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t12
+Creating new node: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+Initial selection DAG: %bb.0 'test:'
+SelectionDAG has 16 nodes:
+  t0: ch = EntryToken
+  t6: i64,ch = CopyFromReg t0, Register:i64 %2
+            t2: i64,ch = CopyFromReg t0, Register:i64 %0
+          t7: i32 = truncate t2
+            t4: i64,ch = CopyFromReg t0, Register:i64 %1
+          t8: i32 = truncate t4
+        t9: i32 = add nsw t7, t8
+      t11: i32 = mul t9, Constant:i32<1>
+    t12: i64 = any_extend t11
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t12
+  t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+
+
+Combining: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+Combining: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t12
+
+Combining: t13: i64 = Register $x10
+
+Combining: t12: i64 = any_extend t11
+
+Combining: t11: i32 = mul t9, Constant:i32<1>
+ ... into: t9: i32 = add nsw t7, t8
+
+Combining: t12: i64 = any_extend t9
+
+Combining: t9: i32 = add nsw t7, t8
+
+Combining: t8: i32 = truncate t4
+
+Combining: t7: i32 = truncate t2
+
+Combining: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+Combining: t3: i64 = Register %1
+
+Combining: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+Combining: t1: i64 = Register %0
+
+Combining: t0: ch = EntryToken
+Optimized lowered selection DAG: %bb.0 'test:'
+SelectionDAG has 12 nodes:
+  t0: ch = EntryToken
+          t2: i64,ch = CopyFromReg t0, Register:i64 %0
+        t7: i32 = truncate t2
+          t4: i64,ch = CopyFromReg t0, Register:i64 %1
+        t8: i32 = truncate t4
+      t9: i32 = add nsw t7, t8
+    t12: i64 = any_extend t9
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t12
+  t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+
+Legalizing node: t13: i64 = Register $x10
+Ignoring node results
+Legally typed node: t13: i64 = Register $x10
+
+Legalizing node: t3: i64 = Register %1
+Ignoring node results
+Legally typed node: t3: i64 = Register %1
+
+Legalizing node: t1: i64 = Register %0
+Ignoring node results
+Legally typed node: t1: i64 = Register %0
+
+Legalizing node: t0: ch = EntryToken
+Analyzing result type: ch
+Legal result type
+Legally typed node: t0: ch = EntryToken
+
+Legalizing node: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+Analyzing result type: i64
+Legal result type
+Analyzing result type: ch
+Legal result type
+Analyzing operand: t0: ch = EntryToken
+Legal operand
+Legally typed node: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+Legalizing node: t7: i32 = truncate t2
+Analyzing result type: i32
+Promote integer result: t7: i32 = truncate t2
+
+Legalizing node: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+Analyzing result type: i64
+Legal result type
+Analyzing result type: ch
+Legal result type
+Analyzing operand: t0: ch = EntryToken
+Legal operand
+Legally typed node: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+Legalizing node: t8: i32 = truncate t4
+Analyzing result type: i32
+Promote integer result: t8: i32 = truncate t4
+
+Legalizing node: t9: i32 = add nsw t7, t8
+Analyzing result type: i32
+Promote integer result: t9: i32 = add nsw t7, t8
+
+Creating new node: t16: i64 = add t2, t4
+Creating new node: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+Creating new node: t19: i32 = truncate t18
+Node has been custom expanded, done
+Legalizing node: t17: ch = ValueType:i32
+Analyzing result type: ch
+Legal result type
+Legally typed node: t17: ch = ValueType:i32
+
+Legalizing node: t16: i64 = add t2, t4
+Analyzing result type: i64
+Legal result type
+Analyzing operand: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+Legal operand
+Analyzing operand: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+Legal operand
+Legally typed node: t16: i64 = add t2, t4
+
+Legalizing node: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+Analyzing result type: i64
+Legal result type
+Analyzing operand: t16: i64 = add t2, t4
+Legal operand
+Analyzing operand: t17: ch = ValueType:i32
+Legal operand
+Legally typed node: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+
+Legalizing node: t19: i32 = truncate t18
+Analyzing result type: i32
+Promote integer result: t19: i32 = truncate t18
+
+Legalizing node: t12: i64 = any_extend t19
+Analyzing result type: i64
+Legal result type
+Analyzing operand: t19: i32 = truncate t18
+Promote integer operand: t12: i64 = any_extend t19
+
+Replacing: t12: i64 = any_extend t19
+     with: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+Legalizing node: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+Analyzing result type: ch
+Legal result type
+Analyzing result type: glue
+Legal result type
+Analyzing operand: t0: ch = EntryToken
+Legal operand
+Analyzing operand: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+Legal operand
+Legally typed node: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+Legalizing node: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+Analyzing result type: ch
+Legal result type
+Analyzing operand: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+Legal operand
+Analyzing operand: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+Legal operand
+Legally typed node: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+Legalizing node: t65535: ch = handlenode t15
+Analyzing result type: ch
+Legal result type
+Analyzing operand: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+Legal operand
+Legally typed node: t65535: ch = handlenode t15
+
+Type-legalized selection DAG: %bb.0 'test:'
+SelectionDAG has 11 nodes:
+  t0: ch = EntryToken
+        t2: i64,ch = CopyFromReg t0, Register:i64 %0
+        t4: i64,ch = CopyFromReg t0, Register:i64 %1
+      t16: i64 = add t2, t4
+    t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+  t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+
+
+Combining: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+
+Combining: t17: ch = ValueType:i32
+
+Combining: t16: i64 = add t2, t4
+
+Combining: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+Combining: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+Combining: t13: i64 = Register $x10
+
+Combining: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+Combining: t3: i64 = Register %1
+
+Combining: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+Combining: t1: i64 = Register %0
+
+Combining: t0: ch = EntryToken
+Optimized type-legalized selection DAG: %bb.0 'test:'
+SelectionDAG has 11 nodes:
+  t0: ch = EntryToken
+        t2: i64,ch = CopyFromReg t0, Register:i64 %0
+        t4: i64,ch = CopyFromReg t0, Register:i64 %1
+      t16: i64 = add t2, t4
+    t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+  t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+
+
+Legalizing: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+Legal node: nothing to do
+
+Legalizing: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+Legal node: nothing to do
+
+Legalizing: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+Legal node: nothing to do
+
+Legalizing: t16: i64 = add t2, t4
+Legal node: nothing to do
+
+Legalizing: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+Legal node: nothing to do
+
+Legalizing: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+Legal node: nothing to do
+
+Legalizing: t17: ch = ValueType:i32
+Legal node: nothing to do
+
+Legalizing: t13: i64 = Register $x10
+
+Legalizing: t3: i64 = Register %1
+
+Legalizing: t1: i64 = Register %0
+
+Legalizing: t0: ch = EntryToken
+Legal node: nothing to do
+Legalized selection DAG: %bb.0 'test:'
+SelectionDAG has 11 nodes:
+  t0: ch = EntryToken
+        t2: i64,ch = CopyFromReg t0, Register:i64 %0
+        t4: i64,ch = CopyFromReg t0, Register:i64 %1
+      t16: i64 = add t2, t4
+    t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+  t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+
+
+Legalizing: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+Legal node: nothing to do
+
+Combining: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+Legalizing: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+Legal node: nothing to do
+
+Combining: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+Legalizing: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+Legal node: nothing to do
+
+Combining: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+
+Legalizing: t16: i64 = add t2, t4
+Legal node: nothing to do
+
+Combining: t16: i64 = add t2, t4
+
+Legalizing: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+Legal node: nothing to do
+
+Combining: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+Legalizing: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+Legal node: nothing to do
+
+Combining: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+Legalizing: t17: ch = ValueType:i32
+Legal node: nothing to do
+
+Combining: t17: ch = ValueType:i32
+
+Legalizing: t13: i64 = Register $x10
+
+Combining: t13: i64 = Register $x10
+
+Legalizing: t3: i64 = Register %1
+
+Combining: t3: i64 = Register %1
+
+Legalizing: t1: i64 = Register %0
+
+Combining: t1: i64 = Register %0
+
+Legalizing: t0: ch = EntryToken
+Legal node: nothing to do
+
+Combining: t0: ch = EntryToken
+Optimized legalized selection DAG: %bb.0 'test:'
+SelectionDAG has 11 nodes:
+  t0: ch = EntryToken
+        t2: i64,ch = CopyFromReg t0, Register:i64 %0
+        t4: i64,ch = CopyFromReg t0, Register:i64 %1
+      t16: i64 = add t2, t4
+    t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+  t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+
+
+===== Instruction selection begins: %bb.0 ''
+
+ISEL: Starting selection on root node: t15: ch = RISCVISD::RET_FLAG t14, Register:i64 $x10, t14:1
+ISEL: Starting pattern match
+  Morphed node: t15: ch = PseudoRET Register:i64 $x10, t14, t14:1
+ISEL: Match complete!
+
+ISEL: Starting selection on root node: t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+ISEL: Starting selection on root node: t18: i64 = sign_extend_inreg t16, ValueType:ch:i32
+ISEL: Starting pattern match
+  Initial Opcode index to 15624
+  OpcodeSwitch from 15628 to 15792
+  Match failed at index 15797
+  Continuing at 15862
+  Morphed node: t18: i64 = ADDW t2, t4
+ISEL: Match complete!
+
+ISEL: Starting selection on root node: t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+ISEL: Starting selection on root node: t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+ISEL: Starting selection on root node: t13: i64 = Register $x10
+
+ISEL: Starting selection on root node: t3: i64 = Register %1
+
+ISEL: Starting selection on root node: t1: i64 = Register %0
+
+ISEL: Starting selection on root node: t0: ch = EntryToken
+
+===== Instruction selection ends:
+Selected selection DAG: %bb.0 'test:'
+SelectionDAG has 9 nodes:
+  t0: ch = EntryToken
+      t2: i64,ch = CopyFromReg t0, Register:i64 %0
+      t4: i64,ch = CopyFromReg t0, Register:i64 %1
+    t18: i64 = ADDW t2, t4
+  t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+  t15: ch = PseudoRET Register:i64 $x10, t14, t14:1
+
+
+********** List Scheduling %bb.0 '' **********
+SU(0): t15: ch = PseudoRET Register:i64 $x10, t14, t14:1
+
+    t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+  # preds left       : 1
+  # succs left       : 0
+  # rdefs left       : 0
+  Latency            : 1
+  Depth              : 2
+  Height             : 0
+  Predecessors:
+    SU(1): Data Latency=1
+SU(1): t18: i64 = ADDW t2, t4
+
+  # preds left       : 2
+  # succs left       : 1
+  # rdefs left       : 1
+  Latency            : 1
+  Depth              : 1
+  Height             : 1
+  Predecessors:
+    SU(3): Data Latency=1
+    SU(2): Data Latency=1
+  Successors:
+    SU(0): Data Latency=1
+SU(2): t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+  # preds left       : 0
+  # succs left       : 1
+  # rdefs left       : 1
+  Latency            : 1
+  Depth              : 0
+  Height             : 2
+  Successors:
+    SU(1): Data Latency=1
+SU(3): t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+  # preds left       : 0
+  # succs left       : 1
+  # rdefs left       : 1
+  Latency            : 1
+  Depth              : 0
+  Height             : 2
+  Successors:
+    SU(1): Data Latency=1
+
+Examining Available:
+Height 0: SU(0): t15: ch = PseudoRET Register:i64 $x10, t14, t14:1
+
+    t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+
+*** Scheduling [0]: SU(0): t15: ch = PseudoRET Register:i64 $x10, t14, t14:1
+
+    t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+
+Examining Available:
+Height 1: SU(1): t18: i64 = ADDW t2, t4
+
+
+*** Scheduling [1]: SU(1): t18: i64 = ADDW t2, t4
+
+
+Examining Available:
+Height 2: SU(3): t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+Height 2: SU(2): t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+
+*** Scheduling [2]: SU(3): t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+
+Examining Available:
+Height 2: SU(2): t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+
+*** Scheduling [3]: SU(2): t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+*** Final schedule ***
+SU(2): t4: i64,ch = CopyFromReg t0, Register:i64 %1
+
+SU(3): t2: i64,ch = CopyFromReg t0, Register:i64 %0
+
+SU(1): t18: i64 = ADDW t2, t4
+
+SU(0): t15: ch = PseudoRET Register:i64 $x10, t14, t14:1
+
+    t14: ch,glue = CopyToReg t0, Register:i64 $x10, t18
+
+
+Total amount of phi nodes to update: 0
+*** MachineFunction at end of ISel ***
+# Machine code for function test: IsSSA, TracksLiveness
+Function Live Ins: $x10 in %0, $x11 in %1
+
+bb.0 (%ir-block.0):
+  liveins: $x10, $x11
+  %1:gpr = COPY $x11
+  %0:gpr = COPY $x10
+  %3:gpr = ADDW %0:gpr, %1:gpr
+  $x10 = COPY %3:gpr
+  PseudoRET implicit $x10
+
+# End machine code for function test.
+
+# Machine code for function test: IsSSA, TracksLiveness
+Function Live Ins: $x10 in %0, $x11 in %1
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY $x11
+32B       %0:gpr = COPY $x10
+48B       %3:gpr = ADDW %0:gpr, %1:gpr
+64B       $x10 = COPY %3:gpr
+80B       PseudoRET implicit $x10
+
+# End machine code for function test.
+
+********** Stack Coloring **********
+********** Function: test
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0: BB0[]
+loop-detection
+compute-mass-in-function
+ - node: BB0[]
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - BB0[]: float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - BB0[]: float = 1.0, int = 8
+
+******** Pre-regalloc Machine LICM: test ********
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0: BB0[]
+loop-detection
+compute-mass-in-function
+ - node: BB0[]
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - BB0[]: float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - BB0[]: float = 1.0, int = 8
+
+Entering:
+Exiting:
+                Looking for trivial roots
+Found a new trivial root: %bb.0
+Last visited node: %bb.0
+                Looking for non-trivial roots
+Total: 1, Num: 2
+Discovered CFG nodes:
+0: nullptr
+1: nullptr
+2: %bb.0
+Found roots: %bb.0
+******** Machine Sinking ********
+********** PEEPHOLE OPTIMIZER **********
+********** Function: test
+MBB:
+Skipping Detect dead lanes pass
+********** PROCESS IMPLICIT DEFS **********
+********** Function: test
+********** REWRITING TWO-ADDR INSTRS **********
+********** Function: test
+# Machine code for function test: NoPHIs, TracksLiveness, TiedOpsRewritten
+Function Live Ins: $x10 in %0, $x11 in %1
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY killed $x11
+32B       %0:gpr = COPY killed $x10
+48B       %3:gpr = ADDW killed %0:gpr, killed %1:gpr
+64B       $x10 = COPY killed %3:gpr
+80B       PseudoRET implicit killed $x10
+
+# End machine code for function test.
+
+Computing live-in reg-units in ABI blocks.
+0B      %bb.0 X10#0 X11#0
+Created 2 new intervals.
+********** INTERVALS **********
+X10 [0B,32r:0)[64r,80r:1)  0@0B-phi 1@64r
+X11 [0B,16r:0)  0@0B-phi
+%0 [32r,48r:0)  0@32r weight:0.000000e+00
+%1 [16r,48r:0)  0@16r weight:0.000000e+00
+%3 [48r,64r:0)  0@48r weight:0.000000e+00
+RegMasks:
+********** MACHINEINSTRS **********
+# Machine code for function test: NoPHIs, TracksLiveness, TiedOpsRewritten
+Function Live Ins: $x10 in %0, $x11 in %1
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY $x11
+32B       %0:gpr = COPY $x10
+48B       %3:gpr = ADDW %0:gpr, %1:gpr
+64B       $x10 = COPY %3:gpr
+80B       PseudoRET implicit $x10
+
+# End machine code for function test.
+
+********** SIMPLE REGISTER COALESCING **********
+********** Function: test
+********** JOINING INTERVALS ***********
+:
+16B     %1:gpr = COPY $x11
+        Considering merging %1 with $x11
+        Can only merge into reserved registers.
+32B     %0:gpr = COPY $x10
+        Considering merging %0 with $x10
+        Can only merge into reserved registers.
+64B     $x10 = COPY %3:gpr
+        Considering merging %3 with $x10
+        Can only merge into reserved registers.
+Trying to inflate 0 regs.
+********** INTERVALS **********
+X10 [0B,32r:0)[64r,80r:1)  0@0B-phi 1@64r
+X11 [0B,16r:0)  0@0B-phi
+%0 [32r,48r:0)  0@32r weight:0.000000e+00
+%1 [16r,48r:0)  0@16r weight:0.000000e+00
+%3 [48r,64r:0)  0@48r weight:0.000000e+00
+RegMasks:
+********** MACHINEINSTRS **********
+# Machine code for function test: NoPHIs, TracksLiveness, TiedOpsRewritten
+Function Live Ins: $x10 in %0, $x11 in %1
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY $x11
+32B       %0:gpr = COPY $x10
+48B       %3:gpr = ADDW %0:gpr, %1:gpr
+64B       $x10 = COPY %3:gpr
+80B       PseudoRET implicit $x10
+
+# End machine code for function test.
+
+Before MISched:
+# Machine code for function test: NoPHIs, TracksLiveness, TiedOpsRewritten
+Function Live Ins: $x10 in %0, $x11 in %1
+
+bb.0 (%ir-block.0):
+  liveins: $x10, $x11
+  %1:gpr = COPY $x11
+  %0:gpr = COPY $x10
+  %3:gpr = ADDW %0:gpr, %1:gpr
+  $x10 = COPY %3:gpr
+  PseudoRET implicit $x10
+
+# End machine code for function test.
+
+********** MI Scheduling **********
+test:%bb.0
+  From: %1:gpr = COPY $x11
+    To: PseudoRET implicit $x10
+ RegionInstrs: 4
+ScheduleDAGMILive::schedule starting
+GenericScheduler RegionPolicy:  ShouldTrackPressure=1 OnlyTopDown=0 OnlyBottomUp=1
+Max Pressure: GPRC=2
+GPRTC=2
+GPRJALR=2
+GPR=2
+Live In: X10 X11
+Live Out:
+Live Thru:
+Top Pressure:
+GPRC=2
+GPRTC=2
+GPRJALR=2
+GPR=2
+Bottom Pressure:
+GPRC=1
+GPRTC=1
+GPRJALR=1
+GPR=1
+AllocationOrder(GPRX0) = [ ]
+AllocationOrder(SP) = [ ]
+AllocationOrder(FPR32C) = [ $f10_f $f11_f $f12_f $f13_f $f14_f $f15_f $f8_f $f9_f ]
+AllocationOrder(GPRC) = [ $x10 $x11 $x12 $x13 $x14 $x15 $x8 $x9 ]
+AllocationOrder(VRM8_with_sub_vrm1_0_in_VMV0) = [ $v0m8 ]
+AllocationOrder(GPRTC) = [ $x6 $x7 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x28 $x29 $x30 $x31 ]
+AllocationOrder(VRM8NoV0) = [ $v8m8 $v16m8 $v24m8 ]
+AllocationOrder(GPRJALR) = [ $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x6 $x7 $x28 $x29 $x30 $x31 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 ]
+AllocationOrder(FPR16) = [ $f0_h $f1_h $f2_h $f3_h $f4_h $f5_h $f6_h $f7_h $f10_h $f11_h $f12_h $f13_h $f14_h $f15_h $f16_h $f17_h $f28_h $f29_h $f30_h $f31_h $f8_h $f9_h $f18_h $f19_h $f20_h $f21_h $f22_h $f23_h $f24_h $f25_h $f26_h $f27_h ]
+AllocationOrder(GPR) = [ $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x5 $x6 $x7 $x28 $x29 $x30 $x31 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x1 ]
+AllocationOrder(VM) = [ $v25 $v26 $v27 $v28 $v29 $v30 $v31 $v8 $v9 $v10 $v11 $v12 $v13 $v14 $v15 $v16 $v17 $v18 $v19 $v20 $v21 $v22 $v23 $v24 $v0 $v1 $v2 $v3 $v4 $v5 $v6 $v7 ]
+Excess PSets:
+Disabled scoreboard hazard recognizer
+Disabled scoreboard hazard recognizer
+SU(0):   %1:gpr = COPY $x11
+  # preds left       : 0
+  # succs left       : 1
+  # rdefs left       : 0
+  Latency            : 0
+  Depth              : 0
+  Height             : 1
+  Successors:
+    SU(2): Data Latency=0 Reg=%1
+  Pressure Diff      : GPRC 1    GPRTC 1    GPRJALR 1
+  Single Issue       : false;
+SU(1):   %0:gpr = COPY $x10
+  # preds left       : 0
+  # succs left       : 2
+  # rdefs left       : 0
+  Latency            : 0
+  Depth              : 0
+  Height             : 1
+  Successors:
+    SU(2): Data Latency=0 Reg=%0
+    SU(3): Anti Latency=0
+  Pressure Diff      : GPRC 1    GPRTC 1    GPRJALR 1
+  Single Issue       : false;
+SU(2):   %3:gpr = ADDW %0:gpr, %1:gpr
+  # preds left       : 2
+  # succs left       : 1
+  # rdefs left       : 0
+  Latency            : 1
+  Depth              : 0
+  Height             : 1
+  Predecessors:
+    SU(1): Data Latency=0 Reg=%0
+    SU(0): Data Latency=0 Reg=%1
+  Successors:
+    SU(3): Data Latency=1 Reg=%3
+  Pressure Diff      : GPR 1
+  Single Issue       : false;
+SU(3):   $x10 = COPY %3:gpr
+  # preds left       : 2
+  # succs left       : 1
+  # rdefs left       : 0
+  Latency            : 0
+  Depth              : 1
+  Height             : 0
+  Predecessors:
+    SU(2): Data Latency=1 Reg=%3
+    SU(1): Anti Latency=0
+  Successors:
+    ExitSU: Ord  Latency=0 Artificial
+  Pressure Diff      : GPRC -1    GPRTC -1    GPRJALR -1
+  Single Issue       : false;
+ExitSU:   PseudoRET implicit $x10
+  # preds left       : 1
+  # succs left       : 0
+  # rdefs left       : 0
+  Latency            : 0
+  Depth              : 1
+  Height             : 0
+  Predecessors:
+    SU(3): Ord  Latency=0 Artificial
+Critical Path(GS-RR ): 1
+** ScheduleDAGMILive::schedule picking next node
+Queue BotQ.P:
+Queue BotQ.A: 3
+Scheduling SU(3) $x10 = COPY %3:gpr
+Bottom Pressure:
+GPR=1
+  LiveReg: %3
+  UpdateRegP: SU(3) $x10 = COPY %3:gpr
+              to GPRC -1    GPRTC -1    GPRJALR -1    GPR -1
+  Ready @0c
+  BotQ.A TopLatency SU(3) 1c
+BotQ.A @0c
+  Retired: 0
+  Executed: 0c
+  Critical: 0c, 0 MOps
+  ExpectedLatency: 0c
+  - Latency limited.
+** ScheduleDAGMILive::schedule picking next node
+Cycle: 1 BotQ.A
+Queue BotQ.P:
+Queue BotQ.A: 2
+Scheduling SU(2) %3:gpr = ADDW %0:gpr, %1:gpr
+Bottom Pressure:
+GPR=2
+  LiveReg: %0
+  UpdateRegP: SU(2) %3:gpr = ADDW %0:gpr, %1:gpr
+              to
+  LiveReg: %1
+  UpdateRegP: SU(2) %3:gpr = ADDW %0:gpr, %1:gpr
+              to GPR -1
+  Ready @1c
+  BotQ.A BotLatency SU(2) 1c
+  *** Max MOps 1 at cycle 1
+Cycle: 2 BotQ.A
+BotQ.A @2c
+  Retired: 1
+  Executed: 2c
+  Critical: 1c, 1 MOps
+  ExpectedLatency: 1c
+  - Latency limited.
+** ScheduleDAGMILive::schedule picking next node
+Queue BotQ.P:
+Queue BotQ.A: 1 0
+  Cand SU(1) ORDER
+Pick Bot ORDER
+Scheduling SU(1) %0:gpr = COPY $x10
+Bottom Pressure:
+GPRC=1
+GPRTC=1
+GPRJALR=1
+GPR=2
+  Ready @2c
+BotQ.A @2c
+  Retired: 1
+  Executed: 2c
+  Critical: 1c, 1 MOps
+  ExpectedLatency: 1c
+  - Latency limited.
+** ScheduleDAGMILive::schedule picking next node
+Queue BotQ.P:
+Queue BotQ.A: 0
+Scheduling SU(0) %1:gpr = COPY $x11
+Bottom Pressure:
+GPRC=2
+GPRTC=2
+GPRJALR=2
+GPR=2
+  Ready @2c
+BotQ.A @2c
+  Retired: 1
+  Executed: 2c
+  Critical: 1c, 1 MOps
+  ExpectedLatency: 1c
+  - Latency limited.
+** ScheduleDAGMILive::schedule picking next node
+*** Final schedule for %bb.0 ***
+SU(0):   %1:gpr = COPY $x11
+SU(1):   %0:gpr = COPY $x10
+SU(2):   %3:gpr = ADDW %0:gpr, %1:gpr
+SU(3):   $x10 = COPY %3:gpr
+
+********** INTERVALS **********
+X10 [0B,32r:0)[64r,80r:1)  0@0B-phi 1@64r
+X11 [0B,16r:0)  0@0B-phi
+%0 [32r,48r:0)  0@32r weight:0.000000e+00
+%1 [16r,48r:0)  0@16r weight:0.000000e+00
+%3 [48r,64r:0)  0@48r weight:0.000000e+00
+RegMasks:
+********** MACHINEINSTRS **********
+# Machine code for function test: NoPHIs, TracksLiveness, TiedOpsRewritten
+Function Live Ins: $x10 in %0, $x11 in %1
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY $x11
+32B       %0:gpr = COPY $x10
+48B       %3:gpr = ADDW %0:gpr, %1:gpr
+64B       $x10 = COPY %3:gpr
+80B       PseudoRET implicit $x10
+
+# End machine code for function test.
+
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0: BB0[]
+loop-detection
+compute-mass-in-function
+ - node: BB0[]
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - BB0[]: float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - BB0[]: float = 1.0, int = 8
+
+********** GREEDY REGISTER ALLOCATION **********
+********** Function: test
+********** Compute Spill Weights **********
+********** Function: test
+********** INTERVALS **********
+X10 [0B,32r:0)[64r,80r:1)  0@0B-phi 1@64r
+X11 [0B,16r:0)  0@0B-phi
+%0 [32r,48r:0)  0@32r weight:INF
+%1 [16r,48r:0)  0@16r weight:4.675926e-03
+%3 [48r,64r:0)  0@48r weight:INF
+RegMasks:
+********** MACHINEINSTRS **********
+# Machine code for function test: NoPHIs, TracksLiveness, TiedOpsRewritten
+Function Live Ins: $x10 in %0, $x11 in %1
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY $x11
+32B       %0:gpr = COPY $x10
+48B       %3:gpr = ADDW %0:gpr, %1:gpr
+64B       $x10 = COPY %3:gpr
+80B       PseudoRET implicit $x10
+
+# End machine code for function test.
+
+Enqueuing %0
+Enqueuing %1
+Enqueuing %3
+
+selectOrSplit GPR:%1 [16r,48r:0)  0@16r weight:4.675926e-03 w=4.675926e-03
+AllocationOrder(GPR) = [ $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x5 $x6 $x7 $x28 $x29 $x30 $x31 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x1 ]
+hints: $x11
+assigning %1 to $x11: X11 [16r,48r:0)  0@16r
+
+selectOrSplit GPR:%0 [32r,48r:0)  0@32r weight:INF w=INF
+hints: $x10
+assigning %0 to $x10: X10 [32r,48r:0)  0@32r
+
+selectOrSplit GPR:%3 [48r,64r:0)  0@48r weight:INF w=INF
+hints: $x10
+assigning %3 to $x10: X10 [48r,64r:0)  0@48r
+********** REWRITE VIRTUAL REGISTERS **********
+********** Function: test
+********** REGISTER MAP **********
+[%0 -> $x10] GPR
+[%1 -> $x11] GPR
+[%3 -> $x10] GPR
+
+0B      bb.0 (%ir-block.0):
+          liveins: $x10, $x11
+16B       %1:gpr = COPY $x11
+32B       %0:gpr = COPY $x10
+48B       %3:gpr = ADDW killed %0:gpr, killed %1:gpr
+64B       $x10 = COPY killed %3:gpr
+80B       PseudoRET implicit $x10
+> renamable $x11 = COPY $x11
+Identity copy: renamable $x11 = COPY $x11
+  deleted.
+> renamable $x10 = COPY $x10
+Identity copy: renamable $x10 = COPY $x10
+  deleted.
+> renamable $x10 = ADDW killed renamable $x10, killed renamable $x11
+> $x10 = COPY killed renamable $x10
+Identity copy: $x10 = COPY killed renamable $x10
+  deleted.
+> PseudoRET implicit $x10
+********** Stack Slot Coloring **********
+********** Function: test
+MCP: BackwardCopyPropagateBlock
+MCP: ForwardCopyPropagateBlock
+******** Post-regalloc Machine LICM: test ********
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0: BB0[]
+loop-detection
+compute-mass-in-function
+ - node: BB0[]
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - BB0[]: float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - BB0[]: float = 1.0, int = 8
+
+                Looking for trivial roots
+Found a new trivial root: %bb.0
+Last visited node: %bb.0
+                Looking for non-trivial roots
+Total: 1, Num: 2
+Discovered CFG nodes:
+0: nullptr
+1: nullptr
+2: %bb.0
+Found roots: %bb.0
+MCP: BackwardCopyPropagateBlock
+MCP: ForwardCopyPropagateBlock
+Machine Function
+********** EXPANDING POST-RA PSEUDO INSTRS **********
+********** Function: test
+
+block-frequency: test
+=====================
+reverse-post-order-traversal
+ - 0: BB0[]
+loop-detection
+compute-mass-in-function
+ - node: BB0[]
+  => mass:  ffffffffffffffff
+float-to-int: min = 1.0, max = 1.0, factor = 8.0
+ - BB0[]: float = 1.0, scaled = 8.0, int = 8
+block-frequency-info: test
+ - BB0[]: float = 1.0, int = 8
+
+                Looking for trivial roots
+Found a new trivial root: %bb.0
+Last visited node: %bb.0
+                Looking for non-trivial roots
+Total: 1, Num: 2
+Discovered CFG nodes:
+0: nullptr
+1: nullptr
+2: %bb.0
+Found roots: %bb.0
+***** BranchRelaxation *****
+  Basic blocks before relaxation
+%bb.0   offset=00000000 size=0x8
+  Basic blocks after relaxation
+
+%bb.0   offset=00000000 size=0x8
+********** COMPUTING STACKMAP LIVENESS: test **********
+
+Debug Range Extension

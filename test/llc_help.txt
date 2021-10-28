@@ -1,0 +1,1125 @@
+OVERVIEW: llvm system compiler
+
+USAGE: llc [options] <input bitcode>
+
+OPTIONS:
+
+Color Options:
+
+  --color                                                               - Use colors in output (default=autodetect)
+
+General options:
+
+  -I=<string>                                                           - include search path
+  -O=<char>                                                             - Optimization level. [-O0, -O1, -O2, or -O3] (default = '-O2')
+  -W                                                                    - Alias for --no-warn
+  --aa-trace                                                            - 
+  --abort-on-max-devirt-iterations-reached                              - Abort when the max iterations for devirtualization CGSCC repeat pass is reached
+  --accel-tables=<value>                                                - Output dwarf accelerator tables.
+    =Default                                                            -   Default for platform
+    =Disable                                                            -   Disabled.
+    =Apple                                                              -   Apple
+    =Dwarf                                                              -   DWARF
+  --adce-remove-control-flow                                            - 
+  --adce-remove-loops                                                   - 
+  --addr-sink-combine-base-gv                                           - Allow combining of BaseGV field in Address sinking.
+  --addr-sink-combine-base-offs                                         - Allow combining of BaseOffs field in Address sinking.
+  --addr-sink-combine-base-reg                                          - Allow combining of BaseReg field in Address sinking.
+  --addr-sink-combine-scaled-reg                                        - Allow combining of ScaledReg field in Address sinking.
+  --addr-sink-new-phis                                                  - Allow creation of Phis in Address sinking.
+  --addr-sink-new-select                                                - Allow creation of selects in Address sinking.
+  --addr-sink-using-gep                                                 - Address sinking in CGP using GEPs.
+  --addrsig                                                             - Emit an address-significance table
+  --agg-antidep-debugdiv=<int>                                          - Debug control for aggressive anti-dep breaker
+  --agg-antidep-debugmod=<int>                                          - Debug control for aggressive anti-dep breaker
+  --aggregate-extracted-args                                            - Aggregate arguments to code-extracted functions
+  --aggressive-ext-opt                                                  - Aggressive extension optimization
+  --alias-set-saturation-threshold=<uint>                               - The maximum number of pointers may-alias sets may contain before degradation
+  --align-all-blocks=<uint>                                             - Force the alignment of all blocks in the function in log2 format (e.g 4 means align on 16B boundaries).
+  --align-all-functions=<uint>                                          - Force the alignment of all functions in log2 format (e.g. 4 means align on 16B boundaries).
+  --align-all-nofallthru-blocks=<uint>                                  - Force the alignment of all blocks that have no fall-through predecessors (i.e. don't add nops that are executed). In log2 format (e.g 4 means align on 16B boundaries).
+  --allow-ginsert-as-artifact                                           - Allow G_INSERT to be considered an artifact. Hack around AMDGPU test infinite loops.
+  --allow-unroll-and-jam                                                - Allows loops to be unroll-and-jammed.
+  --as-secure-log-file-name=<value>                                     - As secure log file name (initialized from AS_SECURE_LOG_FILE env variable)
+  --asm-macro-max-nesting-depth=<uint>                                  - The maximum nesting depth allowed for assembly macros.
+  --asm-show-inst                                                       - Emit internal instruction representation to assembly file
+  --asm-verbose                                                         - Add comments to directives.
+  --assume-preserve-all                                                 - enable preservation of all attrbitues. even those that are unlikely to be usefull
+  --available-load-scan-limit=<uint>                                    - Use this to specify the default maximum number of instructions to scan backward from a given instruction, when searching for available loaded value
+  --avoid-speculation                                                   - MachineLICM should avoid speculation
+  --basic-aa-double-calc-bits                                           - 
+  --basic-aa-force-at-least-64b                                         - 
+  --basic-aa-recphi                                                     - 
+  --basic-block-sections=<all | <function list (file)> | labels | none> - Emit basic blocks into separate sections
+  --bbsections-cold-text-prefix=<string>                                - The text prefix to use for cold basic block clusters
+  --bbsections-detect-source-drift                                      - This checks if there is a fdo instr. profile hash mismatch for this function
+  --binutils-version=<string>                                           - Produced object files can use all ELF features supported by this binutils version and newer.If -no-integrated-as is specified, the generated assembly will consider GNU as support.'none' means that all ELF features can be used, regardless of binutils support
+  --bitcode-flush-threshold=<uint>                                      - The threshold (unit M) for flushing LLVM bitcode.
+  --bitcode-mdindex-threshold=<uint>                                    - Number of metadatas above which we emit an index to enable lazy-loading
+  --block-freq-ratio-threshold=<uint>                                   - Do not hoist instructions if targetblock is N times hotter than the source.
+  --block-placement-exit-block-bias=<uint>                              - Block frequency percentage a loop exit block needs over the original exit to be considered the new exit.
+  --bonus-inst-threshold=<uint>                                         - Control the number of bonus instructions (default = 1)
+  --branch-fold-placement                                               - Perform branch folding during placement. Reduces code size.
+  --break-anti-dependencies=<string>                                    - Break post-RA scheduling anti-dependencies: "critical", "all", or "none"
+  --callgraph-dot-filename-prefix=<string>                              - The prefix used for the CallGraph dot file names.
+  --callgraph-heat-colors                                               - Show heat colors in call-graph
+  --callgraph-multigraph                                                - Show call-multigraph (do not remove parallel edges)
+  --callgraph-show-weights                                              - Show edges labeled with weights
+  --callsite-splitting-duplication-threshold=<uint>                     - Only allow instructions before a call, if their cost is below DuplicationThreshold
+  --canon-nth-function=<N>                                              - Function number to canonicalize.
+  --capture-tracking-max-uses-to-explore=<uint>                         - Maximal number of uses to explore.
+  --cfg-dot-filename-prefix=<string>                                    - The prefix used for the CFG dot file names.
+  --cfg-func-name=<string>                                              - The name of a function (or its substring) whose CFG is viewed/printed.
+  --cfg-heat-colors                                                     - Show heat colors in CFG
+  --cfg-hide-cold-paths=<number>                                        - Hide blocks with relative frequency below the given value
+  --cfg-hide-deoptimize-paths                                           - 
+  --cfg-hide-unreachable-paths                                          - 
+  --cfg-raw-weights                                                     - Use raw weights for labels. Use percentages as default.
+  --cfg-weights                                                         - Show edges labeled with weights
+  --cgp-freq-ratio-to-skip-merge=<uint>                                 - Skip merging empty blocks if (frequency of empty block) / (frequency of destination block) is greater than this ratio
+  --cgp-icmp-eq2icmp-st                                                 - Enable ICMP_EQ to ICMP_S(L|G)T conversion.
+  --cgp-optimize-phi-types                                              - Enable converting phi types in CodeGenPrepare
+  --cgp-split-large-offset-gep                                          - Enable splitting large offset of GEP.
+  --cgp-type-promotion-merge                                            - Enable merging of redundant sexts when one is dominating the other.
+  --cgp-verify-bfi-updates                                              - Enable BFI update verification for CodeGenPrepare.
+  --check-bfi-unknown-block-queries                                     - Check if block frequency is queried for an unknown block for debugging missed BFI updates
+  --code-model=<value>                                                  - Choose code model
+    =tiny                                                               -   Tiny code model
+    =small                                                              -   Small code model
+    =kernel                                                             -   Kernel code model
+    =medium                                                             -   Medium code model
+    =large                                                              -   Large code model
+  --cold-callsite-rel-freq=<int>                                        - Maximum block frequency, expressed as a percentage of caller's entry frequency, for a callsite to be cold in the absence of profile information.
+  --combiner-aa-only-func=<string>                                      - Only use DAG-combiner alias analysis in this function
+  --combiner-global-alias-analysis                                      - Enable DAG combiner's use of IR alias analysis
+  --combiner-reduce-load-op-store-width                                 - DAG cominber enable reducing the width of load/op/store sequence
+  --combiner-shrink-load-replace-store-with-store                       - DAG cominber enable load/<replace bytes>/store with a narrower store
+  --combiner-split-load-index                                           - DAG combiner may split indexing from loads
+  --combiner-store-merge-dependence-limit=<uint>                        - Limit the number of times for the same StoreNode and RootNode to bail out in store merging dependence check
+  --combiner-store-merging                                              - DAG combiner enable merging multiple stores into a wider store
+  --combiner-stress-load-slicing                                        - Bypass the profitability model of load slicing
+  --combiner-tokenfactor-inline-limit=<uint>                            - Limit the number of operands to inline for Token Factors
+  --combiner-use-tbaa                                                   - Enable DAG combiner's use of TBAA
+  --compile-twice                                                       - Run everything twice, re-using the same pass manager and verify the result is the same.
+  --consider-local-interval-cost                                        - Consider the cost of local intervals created by a split candidate when choosing the best split candidate.
+  --consthoist-gep                                                      - Try hoisting constant gep expressions
+  --consthoist-min-num-to-rebase=<uint>                                 - Do not rebase if number of dependent constants of a Base is less than this number.
+  --consthoist-with-block-frequency                                     - Enable the use of the block frequency analysis to reduce the chance to execute const materialization more frequently than without hoisting.
+  --cost-kind=<value>                                                   - Target cost kind
+    =throughput                                                         -   Reciprocal throughput
+    =latency                                                            -   Instruction latency
+    =code-size                                                          -   Code size
+    =size-latency                                                       -   Code size and latency
+  --costmodel-reduxcost                                                 - Recognize reduction patterns.
+  --crash-diagnostics-dir=<directory>                                   - Directory for crash diagnostic files.
+  --da-delinearize                                                      - Try to delinearize array references.
+  --da-disable-delinearization-checks                                   - Disable checks that try to statically verify validity of delinearized subscripts. Enabling this option may result in incorrect dependence vectors for languages that allow the subscript of one dimension to underflow or overflow into another dimension.
+  --dag-dump-verbose                                                    - Display more information when dumping selection DAG nodes.
+  --dag-maps-huge-region=<uint>                                         - The limit to use while constructing the DAG prior to scheduling, at which point a trade-off is made to avoid excessive compile time.
+  --dag-maps-reduction-size=<uint>                                      - A huge scheduling region will have maps reduced by this many nodes at a time. Defaults to HugeRegion / 2.
+  --data-sections                                                       - Emit data into separate sections
+  --dataflow-edge-limit=<uint>                                          - Maximum number of dataflow edges to traverse when evaluating the benefit of commuting operands
+  --ddg-pi-blocks                                                       - Create pi-block nodes.
+  --ddg-simplify                                                        - Simplify DDG by merging nodes that have less interesting edges.
+  --debug                                                               - Enable debug output
+  --debug-buffer-size=<uint>                                            - Buffer the last N characters of debug output until program termination. [default 0 -- immediate print-out]
+  -debug-counter                                                        - Comma separated list of debug counter skip and count
+    =assume-queries-counter                                             -   Controls which assumes gets created
+    =assume-builder-counter                                             -   Controls which assumes gets created
+    =predicateinfo-rename                                               -   Controls which variables are renamed with predicateinfo
+    =instcombine-visit                                                  -   Controls which instructions are visited
+    =instcombine-negator                                                -   Controls Negator transformations in InstCombine pass
+    =conds-eliminated                                                   -   Controls which conditions are eliminated
+    =dce-transform                                                      -   Controls which instructions are eliminated
+    =dse-memoryssa                                                      -   Controls which MemoryDefs are eliminated.
+    =div-rem-pairs-transform                                            -   Controls transformations in div-rem-pairs pass
+    =early-cse                                                          -   Controls which instructions are removed
+    =newgvn-vn                                                          -   Controls which instructions are value numbered
+    =newgvn-phi                                                         -   Controls which instructions we create phi of ops for
+    =partially-inline-libcalls-transform                                -   Controls transformations in partially-inline-libcalls
+    =machine-cp-fwd                                                     -   Controls which register COPYs are forwarded
+  --debug-entry-values                                                  - Enable debug info for the debug entry values.
+  --debug-only=<debug string>                                           - Enable a specific type of debug output (comma separated list of types)
+  --debug-pass=<value>                                                  - Print legacy PassManager debugging information
+    =Disabled                                                           -   disable debug output
+    =Arguments                                                          -   print pass arguments to pass to 'opt'
+    =Structure                                                          -   print pass structure before run()
+    =Executions                                                         -   print pass name before it is executed
+    =Details                                                            -   print pass details when it is executed
+  --debugger-tune=<value>                                               - Tune debug info for a particular debugger
+    =gdb                                                                -   gdb
+    =lldb                                                               -   lldb
+    =dbx                                                                -   dbx
+    =sce                                                                -   SCE targets (e.g. PS4)
+  --debugify-and-strip-all-safe                                         - Debugify MIR before and Strip debug after each pass except those known to be unsafe when debug info is present
+  --debugify-check-and-strip-all-safe                                   - Debugify MIR before, by checking and stripping the debug info after, each pass except those known to be unsafe when debug info is present
+  --debugify-level=<value>                                              - Kind of debug info to add
+    =locations                                                          -   Locations only
+    =location+variables                                                 -   Locations and Variables
+  --debugify-quiet                                                      - Suppress verbose debugify output
+  --default-trip-count=<uint>                                           - Use this to specify the default trip count of a loop
+  --demote-catchswitch-only                                             - Demote catchswitch BBs only (for wasm EH)
+  --denormal-fp-math=<value>                                            - Select which denormal numbers the code is permitted to require
+    =ieee                                                               -   IEEE 754 denormal numbers
+    =preserve-sign                                                      -   the sign of a  flushed-to-zero number is preserved in the sign of 0
+    =positive-zero                                                      -   denormals are flushed to positive zero
+  --denormal-fp-math-f32=<value>                                        - Select which denormal numbers the code is permitted to require for float
+    =ieee                                                               -   IEEE 754 denormal numbers
+    =preserve-sign                                                      -   the sign of a  flushed-to-zero number is preserved in the sign of 0
+    =positive-zero                                                      -   denormals are flushed to positive zero
+  --dfa-cost-threshold=<uint>                                           - Maximum cost accepted for the transformation
+  --dfa-instr-limit=<uint>                                              - If present, stops packetizing after N instructions
+  --dfa-jump-view-cfg-before                                            - View the CFG before DFA Jump Threading
+  --dfa-max-path-length=<uint>                                          - Max number of blocks searched to find a threading path
+  --dfa-sched-reg-pressure-threshold=<int>                              - Track reg pressure and switch priority to in-depth
+  --disable-2addr-hack                                                  - Disable scheduler's two-address hack
+  --disable-adv-copy-opt                                                - Disable advanced copy optimization
+  --disable-basic-aa                                                    - 
+  --disable-binop-extract-shuffle                                       - Disable binop extract to shuffle transforms
+  --disable-block-placement                                             - Disable probability-driven block placement
+  --disable-branch-fold                                                 - Disable branch folding
+  --disable-cgp                                                         - Disable Codegen Prepare
+  --disable-cgp-branch-opts                                             - Disable branch optimizations in CodeGenPrepare
+  --disable-cgp-ext-ld-promotion                                        - Disable ext(promotable(ld)) -> promoted(ext(ld)) optimization in CodeGenPrepare
+  --disable-cgp-gc-opts                                                 - Disable GC optimizations in CodeGenPrepare
+  --disable-cgp-select2branch                                           - Disable select to branch conversion.
+  --disable-cgp-store-extract                                           - Disable store(extract) optimizations in CodeGenPrepare
+  --disable-cleanups                                                    - Do not remove implausible terminators or other similar cleanups
+  --disable-complex-addr-modes                                          - Disables combining addressing modes with different parts in optimizeMemoryInst.
+  --disable-constant-hoisting                                           - Disable ConstantHoisting
+  --disable-copyprop                                                    - Disable Copy Propagation pass
+  --disable-debug-info-print                                            - Disable debug info printing
+  --disable-demotion                                                    - Clone multicolor basic blocks but do not demote cross scopes
+  --disable-dfa-sched                                                   - Disable use of DFA during scheduling
+  --disable-early-ifcvt                                                 - Disable Early If-conversion
+  --disable-early-taildup                                               - Disable pre-register allocation tail duplication
+  --disable-expand-reductions                                           - Disable the expand reduction intrinsics pass from running
+  --disable-gep-const-evaluation                                        - Disables evaluation of GetElementPtr with constant operands
+  --disable-gisel-legality-check                                        - Don't verify that MIR is fully legal between GlobalISel passes
+  --disable-hoisting-to-hotter-blocks=<value>                           - Disable hoisting instructions to hotter blocks
+    =none                                                               -   disable the feature
+    =pgo                                                                -   enable the feature when using profile data
+    =all                                                                -   enable the feature with/wo profile data
+  --disable-i2p-p2i-opt                                                 - Disables inttoptr/ptrtoint roundtrip optimization
+  --disable-ifcvt-diamond                                               - 
+  --disable-ifcvt-forked-diamond                                        - 
+  --disable-ifcvt-simple                                                - 
+  --disable-ifcvt-simple-false                                          - 
+  --disable-ifcvt-triangle                                              - 
+  --disable-ifcvt-triangle-false                                        - 
+  --disable-ifcvt-triangle-false-rev                                    - 
+  --disable-ifcvt-triangle-rev                                          - 
+  --disable-interleaved-load-combine                                    - Disable combining of interleaved loads
+  --disable-lftr                                                        - Disable Linear Function Test Replace optimization
+  --disable-licm-promotion                                              - Disable memory promotion in LICM pass
+  --disable-lsr                                                         - Disable Loop Strength Reduction Pass
+  --disable-machine-cse                                                 - Disable Machine Common Subexpression Elimination
+  --disable-machine-dce                                                 - Disable Machine Dead Code Elimination
+  --disable-machine-licm                                                - Disable Machine LICM
+  --disable-machine-sink                                                - Disable Machine Sinking
+  --disable-mergeicmps                                                  - Disable MergeICmps Pass
+  --disable-non-allocatable-phys-copy-opt                               - Disable non-allocatable physical register copy optimization
+  --disable-ondemand-mds-loading                                        - Force disable the lazy-loading on-demand of metadata when loading bitcode for importing.
+  --disable-partial-libcall-inlining                                    - Disable Partial Libcall Inlining
+  --disable-peephole                                                    - Disable the peephole optimizer
+  --disable-phi-elim-edge-splitting                                     - Disable critical edge splitting during PHI elimination
+  --disable-post-ra                                                     - Disable Post Regalloc Scheduler
+  --disable-postra-machine-licm                                         - Disable Machine LICM
+  --disable-postra-machine-sink                                         - Disable PostRA Machine Sinking
+  --disable-preheader-prot                                              - Disable protection against removing loop preheaders
+  --disable-sched-critical-path                                         - Disable critical path priority in sched=list-ilp
+  --disable-sched-cycles                                                - Disable cycle-level precision during preRA scheduling
+  --disable-sched-hazard                                                - Disable hazard detection during preRA scheduling
+  --disable-sched-height                                                - Disable scheduled-height priority in sched=list-ilp
+  --disable-sched-live-uses                                             - Disable live use priority in sched=list-ilp
+  --disable-sched-physreg-join                                          - Disable physreg def-use affinity
+  --disable-sched-reg-pressure                                          - Disable regpressure priority in sched=list-ilp
+  --disable-sched-stalls                                                - Disable no-stall priority in sched=list-ilp
+  --disable-sched-vrcycle                                               - Disable virtual register cycle interference checks
+  --disable-separate-const-offset-from-gep                              - Do not separate the constant offset from a GEP instruction
+  --disable-simplify-libcalls                                           - Disable simplify-libcalls
+  --disable-spill-hoist                                                 - Disable inline spill hoisting
+  --disable-ssc                                                         - Disable Stack Slot Coloring
+  --disable-strictnode-mutation                                         - Don't mutate strict-float node to a legalize node
+  --disable-symbolication                                               - Disable symbolizing crash backtraces.
+  --disable-tail-calls                                                  - Never emit tail calls
+  --disable-tail-duplicate                                              - Disable tail duplication
+  --disable-type-promotion                                              - Disable type promotion pass
+  --disable-vector-combine                                              - Disable all vector combine transforms
+  --disable-verify                                                      - Do not verify input module
+  --discard-value-names                                                 - Discard names from Value (other than GlobalValue).
+  --dom-conditions-max-uses=<uint>                                      - 
+  --dom-tree-reachability-max-bbs-to-explore=<uint>                     - Max number of BBs to explore for reachability analysis
+  --dot-cfg-mssa=<file name for generated dot file>                     - file name for generated dot file
+  --dot-ddg-filename-prefix=<string>                                    - The prefix used for the DDG dot file names.
+  --dot-ddg-only                                                        - simple ddg dot graph
+  --dse-memoryssa-defs-per-block-limit=<uint>                           - The number of MemoryDefs we consider as candidates to eliminated other stores per basic block (default = 5000)
+  --dse-memoryssa-otherbb-cost=<uint>                                   - The cost of a step in a different basic block than the killing MemoryDef(default = 5)
+  --dse-memoryssa-partial-store-limit=<uint>                            - The maximum number candidates that only partially overwrite the killing MemoryDef to consider (default = 5)
+  --dse-memoryssa-path-check-limit=<uint>                               - The maximum number of blocks to check when trying to prove that all paths to an exit go through a killing block (default = 50)
+  --dse-memoryssa-samebb-cost=<uint>                                    - The cost of a step in the same basic block as the killing MemoryDef(default = 1)
+  --dse-memoryssa-scanlimit=<uint>                                      - The number of memory instructions to scan for dead store elimination (default = 100)
+  --dse-memoryssa-walklimit=<uint>                                      - The maximum number of steps while walking upwards to find MemoryDefs that may be killed (default = 90)
+  --dwarf-directory                                                     - Use .file directives with an explicit directory
+  --dwarf-extended-loc=<value>                                          - Disable emission of the extended flags in .loc directives.
+    =Default                                                            -   Default for platform
+    =Enable                                                             -   Enabled
+    =Disable                                                            -   Disabled
+  --dwarf-inlined-strings=<value>                                       - Use inlined strings rather than string section.
+    =Default                                                            -   Default for platform
+    =Enable                                                             -   Enabled
+    =Disable                                                            -   Disabled
+  --dwarf-linkage-names=<value>                                         - Which DWARF linkage-name attributes to emit.
+    =Default                                                            -   Default for platform
+    =All                                                                -   All
+    =Abstract                                                           -   Abstract subprograms
+  --dwarf-op-convert=<value>                                            - Enable use of the DWARFv5 DW_OP_convert operator
+    =Default                                                            -   Default for platform
+    =Enable                                                             -   Enabled
+    =Disable                                                            -   Disabled
+  --dwarf-sections-as-references=<value>                                - Use sections+offset as references rather than labels.
+    =Default                                                            -   Default for platform
+    =Enable                                                             -   Enabled
+    =Disable                                                            -   Disabled
+  --dwarf-version=<int>                                                 - Dwarf version
+  --dwarf64                                                             - Generate debugging info in the 64-bit DWARF format
+  --early-ifcvt-limit=<uint>                                            - Maximum number of instructions per speculated block.
+  --early-live-intervals                                                - Run live interval analysis earlier in the pipeline
+  --earlycse-debug-hash                                                 - Perform extra assertion checking to verify that SimpleValue's hash function is well-behaved w.r.t. its isEqual predicate
+  --earlycse-mssa-optimization-cap=<uint>                               - Enable imprecision in EarlyCSE in pathological cases, in exchange for faster compile. Caps the MemorySSA clobbering calls.
+  --emit-call-site-info                                                 - Emit call site debug information, if debug information is enabled.
+  --emulate-old-livedebugvalues                                         - Act like old LiveDebugValues did
+  --emulated-tls                                                        - Use emulated TLS model
+  --enable-aa-sched-mi                                                  - Enable use of AA during MI DAG construction
+  --enable-andcmp-sinking                                               - Enable sinkinig and/cmp into branches.
+  --enable-block-placement-stats                                        - Collect probability-driven block placement stats
+  --enable-cond-stores-vec                                              - Enable if predication of stores during vectorization.
+  --enable-cse-in-irtranslator                                          - Should enable CSE in irtranslator
+  --enable-cse-in-legalizer                                             - Should enable CSE in Legalizer
+  --enable-deferred-spilling                                            - Instead of spilling a variable right away, defer the actual code insertion to the end of the allocation. That way the allocator might still find a suitable coloring for this variable because of other evicted variables.
+  --enable-double-float-shrink                                          - Enable unsafe double to float shrinking for math lib calls
+  --enable-dse-partial-overwrite-tracking                               - Enable partial-overwrite tracking in DSE
+  --enable-dse-partial-store-merging                                    - Enable partial store merging in DSE
+  --enable-epilogue-vectorization                                       - Enable vectorization of epilogue loops.
+  --enable-fs-discriminator                                             - Enable adding flow sensitive discriminators
+  --enable-global-merge                                                 - Enable the global merge pass
+  --enable-gvn-memdep                                                   - 
+  --enable-if-conversion                                                - Enable if-conversion during vectorization.
+  --enable-implicit-null-checks                                         - Fold null checks into faulting memory operations
+  --enable-ind-var-reg-heur                                             - Count the induction variable only once when interleaving
+  --enable-interleaved-mem-accesses                                     - Enable vectorization on interleaved memory accesses in a loop
+  --enable-ipra                                                         - Enable interprocedural register allocation to reduce load/store at procedure calls.
+  --enable-knowledge-retention                                          - enable preservation of attributes throughout code transformation
+  --enable-legalize-types-checking                                      - 
+  --enable-linkonceodr-outlining                                        - Enable the machine outliner on linkonceodr functions
+  --enable-load-in-loop-pre                                             - 
+  --enable-load-pre                                                     - 
+  --enable-loadstore-runtime-interleave                                 - Enable runtime interleaving until load/store ports are saturated
+  --enable-local-reassign                                               - Local reassignment can yield better allocation decisions, but may be compile time intensive
+  --enable-loop-distribute                                              - Enable the new, experimental LoopDistribution Pass
+  --enable-loop-simplifycfg-term-folding                                - 
+  --enable-lsr-phielim                                                  - Enable LSR phi elimination
+  --enable-machine-outliner                                             - Enable the machine outliner
+  --enable-machine-outliner=<value>                                     - Enable the machine outliner
+    =always                                                             -   Run on all functions guaranteed to be beneficial
+    =never                                                              -   Disable all outlining
+  --enable-masked-interleaved-mem-accesses                              - Enable vectorization on masked interleaved memory accesses in a loop
+  --enable-mem-access-versioning                                        - Enable symbolic stride memory access versioning
+  --enable-memcpy-dag-opt                                               - Gang up loads and stores generated by inlining of memcpy
+  --enable-memcpyopt-memoryssa                                          - Use MemorySSA-backed MemCpyOpt.
+  --enable-misched                                                      - Enable the machine instruction scheduling pass.
+  --enable-mssa-in-legacy-loop-sink                                     - Enable MemorySSA for LoopSink in legacy pass manager
+  --enable-mssa-in-loop-sink                                            - Enable MemorySSA for LoopSink in new pass manager
+  --enable-mssa-loop-dependency                                         - Enable MemorySSA dependency for loop pass manager
+  --enable-name-compression                                             - Enable name/filename string compression
+  --enable-no-infs-fp-math                                              - Enable FP math optimizations that assume no +-Infs
+  --enable-no-nans-fp-math                                              - Enable FP math optimizations that assume no NaNs
+  --enable-no-signed-zeros-fp-math                                      - Enable FP math optimizations that assume the sign of 0 is insignificant
+  --enable-no-trapping-fp-math                                          - Enable setting the FP exceptions build attribute not to use exceptions
+  --enable-noalias-to-md-conversion                                     - Convert noalias attributes to metadata during inlining.
+  --enable-nontrivial-unswitch                                          - Forcibly enables non-trivial loop unswitching rather than following the configuration passed into the pass.
+  --enable-objc-arc-opts                                                - enable/disable all ARC Optimizations
+  --enable-patchpoint-liveness                                          - Enable PatchPoint Liveness Analysis Pass
+  --enable-phi-of-ops                                                   - 
+  --enable-pipeliner                                                    - Enable Software Pipelining
+  --enable-pipeliner-opt-size                                           - Enable SWP at Os.
+  --enable-post-misched                                                 - Enable the post-ra machine instruction scheduling pass.
+  --enable-pre                                                          - 
+  --enable-scoped-noalias                                               - 
+  --enable-selectiondag-sp                                              - 
+  --enable-shrink-wrap                                                  - enable the shrink-wrapping pass
+  --enable-sign-dependent-rounding-fp-math                              - Force codegen to assume rounding mode can change dynamically
+  --enable-split-backedge-in-load-pre                                   - 
+  --enable-split-machine-functions                                      - Split out cold blocks from machine functions based on profile information.
+  --enable-store-refinement                                             - 
+  --enable-strict-reductions                                            - Enable the vectorisation of loops with in-order (strict) FP reductions
+  --enable-subreg-liveness                                              - Enable subregister liveness tracking.
+  --enable-tail-merge                                                   - 
+  --enable-tbaa                                                         - 
+  --enable-unsafe-fp-math                                               - Enable optimizations that may decrease FP precision
+  --enable-unsafe-globalsmodref-alias-results                           - 
+  --enable-unswitch-cost-multiplier                                     - Enable unswitch cost multiplier that prohibits exponential explosion in nontrivial unswitch.
+  --enable-vplan-native-path                                            - Enable VPlan-native vectorization path with support for outer loop vectorization.
+  --enable-vplan-predication                                            - Enable VPlan-native vectorization path predicator with support for outer loop vectorization.
+  --epilogue-vectorization-force-VF=<uint>                              - When epilogue vectorization is enabled, and a value greater than 1 is specified, forces the given VF for all applicable epilogue loops.
+  --epilogue-vectorization-minimum-VF=<uint>                            - Only loops with vectorization factor equal to or larger than the specified value are considered for epilogue vectorization.
+  --exception-model=<value>                                             - exception model
+    =default                                                            -   default exception handling model
+    =dwarf                                                              -   DWARF-like CFI based exception handling
+    =sjlj                                                               -   SjLj exception handling
+    =arm                                                                -   ARM EHABI exceptions
+    =wineh                                                              -   Windows exception model
+    =wasm                                                               -   WebAssembly exception handling
+  --exhaustive-register-search                                          - Exhaustive Search for registers bypassing the depth and interference cutoffs of last chance recoloring
+  --expandvp-override-evl-transform=<string>                            - Options: <empty>|Legal|Discard|Convert. If non-empty, ignore TargetTransformInfo and always use this transformation for the %evl parameter (Used in testing).
+  --expandvp-override-mask-transform=<string>                           - Options: <empty>|Legal|Discard|Convert. If non-empty, Ignore TargetTransformInfo and always use this transformation for the %mask parameter (Used in testing).
+  --experimental-debug-variable-locations                               - Use experimental new value-tracking variable locations
+  --fast-cluster-threshold=<uint>                                       - The threshold for fast cluster
+  --fast-isel                                                           - Enable the "fast" instruction selector
+  --fast-isel-abort=<int>                                               - Enable abort calls when "fast" instruction selection fails to lower an instruction: 0 disable the abort, 1 will abort but for args, calls and terminators, 2 will also abort for argument lowering, and 3 will never fallback to SelectionDAG.
+  --fast-isel-report-on-fallback                                        - Emit a diagnostic when "fast" instruction selection falls back to SelectionDAG.
+  --fatal-warnings                                                      - Treat warnings as errors
+  --filetype=<value>                                                    - Choose a file type (not all types are supported by all targets):
+    =asm                                                                -   Emit an assembly ('.s') file
+    =obj                                                                -   Emit a native object ('.o') file
+    =null                                                               -   Emit nothing, for performance testing
+  --filter-print-funcs=<function names>                                 - Only print IR for functions whose name match this for all print-[before|after][-all] options
+  --filter-view-dags=<string>                                           - Only display the basic block whose name matches this for all view-*-dags options
+  --fixup-allow-gcptr-in-csr                                            - Allow passing GC Pointer arguments in callee saved registers
+  --fixup-max-csr-statepoints=<uint>                                    - Max number of statepoints allowed to pass GC Ptrs in registers
+  --fixup-scs-enable-copy-propagation                                   - Enable simple copy propagation during register reloading
+  --fixup-scs-extend-slot-size                                          - Allow spill in spill slot of greater size than register size
+  --flat-loop-tripcount-threshold=<uint>                                - If the runtime tripcount for the loop is lower than the threshold, the loop is considered as flat and will be less aggressively unrolled.
+  --float-abi=<value>                                                   - Choose float ABI type
+    =default                                                            -   Target default float ABI type
+    =soft                                                               -   Soft float ABI (implied by -soft-float)
+    =hard                                                               -   Hard float ABI (uses FP registers)
+  --float2int-max-integer-bw=<uint>                                     - Max integer bitwidth to consider in float2int(default=64)
+  --force-dwarf-frame-section                                           - Always emit a debug frame section.
+  --force-fast-cluster                                                  - Switch to fast cluster algorithm with the lost of some fusion opportunities
+  --force-fuse-matrix                                                   - Force matrix instruction fusion even if not profitable.
+  --force-hardware-loop-guard                                           - Force generation of loop guard intrinsic
+  --force-hardware-loop-phi                                             - Force hardware loop counter to be updated through a phi
+  --force-hardware-loops                                                - Force hardware loops intrinsics to be inserted
+  --force-instr-ref-livedebugvalues                                     - Use instruction-ref based LiveDebugValues with normal DBG_VALUE inputs
+  --force-legal-indexing                                                - Force all indexed operations to be legal for the GlobalISel combiner
+  --force-loop-cold-block                                               - Force outlining cold blocks from loops.
+  --force-nested-hardware-loop                                          - Force allowance of nested hardware loops
+  --force-opaque-pointers                                               - Force all pointers to be opaque pointers
+  --force-pgso                                                          - Force the (profiled-guided) size optimizations. 
+  --force-precise-rotation-cost                                         - Force the use of precise cost loop rotation strategy.
+  --force-split-store                                                   - Force store splitting no matter what the target query says.
+  --force-summary-edges-cold=<value>                                    - Force all edges in the function summary to cold
+    =none                                                               -   None.
+    =all-non-critical                                                   -   All non-critical edges.
+    =all                                                                -   All edges.
+  --force-target-instruction-cost=<uint>                                - A flag that overrides the target's expected cost for an instruction to a single constant value. Mostly useful for getting consistent testing.
+  --force-target-max-scalar-interleave=<uint>                           - A flag that overrides the target's max interleave factor for scalar loops.
+  --force-target-max-vector-interleave=<uint>                           - A flag that overrides the target's max interleave factor for vectorized loops.
+  --force-target-num-scalar-regs=<uint>                                 - A flag that overrides the target's number of scalar registers.
+  --force-target-num-vector-regs=<uint>                                 - A flag that overrides the target's number of vector registers.
+  --force-target-supports-scalable-vectors                              - Pretend that scalable vectors are supported, even if the target does not support them. This flag should only be used for testing.
+  --force-vector-interleave=<uint>                                      - Sets the vectorization interleave count. Zero is autoselect.
+  --force-vector-width=<uint>                                           - Sets the SIMD width. Zero is autoselect.
+  --forget-scev-loop-unroll                                             - Forget everything in SCEV when doing LoopUnroll, instead of just the current top-most loop. This is sometimes preferred to reduce compile time.
+  --forward-switch-cond                                                 - Forward switch condition to phi ops (default = false)
+  --fp-contract=<value>                                                 - Enable aggressive formation of fused FP ops
+    =fast                                                               -   Fuse FP ops whenever profitable
+    =on                                                                 -   Only fuse 'blessed' FP ops.
+    =off                                                                -   Only fuse FP ops when the result won't be affected.
+  --frame-pointer=<value>                                               - Specify frame pointer elimination optimization
+    =all                                                                -   Disable frame pointer elimination
+    =non-leaf                                                           -   Disable frame pointer elimination for non-leaf frame
+    =none                                                               -   Enable frame pointer elimination
+  --fs-no-final-discrim                                                 - Do not insert FS-AFDO discriminators before emit.
+  --function-sections                                                   - Emit functions into separate sections
+  --fuse-matrix                                                         - Enable/disable fusing matrix instructions.
+  --fuse-matrix-tile-size=<uint>                                        - Tile size for matrix instruction fusion using square-shaped tiles.
+  --fuse-matrix-use-loops                                               - Generate loop nest for tiling.
+  --generate-arange-section                                             - Generate dwarf aranges
+  --generate-type-units                                                 - Generate DWARF4 type units.
+  --global-isel                                                         - Enable the "global" instruction selector
+  --global-isel-abort=<value>                                           - Enable abort calls when "global" instruction selection fails to lower/select an instruction
+    =0                                                                  -   Disable the abort
+    =1                                                                  -   Enable the abort
+    =2                                                                  -   Disable the abort but emit a diagnostic on failure
+  --global-merge-group-by-use                                           - Improve global merge pass to look at uses
+  --global-merge-ignore-single-use                                      - Improve global merge pass to ignore globals only used alone
+  --global-merge-max-offset=<uint>                                      - Set maximum offset for global merge pass
+  --global-merge-on-const                                               - Enable global merge pass on constants
+  --global-merge-on-external                                            - Enable global merge pass on external linkage
+  --guard-widening-widen-branch-guards                                  - Whether or not we should widen guards  expressed as branches by widenable conditions
+  --guards-predicate-pass-branch-weight=<uint>                          - The probability of a guard failing is assumed to be the reciprocal of this value (default = 1 << 20)
+  --gvn-hoist-max-bbs=<int>                                             - Max number of basic blocks on the path between hoisting locations (default = 4, unlimited = -1)
+  --gvn-hoist-max-chain-length=<int>                                    - Maximum length of dependent chains to hoist (default = 10, unlimited = -1)
+  --gvn-hoist-max-depth=<int>                                           - Hoist instructions from the beginning of the BB up to the maximum specified depth (default = 100, unlimited = -1)
+  --gvn-max-block-speculations=<uint>                                   - Max number of blocks we're willing to speculate on (and recurse into) when deducing if a value is fully available or not in GVN (default = 600)
+  --gvn-max-hoisted=<int>                                               - Max number of instructions to hoist (default unlimited = -1)
+  --gvn-max-num-deps=<uint>                                             - Max number of dependences to attempt Load PRE (default = 100)
+  --hardware-loop-counter-bitwidth=<uint>                               - Set the loop counter bitwidth
+  --hardware-loop-decrement=<uint>                                      - Set the loop decrement value
+  --hints-allow-reordering                                              - Allow enabling loop hints to reorder FP operations during vectorization.
+  --hoist-cheap-insts                                                   - MachineLICM should hoist even cheap instructions
+  --hoist-common-insts                                                  - hoist common instructions (default = false)
+  --hoist-const-stores                                                  - Hoist invariant stores
+  --hot-callsite-rel-freq=<int>                                         - Minimum block frequency, expressed as a multiple of caller's entry frequency, for a callsite to be hot in the absence of profile information.
+  --hot-callsite-threshold=<int>                                        - Threshold for hot callsites 
+  --huge-size-for-split=<uint>                                          - A threshold of live range size which may cause high compile time cost in global splitting.
+  --icp-max-prom=<uint>                                                 - Max number of promotions for a single indirect call callsite
+  --icp-remaining-percent-threshold=<uint>                              - The percentage threshold against remaining unpromoted indirect call count for the promotion
+  --icp-total-percent-threshold=<uint>                                  - The percentage threshold against total count for the promotion
+  --ifcvt-branch-fold                                                   - 
+  --ifcvt-fn-start=<int>                                                - 
+  --ifcvt-fn-stop=<int>                                                 - 
+  --ifcvt-limit=<int>                                                   - 
+  --ignore-xcoff-visibility                                             - Not emit the visibility attribute for asm in AIX OS or give all symbols 'unspecified' visibility in XCOFF object file
+  --imp-null-check-page-size=<int>                                      - The page size of the target in bytes
+  --imp-null-max-insts-to-consider=<uint>                               - The max number of instructions to consider hoisting loads over (the algorithm is quadratic over this number)
+  --import-constants-with-refs                                          - Import constant global variables with references
+  --import-full-type-definitions                                        - Import full type definitions for ThinLTO.
+  --incremental-linker-compatible                                       - When used with filetype=obj, emit an object file which can be used with an incremental linker
+  --indvars-post-increment-ranges                                       - Use post increment control-dependent ranges in IndVarSimplify
+  --indvars-predicate-loops                                             - Predicate conditions in read only loops
+  --indvars-widen-indvars                                               - Allow widening of indvars to eliminate s/zext
+  --info-output-file=<filename>                                         - File to append -stats and -timer output to
+  --inline-call-penalty=<int>                                           - Call penalty that is applied per callsite when inlining
+  --inline-caller-superset-nobuiltin                                    - Allow inlining when caller has a superset of callee's nobuiltin attributes.
+  --inline-cold-callsite-threshold=<int>                                - Threshold for inlining cold callsites
+  --inline-cost-full                                                    - Compute the full inline cost of a call site even when the cost exceeds the threshold.
+  --inline-deferral-scale=<int>                                         - Scale to limit the cost of inline deferral
+  --inline-enable-cost-benefit-analysis                                 - Enable the cost-benefit analysis for the inliner
+  --inline-remark-attribute                                             - Enable adding inline-remark attribute to callsites processed by inliner but decided to be not inlined
+  --inline-savings-multiplier=<int>                                     - Multiplier to multiply cycle savings by during inlining
+  --inline-size-allowance=<int>                                         - The maximum size of a callee that get's inlined without sufficient cycle savings
+  --inline-threshold=<int>                                              - Control the amount of inlining to perform (default = 225)
+  --inlinecold-threshold=<int>                                          - Threshold for inlining functions with cold attribute
+  --inlinedefault-threshold=<int>                                       - Default amount of inlining to perform
+  --inlinehint-threshold=<int>                                          - Threshold for inlining functions with inline hint
+  --inliner-function-import-stats=<value>                               - Enable inliner stats for imported functions
+    =basic                                                              -   basic statistics
+    =verbose                                                            -   printing of statistics for each inlined function
+  --instcombine-code-sinking                                            - Enable code sinking
+  --instcombine-guard-widening-window=<uint>                            - How wide an instruction window to bypass looking for another guard
+  --instcombine-infinite-loop-threshold=<uint>                          - Number of instruction combining iterations considered an infinite loop
+  --instcombine-lower-dbg-declare=<uint>                                - 
+  --instcombine-max-iterations=<uint>                                   - Limit the maximum number of instruction combining iterations
+  --instcombine-max-num-phis=<uint>                                     - Maximum number phis to handle in intptr/ptrint folding
+  --instcombine-maxarray-size=<uint>                                    - Maximum array size considered when doing a combine
+  --instcombine-negator-enabled                                         - Should we attempt to sink negations?
+  --instcombine-negator-max-depth=<uint>                                - What is the maximal lookup depth when trying to check for viability of negation sinking.
+  --interleave-loops                                                    - Enable loop interleaving in Loop vectorization passes
+  --interleave-small-loop-scalar-reduction                              - Enable interleaving for loops with small iteration counts that contain scalar reductions to expose ILP.
+  --ipt-expensive-asserts                                               - Perform expensive assert validation on every query to Instruction Precedence Tracking
+  --irce-allow-narrow-latch                                             - If set to true, IRCE may eliminate wide range checks in loops with narrow latch condition.
+  --irce-allow-unsigned-latch                                           - 
+  --irce-loop-size-cutoff=<uint>                                        - 
+  --irce-min-runtime-iterations=<uint>                                  - 
+  --irce-print-changed-loops                                            - 
+  --irce-print-range-checks                                             - 
+  --irce-skip-profitability-checks                                      - 
+  --iterative-bfi-max-iterations-per-block=<uint>                       - Iterative inference: maximum number of update iterations per block
+  --iterative-bfi-precision=<number>                                    - Iterative inference: delta convergence precision; smaller values typically lead to better results at the cost of worsen runtime
+  --join-globalcopies                                                   - Coalesce copies that span blocks (default=subtarget)
+  --join-liveintervals                                                  - Coalesce copies (default=true)
+  --join-splitedges                                                     - Coalesce copies on split edges (default=subtarget)
+  --jump-inst-cost=<uint>                                               - Cost of jump instructions.
+  --jump-is-expensive                                                   - Do not create extra branches to split comparison logic.
+  --jump-table-density=<uint>                                           - Minimum density for building a jump table in a normal function
+  --jump-threading-across-loop-headers                                  - Allow JumpThreading to thread across loop headers, for testing
+  --jump-threading-freeze-select-cond                                   - Freeze the condition when unfolding select
+  --jump-threading-implication-search-threshold=<uint>                  - The number of predecessors to search for a stronger condition to use to thread over a weaker condition
+  --jump-threading-threshold=<uint>                                     - Max block size to duplicate for jump threading
+  --keep-loops                                                          - Preserve canonical loop structure (default = true)
+  --large-interval-freq-threshold=<uint>                                - For a large interval, if it is coalesed with other live intervals many times more than the threshold, stop its coalescing to control the compile time. 
+  --large-interval-size-threshold=<uint>                                - If the valnos size of an interval is larger than the threshold, it is regarded as a large interval. 
+  --late-remat-update-threshold=<uint>                                  - During rematerialization for a copy, if the def instruction has many other copy uses to be rematerialized, delay the multiple separate live interval update work and do them all at once after all those rematerialization are done. It will save a lot of repeated work. 
+  --lcr-max-depth=<uint>                                                - Last chance recoloring max depth
+  --lcr-max-interf=<uint>                                               - Last chance recoloring maximum number of considered interference at a time
+  --ldstmemcpy-glue-max=<int>                                           - Number limit for gluing ld/st of memcpy.
+  --licm-coldness-threshold=<uint>                                      - Relative coldness Threshold of hoisting/sinking destination block for LICM to be considered beneficial
+  --licm-control-flow-hoisting                                          - Enable control flow (and PHI) hoisting in LICM
+  --licm-max-num-uses-traversed=<uint>                                  - Max num uses visited for identifying load invariance in loop using invariant start (default = 8)
+  --licm-mssa-max-acc-promotion=<uint>                                  - [LICM & MemorySSA] When MSSA in LICM is disabled, this has no effect. When MSSA in LICM is enabled, then this is the maximum number of accesses allowed to be present in a loop in order to enable memory promotion.
+  --licm-mssa-optimization-cap=<uint>                                   - Enable imprecision in LICM in pathological cases, in exchange for faster compile. Caps the MemorySSA clobbering calls.
+  --licm-n2-threshold=<int>                                             - How many instruction to cross product using AA
+  --licm-versioning-invariant-threshold=<number>                        - LoopVersioningLICM's minimum allowed percentageof possible invariant instructions per loop
+  --licm-versioning-max-depth-threshold=<uint>                          - LoopVersioningLICM's threshold for maximum allowed loop nest/depth
+  --likely-branch-weight=<uint>                                         - Weight of the branch likely to be taken (default = 2000)
+  --limit-float-precision=<uint>                                        - Generate low-precision inline sequences for some float libcalls
+  --live-debug-variables                                                - Enable the live debug variables pass
+  --livedebugvalues-input-bb-limit=<uint>                               - Maximum input basic blocks before DBG_VALUE limit applies
+  --livedebugvalues-input-dbg-value-limit=<uint>                        - Maximum input DBG_VALUE insts supported by debug range extension
+  --load=<pluginfilename>                                               - Load the specified plugin
+  --locally-hot-callsite-threshold=<int>                                - Threshold for locally hot callsites 
+  --loop-deletion-enable-symbolic-execution                             - Break backedge through symbolic execution of 1st iteration attempting to prove that the backedge is never taken
+  --loop-distribute-non-if-convertible                                  - Whether to distribute into a loop that may not be if-convertible by the loop vectorizer
+  --loop-distribute-scev-check-threshold=<uint>                         - The maximum number of SCEV checks allowed for Loop Distribution
+  --loop-distribute-scev-check-threshold-with-pragma=<uint>             - The maximum number of SCEV checks allowed for Loop Distribution for loop marked with #pragma loop distribute(enable)
+  --loop-distribute-verify                                              - Turn on DominatorTree and LoopInfo verification after Loop Distribution
+  --loop-flatten-assume-no-overflow                                     - Assume that the product of the two iteration trip counts will never overflow
+  --loop-flatten-cost-threshold=<uint>                                  - Limit on the cost of instructions that can be repeated due to loop flattening
+  --loop-flatten-widen-iv                                               - Widen the loop induction variables, if possible, so overflow checks won't reject flattening
+  --loop-fusion-dependence-analysis=<value>                             - Which dependence analysis should loop fusion use?
+    =scev                                                               -   Use the scalar evolution interface
+    =da                                                                 -   Use the dependence analysis interface
+    =all                                                                -   Use all available analyses
+  --loop-fusion-peel-max-count=<uint>                                   - Max number of iterations to be peeled from a loop, such that fusion can take place
+  --loop-fusion-verbose-debug                                           - Enable verbose debugging for Loop Fusion
+  --loop-interchange-threshold=<int>                                    - Interchange if you gain more than this number
+  --loop-load-elimination-scev-check-threshold=<uint>                   - The maximum number of SCEV checks allowed for Loop Load Elimination
+  --loop-predication-enable-count-down-loop                             - 
+  --loop-predication-enable-iv-truncation                               - 
+  --loop-predication-latch-probability-scale=<number>                   - scale factor for the latch probability. Value should be greater than 1. Lower values are ignored
+  --loop-predication-predicate-widenable-branches-to-deopt              - Whether or not we should predicate guards expressed as widenable branches to deoptimize blocks
+  --loop-predication-skip-profitability-checks                          - 
+  --loop-prefetch-writes                                                - Prefetch write addresses
+  --loop-rotate-multi                                                   - Allow loop rotation multiple times in order to reach a better latch exit
+  --loop-to-cold-block-ratio=<uint>                                     - Outline loop blocks from loop chain if (frequency of loop) / (frequency of block) is greater than this ratio
+  --loop-unswitch-memoryssa-threshold=<uint>                            - Max number of memory uses to explore during partial unswitching analysis
+  --loop-unswitch-threshold=<uint>                                      - Max loop size to unswitch
+  --loop-vectorize-with-block-frequency                                 - Enable the use of the block frequency analysis to access PGO heuristics minimizing code growth in cold regions and being more aggressive in hot regions.
+  --loop-version-annotate-no-alias                                      - Add no-alias annotation for instructions that are disambiguated by memchecks
+  --lower-interleaved-accesses                                          - Enable lowering interleaved accesses to intrinsics
+  --lsr-complexity-limit=<uint>                                         - LSR search space complexity limit
+  --lsr-exp-narrow                                                      - Narrow LSR complex solution using expectation of registers number
+  --lsr-filter-same-scaled-reg                                          - Narrow LSR search space by filtering non-optimal formulae with the same ScaledReg and Scale
+  --lsr-insns-cost                                                      - Add instruction count to a LSR cost model
+  --lsr-preferred-addressing-mode=<value>                               - A flag that overrides the target's preferred addressing mode.
+    =none                                                               -   Don't prefer any addressing mode
+    =preindexed                                                         -   Prefer pre-indexed addressing mode
+    =postindexed                                                        -   Prefer post-indexed addressing mode
+  --lsr-setupcost-depth-limit=<uint>                                    - The limit on recursion depth for LSRs setup cost
+  --machine-combiner-dump-subst-intrs                                   - Dump all substituted intrs
+  --machine-combiner-inc-threshold=<uint>                               - Incremental depth computation will be used for basic blocks with more instructions.
+  --machine-combiner-verify-pattern-order                               - Verify that the generated patterns are ordered by increasing latency
+  --machine-outliner-reruns=<uint>                                      - Number of times to rerun the outliner after the initial outline
+  --machine-sink-bfi                                                    - Use block frequency info to find successors to sink
+  --machine-sink-load-blocks-threshold=<uint>                           - Do not try to find alias store for a load if the block number in the straight line is higher than this threshold.
+  --machine-sink-load-instrs-threshold=<uint>                           - Do not try to find alias store for a load if there is a in-path block whose instruction number is higher than this threshold.
+  --machine-sink-loop-limit=<uint>                                      - The maximum number of instructions considered for loop sinking.
+  --machine-sink-split                                                  - Split critical edges during machine sinking
+  --machine-sink-split-probability-threshold=<uint>                     - Percentage threshold for splitting single-instruction critical edge. If the branch threshold is higher than this threshold, we allow speculative execution of up to 1 instruction to avoid branching to splitted critical edge
+  --march=<string>                                                      - Architecture to generate code for (see --version)
+  --matrix-allow-contract                                               - Allow the use of FMAs if available and profitable. This may result in different results, due to less rounding error.
+  --matrix-default-layout=<value>                                       - Sets the default matrix layout
+    =column-major                                                       -   Use column-major layout
+    =row-major                                                          -   Use row-major layout
+  --mattr=<a1,+a2,-a3,...>                                              - Target specific attributes (-mattr=help for details)
+  --max-dependences=<uint>                                              - Maximum number of dependences collected by loop-access analysis (default = 100)
+  --max-inst-checked-for-throw-during-inlining=<uint>                   - the maximum number of instructions analyzed for may throw during attribute inference in inlined body
+  --max-interleave-group-factor=<uint>                                  - Maximum factor for an interleaved access group (default = 8)
+  --max-jump-table-size=<uint>                                          - Set maximum size of jump tables.
+  --max-loads-per-memcmp=<uint>                                         - Set maximum number of loads used in expanded memcmp
+  --max-loads-per-memcmp-opt-size=<uint>                                - Set maximum number of loads used in expanded memcmp for -Os/Oz
+  --max-nested-scalar-reduction-interleave=<uint>                       - The maximum interleave count to use when interleaving a scalar reduction in a nested loop.
+  --max-prefetch-iters-ahead=<uint>                                     - Max number of iterations to prefetch ahead
+  --max-registers-for-gc-values=<uint>                                  - Max number of VRegs allowed to pass GC pointer meta args in
+  --max-sched-reorder=<int>                                             - Number of instructions to allow ahead of the critical path in sched=list-ilp
+  --max-speculation-depth=<uint>                                        - Limit maximum recursion depth when calculating costs of speculatively executed instructions
+  --max-uses-for-sinking=<uint>                                         - Do not sink instructions that have too many uses.
+  --mc-relax-all                                                        - When used with filetype=obj, relax all fixups in the emitted object file
+  --mcpu=<cpu-name>                                                     - Target a specific cpu type (-mcpu=help for details)
+  --meabi=<value>                                                       - Set EABI type (default depends on triple):
+    =default                                                            -   Triple default EABI version
+    =4                                                                  -   EABI version 4
+    =5                                                                  -   EABI version 5
+    =gnu                                                                -   EABI GNU
+  --memcmp-num-loads-per-block=<uint>                                   - The number of loads per basic block for inline expansion of memcmp that is only being compared against zero.
+  --memdep-block-number-limit=<uint>                                    - The number of blocks to scan during memory dependency analysis (default = 1000)
+  --memdep-block-scan-limit=<uint>                                      - The number of instructions to scan in a block in memory dependency analysis (default = 100)
+  --memory-check-merge-threshold=<uint>                                 - Maximum number of comparisons done when trying to merge runtime memory checks. (default = 100)
+  --memssa-check-limit=<uint>                                           - The maximum number of stores/phis MemorySSAwill consider trying to walk past (default = 100)
+  --mfs-count-threshold=<uint>                                          - Minimum number of times a block must be executed to be retained.
+  --mfs-psi-cutoff=<uint>                                               - Percentile profile summary cutoff used to determine cold blocks. Unused if set to zero.
+  --min-jump-table-entries=<uint>                                       - Set minimum number of entries to use a jump table.
+  --min-prefetch-stride=<uint>                                          - Min stride to add prefetches
+  --minimize-addr-in-v5=<value>                                         - Always use DW_AT_ranges in DWARFv5 whenever it could allow more address pool entry sharing to reduce relocations/object size
+    =Default                                                            -   Default address minimization strategy
+    =Ranges                                                             -   Use rnglists for contiguous ranges if that allows using a pre-existing base address
+    =Expressions                                                        -   Use exprloc addrx+offset expressions for any address with a prior base address
+    =Form                                                               -   Use addrx+offset extension form for any address with a prior base address
+    =Disabled                                                           -   Stuff
+  --mir-debug-loc                                                       - Print MIR debug-locations
+  --mir-strip-debugify-only                                             - Should mir-strip-debug only strip debug info from debugified modules by default
+  --mir-vreg-namer-use-stable-hash                                      - Use Stable Hashing for MIR VReg Renaming
+  --misched=<value>                                                     - Machine instruction scheduler to use
+    =default                                                            -   Use the target's default scheduler choice.
+    =converge                                                           -   Standard converging scheduler.
+    =ilpmax                                                             -   Schedule bottom-up for max ILP
+    =ilpmin                                                             -   Schedule bottom-up for min ILP
+    =shuffle                                                            -   Shuffle machine instructions alternating directions
+  --misched-bottomup                                                    - Force bottom-up list scheduling
+  --misched-cluster                                                     - Enable memop clustering.
+  --misched-cutoff=<uint>                                               - Stop scheduling after N instructions
+  --misched-cyclicpath                                                  - Enable cyclic critical path analysis.
+  --misched-dcpl                                                        - Print critical path length to stdout
+  --misched-fusion                                                      - Enable scheduling for macro fusion.
+  --misched-limit=<uint>                                                - Limit ready list to N instructions
+  --misched-only-block=<uint>                                           - Only schedule this MBB#
+  --misched-only-func=<string>                                          - Only schedule this function
+  --misched-postra                                                      - Run MachineScheduler post regalloc (independent of preRA sched)
+  --misched-print-dags                                                  - Print schedule DAGs
+  --misched-regpressure                                                 - Enable register pressure scheduling.
+  --misched-topdown                                                     - Force top-down list scheduling
+  --misfetch-cost=<uint>                                                - Cost that models the probabilistic risk of an instruction misfetch due to a jump comparing to falling through, whose cost is zero.
+  --module-summary-dot-file=<filename>                                  - File to emit dot graph of new summary into.
+  --mtriple=<string>                                                    - Override target triple for module
+  --no-deprecated-warn                                                  - Suppress all deprecated warnings
+  --no-discriminators                                                   - Disable generation of discriminator information.
+  --no-dwarf-ranges-section                                             - Disable emission .debug_ranges section.
+  --no-integrated-as                                                    - Disable integrated assembler
+  --no-phi-elim-live-out-early-exit                                     - Do not use an early exit if isLiveOutPastPHIs returns true.
+  --no-stack-coloring                                                   - Disable stack coloring
+  --no-stack-slot-sharing                                               - Suppress slot sharing during stack coloring
+  --no-type-check                                                       - Suppress type errors (Wasm)
+  --no-warn                                                             - Suppress all warnings
+  --no-warn-sample-unused                                               - Use this option to turn off/on warnings about function with samples but without debug information to use those samples. 
+  --no-xray-index                                                       - Don't emit xray_fn_idx section
+  --non-global-value-max-name-size=<uint>                               - Maximum size for the name of non-global values.
+  --nozero-initialized-in-bss                                           - Don't place zero-initialized symbols into bss section
+  -o=<filename>                                                         - Output filename
+  --only-simple-regions                                                 - Show only simple regions in the graphviz viewer
+  --opt-bisect-limit=<int>                                              - Maximum optimization to perform
+  --optimize-regalloc                                                   - Enable optimized register allocation compilation path.
+  --optsize-jump-table-density=<uint>                                   - Minimum density for building a jump table in an optsize function
+  --partial-profile                                                     - Specify the current profile is used as a partial profile.
+  --partial-sample-profile-working-set-size-scale-factor=<number>       - The scale factor used to scale the working set size of the partial sample profile along with the partial profile ratio. This includes the factor of the profile counter per block and the factor to scale the working set size to use the same shared thresholds as PGO.
+  --partial-unrolling-threshold=<uint>                                  - Threshold for partial unrolling
+  --pass-remarks=<pattern>                                              - Enable optimization remarks from passes whose name match the given regular expression
+  --pass-remarks-analysis=<pattern>                                     - Enable optimization analysis remarks from passes whose name match the given regular expression
+  --pass-remarks-filter=<regex>                                         - Only record optimization remarks from passes whose names match the given regular expression
+  --pass-remarks-format=<format>                                        - The format used for serializing remarks (default: YAML)
+  --pass-remarks-hotness-threshold=<value>                              - Minimum profile count required for an optimization remark to be output. Use 'auto' to apply the threshold from profile summary.
+  --pass-remarks-missed=<pattern>                                       - Enable missed optimization remarks from passes whose name match the given regular expression
+  --pass-remarks-output=<filename>                                      - Output filename for pass remarks
+  --pass-remarks-with-hotness                                           - With PGO, include profile count in optimization remarks
+  --pbqp-coalescing                                                     - Attempt coalescing during PBQP register allocation.
+  --pbqp-dump-graphs                                                    - Dump graphs for each function/round in the compilation unit.
+  --pgo-view-counts=<value>                                             - A boolean option to show CFG dag or text with block profile counts and branch probabilities right after PGO profile annotation step. The profile counts are computed using branch probabilities from the runtime profile data and block frequency propagation algorithm. To view the raw counts from the profile, use option -pgo-view-raw-counts instead. To limit graph display to only one function, use filtering option -view-bfi-func-name.
+    =none                                                               -   do not show.
+    =graph                                                              -   show a graph.
+    =text                                                               -   show in text.
+  --pgso                                                                - Enable the profile guided size optimizations. 
+  --pgso-cold-code-only                                                 - Apply the profile guided size optimizations only to cold code.
+  --pgso-cold-code-only-for-instr-pgo                                   - Apply the profile guided size optimizations only to cold code under instrumentation PGO.
+  --pgso-cold-code-only-for-partial-sample-pgo                          - Apply the profile guided size optimizations only to cold code under partial-profile sample PGO.
+  --pgso-cold-code-only-for-sample-pgo                                  - Apply the profile guided size optimizations only to cold code under sample PGO.
+  --pgso-cutoff-instr-prof=<int>                                        - The profile guided size optimization profile summary cutoff for instrumentation profile.
+  --pgso-cutoff-sample-prof=<int>                                       - The profile guided size optimization profile summary cutoff for sample profile.
+  --pgso-lwss-only                                                      - Apply the profile guided size optimizations only if the working set size is large (except for cold code.)
+  --phi-elim-split-all-critical-edges                                   - Split all critical edges during PHI elimination
+  --phi-node-folding-threshold=<uint>                                   - Control the amount of phi node folding to perform (default = 2)
+  --phicse-debug-hash                                                   - Perform extra assertion checking to verify that PHINodes's hash function is well-behaved w.r.t. its isEqual predicate
+  --phicse-num-phi-smallsize=<uint>                                     - When the basic block contains not more than this number of PHI nodes, perform a (faster!) exhaustive search instead of set-driven one.
+  --pipeliner-annotate-for-testing                                      - Instead of emitting the pipelined code, annotate instructions with the generated schedule for feeding into the -modulo-schedule-test pass
+  --pipeliner-dbg-res                                                   - 
+  --pipeliner-experimental-cg                                           - Use the experimental peeling code generator for software pipelining
+  --pipeliner-max=<int>                                                 - 
+  --pipeliner-max-mii=<int>                                             - Size limit for the MII.
+  --pipeliner-max-stages=<int>                                          - Maximum stages allowed in the generated scheduled.
+  --pipeliner-prune-deps                                                - Prune dependences between unrelated Phi nodes.
+  --pipeliner-prune-loop-carried                                        - Prune loop carried order dependences.
+  --pipeliner-show-mask                                                 - 
+  --post-RA-scheduler                                                   - Enable scheduling after register allocation
+  --postra-sched-debugdiv=<int>                                         - Debug control MBBs that are scheduled
+  --postra-sched-debugmod=<int>                                         - Debug control MBBs that are scheduled
+  --pragma-unroll-and-jam-threshold=<uint>                              - Unrolled size limit for loops with an unroll_and_jam(full) or unroll_count pragma.
+  --pragma-unroll-threshold=<uint>                                      - Unrolled size limit for loops with an unroll(full) or unroll_count pragma.
+  --pragma-vectorize-memory-check-threshold=<uint>                      - The maximum allowed number of runtime memory checks with a vectorize(enable) pragma.
+  --pragma-vectorize-scev-check-threshold=<uint>                        - The maximum number of SCEV checks allowed with a vectorize(enable) pragma
+  --pre-RA-sched=<value>                                                - Instruction schedulers available (before register allocation):
+    =vliw-td                                                            -   VLIW scheduler
+    =list-ilp                                                           -   Bottom-up register pressure aware list scheduling which tries to balance ILP and register pressure
+    =list-hybrid                                                        -   Bottom-up register pressure aware list scheduling which tries to balance latency and register pressure
+    =source                                                             -   Similar to list-burr but schedules in source order when possible
+    =list-burr                                                          -   Bottom-up register reduction list scheduling
+    =linearize                                                          -   Linearize DAG, no scheduling
+    =fast                                                               -   Fast suboptimal list scheduling
+    =default                                                            -   Best scheduler for the target
+  --precise-rotation-cost                                               - Model the cost of loop rotation more precisely by using profile data.
+  --precompute-phys-liveness                                            - Eagerly compute live intervals for all physreg units.
+  --prefer-inloop-reductions                                            - Prefer in-loop vector reductions, overriding the targets preference.
+  --prefer-predicate-over-epilogue=<value>                              - Tail-folding and predication preferences over creating a scalar epilogue loop.
+    =scalar-epilogue                                                    -   Don't tail-predicate loops, create scalar epilogue
+    =predicate-else-scalar-epilogue                                     -   prefer tail-folding, create scalar epilogue if tail folding fails.
+    =predicate-dont-vectorize                                           -   prefers tail-folding, don't attempt vectorization if tail-folding fails.
+  --prefer-predicated-reduction-select                                  - Prefer predicating a reduction operation over an after loop select.
+  --prefetch-distance=<uint>                                            - Number of instructions to prefetch ahead
+  --preserve-alignment-assumptions-during-inlining                      - Convert align attributes to assumptions during inlining.
+  --preserve-as-comments                                                - Preserve Comments in outputted assembly
+  --print-after=<string>                                                - Print IR after specified passes
+  --print-after-all                                                     - Print IR after each pass
+  --print-after-isel                                                    - Print machine instrs after ISel
+  --print-before=<string>                                               - Print IR before specified passes
+  --print-before-all                                                    - Print IR before each pass
+  --print-bfi                                                           - Print the block frequency info.
+  --print-bfi-func-name=<string>                                        - The option to specify the name of the function whose block frequency info is printed.
+  --print-bpi                                                           - Print the branch probability info.
+  --print-bpi-func-name=<string>                                        - The option to specify the name of the function whose branch probability info is printed.
+  --print-debug-counter                                                 - Print out debug counter info after all counters accumulated
+  --print-gc                                                            - Dump garbage collector data
+  --print-instruction-comments                                          - Prints comments for instruction based on inline cost analysis
+  --print-isel-input                                                    - Print LLVM IR input to isel pass
+  --print-lsr-output                                                    - Print LLVM IR produced by the loop-reduce pass
+  --print-lvi-after-jump-threading                                      - Print the LazyValueInfo cache after JumpThreading
+  --print-machine-bfi                                                   - Print the machine block frequency info.
+  --print-module-scope                                                  - When printing IR for print-[before|after]{-all} always print a module IR
+  --print-region-style=<value>                                          - style of printing regions
+    =none                                                               -   print no details
+    =bb                                                                 -   print regions in detail with block_iterator
+    =rn                                                                 -   print regions in detail with element_iterator
+  --print-regmask-num-regs=<int>                                        - Number of registers to limit to when printing regmask operands in IR dumps. unlimited = -1
+  --print-regusage                                                      - print register usage details collected for analysis.
+  --print-slotindexes                                                   - When printing machine IR, annotate instructions and blocks with SlotIndexes when available
+  --print-summary-global-ids                                            - Print the global id for each value when reading the module summary
+  --profile-guided-section-prefix                                       - Use profile info to add section prefix for hot/cold functions
+  --profile-isfs                                                        - Profile uses flow senstive discriminators
+  --profile-likely-prob=<uint>                                          - branch probability threshold in percentage to be considered very likely when profile is available
+  --profile-summary-contextless                                         - Merge context profiles before calculating thresholds.
+  --profile-summary-cutoff-cold=<int>                                   - A count is cold if it is below the minimum count to reach this percentile of total counts.
+  --profile-summary-cutoff-hot=<int>                                    - A count is hot if it exceeds the minimum count to reach this percentile of total counts.
+  --profile-summary-huge-working-set-size-threshold=<uint>              - The code working set size is considered huge if the number of blocks required to reach the -profile-summary-cutoff-hot percentile exceeds this count.
+  --profile-summary-large-working-set-size-threshold=<uint>             - The code working set size is considered large if the number of blocks required to reach the -profile-summary-cutoff-hot percentile exceeds this count.
+  --profile-symbol-list-cutoff=<ulong>                                  - Cutoff value about how many symbols in profile symbol list will be used. This is very useful for performance debugging
+  --profile-unknown-in-special-section                                  - In profiling mode like sampleFDO, if a function doesn't have profile, we cannot tell the function is cold for sure because it may be a function newly added without ever being sampled. With the flag enabled, compiler can put such profile unknown functions into a special section, so runtime system can choose to handle it in a different way than .text section, to save RAM for example. 
+  --propagate-attrs                                                     - Propagate attributes in index
+  --protect-from-escaped-allocas                                        - Do not optimize lifetime zones that are broken
+  --pseudo-probe-for-profiling                                          - Emit pseudo probes for AutoFDO
+  --rafast-ignore-missing-defs                                          - 
+  --rdf-liveness-max-rec=<uint>                                         - Maximum recursion level
+  --reassociate-geps-verify-no-dead-code                                - Verify this pass produces no dead code
+  --recurrence-chain-limit=<uint>                                       - Maximum length of recurrence chain when evaluating the benefit of commuting operands
+  --regalloc=<value>                                                    - Register allocator to use
+    =pbqp                                                               -   PBQP register allocator
+    =greedy                                                             -   greedy register allocator
+    =fast                                                               -   fast register allocator
+    =basic                                                              -   basic register allocator
+    =default                                                            -   pick register allocator based on -O option
+  --regalloc-csr-first-time-cost=<uint>                                 - Cost for first time use of callee-saved register.
+  Mode of the RegBankSelect pass
+      --regbankselect-fast                                                 - Run the Fast mode (default mapping)
+      --regbankselect-greedy                                               - Use the Greedy mode (best local mapping)
+  --relax-elf-relocations                                               - Emit GOTPCRELX/REX_GOTPCRELX instead of GOTPCREL on x86-64 ELF
+  --relocation-model=<value>                                            - Choose relocation model
+    =static                                                             -   Non-relocatable code
+    =pic                                                                -   Fully relocatable, position independent code
+    =dynamic-no-pic                                                     -   Relocatable external references, non-relocatable code
+    =ropi                                                               -   Code and read-only data relocatable, accessed PC-relative
+    =rwpi                                                               -   Read-write data relocatable, accessed relative to static base
+    =ropi-rwpi                                                          -   Combination of ropi and rwpi
+  --remarks-section                                                     - Emit a section containing remark diagnostics metadata. By default, this is enabled for the following formats: yaml-strtab, bitstream.
+  --replexitval=<value>                                                 - Choose the strategy to replace exit value in IndVarSimplify
+    =never                                                              -   never replace exit value
+    =cheap                                                              -   only replace exit value when the cost is cheap
+    =noharduse                                                          -   only replace exit values when loop def likely dead
+    =always                                                             -   always replace exit value whenever possible
+  --reroll-num-tolerated-failed-matches=<uint>                          - The maximum number of failures to tolerate during fuzzy matching. (default: 400)
+  --restrict-statepoint-remat                                           - Restrict remat for statepoint operands
+  --rewrite-map-file=<filename>                                         - Symbol Rewrite Map
+  --rewrite-phi-limit=<uint>                                            - Limit the length of PHI chains to lookup
+  --riscv-disable-insert-vsetvl-phi-opt                                 - Disable looking through phis when inserting vsetvlis.
+  --riscv-no-aliases                                                    - Disable the emission of assembler pseudo instructions
+  --riscv-v-fixed-length-vector-lmul-max=<uint>                         - The maximum LMUL value to use for fixed length vectors. Fractional LMUL values are not supported.
+  --riscv-v-vector-bits-max=<uint>                                      - Assume V extension vector registers are at most this big, with zero meaning no maximum size is assumed.
+  --riscv-v-vector-bits-min=<uint>                                      - Assume V extension vector registers are at least this big, with zero meaning no minimum size is assumed.
+  --rng-seed=<seed>                                                     - Seed for the random number generator
+  --rotation-max-header-size=<uint>                                     - The default maximum header size for automatic loop rotation
+  --rotation-prepare-for-lto                                            - Run loop-rotation in the prepare-for-lto stage. This option should be used for testing only.
+  --rs4gc-allow-statepoint-with-no-deopt-info                           - 
+  --rs4gc-clobber-non-live                                              - 
+  --run-pass=<pass-name>                                                - Run compiler only for specified passes (comma separated list)
+  --runtime-check-per-loop-load-elim=<uint>                             - Max number of memchecks allowed per eliminated load on average
+  --runtime-memory-check-threshold=<uint>                               - When performing memory disambiguation checks at runtime do not generate more than this number of comparisons (default = 8).
+  --safe-stack-coloring                                                 - enable safe stack coloring
+  --safe-stack-layout                                                   - enable safe stack layout
+  --safepoint-ir-verifier-print-only                                    - 
+  --safestack-use-pointer-address                                       - 
+  --sample-profile-check-record-coverage=<N>                            - Emit a warning if less than N% of records in the input profile are matched to the IR.
+  --sample-profile-check-sample-coverage=<N>                            - Emit a warning if less than N% of samples in the input profile are matched to the IR.
+  --sample-profile-max-propagate-iterations=<uint>                      - Maximum number of iterations to go through when propagating sample block/edge weights through the CFG.
+  --scalable-vectorization=<value>                                      - Control whether the compiler can use scalable vectors to vectorize a loop
+    =off                                                                -   Scalable vectorization is disabled.
+    =on                                                                 -   Scalable vectorization is available, but favor fixed-width vectorization when the cost is inconclusive.
+    =preferred                                                          -   Scalable vectorization is available and favored when the cost is inconclusive.
+  --scalar-evolution-classify-expressions                               - When printing analysis, include information on every instruction
+  --scalar-evolution-huge-expr-threshold=<uint>                         - Size of the expression which is considered huge
+  --scalar-evolution-max-add-rec-size=<uint>                            - Max coefficients in AddRec during evolving
+  --scalar-evolution-max-arith-depth=<uint>                             - Maximum depth of recursive arithmetics
+  --scalar-evolution-max-cast-depth=<uint>                              - Maximum depth of recursive SExt/ZExt/Trunc
+  --scalar-evolution-max-constant-evolving-depth=<uint>                 - Maximum depth of recursive constant evolving
+  --scalar-evolution-max-scev-compare-depth=<uint>                      - Maximum depth of recursive SCEV complexity comparisons
+  --scalar-evolution-max-scev-operations-implication-depth=<uint>       - Maximum depth of recursive SCEV operations implication analysis
+  --scalar-evolution-max-value-compare-depth=<uint>                     - Maximum depth of recursive value complexity comparisons
+  --scalar-evolution-use-expensive-range-sharpening                     - Use more powerful methods of sharpening expression ranges. May be costly in terms of compile time
+  --scalarize-load-store                                                - Allow the scalarizer pass to scalarize loads and store
+  --scalarize-variable-insert-extract                                   - Allow the scalarizer pass to scalarize insertelement/extractelement with variable index
+  --scale-partial-sample-profile-working-set-size                       - If true, scale the working set size of the partial sample profile by the partial profile ratio to reflect the size of the program being compiled.
+  --scev-addops-inline-threshold=<uint>                                 - Threshold for inlining addition operands into a SCEV
+  --scev-cheap-expansion-budget=<uint>                                  - When performing SCEV expansion only if it is cheap to do, this controls the budget that is considered cheap (default = 4)
+  --scev-mulops-inline-threshold=<uint>                                 - Threshold for inlining multiplication operands into a SCEV
+  --scev-verify-ir                                                      - Verify IR correctness when making sensitive SCEV queries (slow)
+  --sched-avg-ipc=<uint>                                                - Average inst/cycle whan no target itinerary exists.
+  --sched-high-latency-cycles=<int>                                     - Roughly estimate the number of cycles that 'long latency'instructions take for targets with no itinerary
+  --scheditins                                                          - Use InstrItineraryData for latency lookup
+  --schedmodel                                                          - Use TargetSchedModel for latency lookup
+  --show-mc-encoding                                                    - Show encoding in .s output
+  --simple-loop-unswitch-drop-non-trivial-implicit-null-checks          - If enabled, drop make.implicit metadata in unswitched implicit null checks to save time analyzing if we can keep it.
+  --simple-loop-unswitch-guards                                         - If enabled, simple loop unswitching will also consider llvm.experimental.guard intrinsics as unswitch candidates.
+  --simple-loop-unswitch-memoryssa-threshold=<uint>                     - Max number of memory uses to explore during partial unswitching analysis
+  --simplify-mir                                                        - Leave out unnecessary information when printing MIR
+  --simplifycfg-branch-fold-threshold=<uint>                            - Maximum cost of combining conditions when folding branches
+  --simplifycfg-hoist-common                                            - Hoist common instructions up to the parent block
+  --simplifycfg-hoist-cond-stores                                       - Hoist conditional stores if an unconditional store precedes
+  --simplifycfg-max-small-block-size=<int>                              - Max size of a block which is still considered small enough to thread through
+  --simplifycfg-merge-cond-stores                                       - Hoist conditional stores even if an unconditional store does not precede - hoist multiple conditional stores into a single predicated store
+  --simplifycfg-merge-cond-stores-aggressively                          - When merging conditional stores, do so even if the resultant basic blocks are unlikely to be if-converted as a result
+  --simplifycfg-require-and-preserve-domtree                            - Temorary development switch used to gradually uplift SimplifyCFG into preserving DomTree,
+  --simplifycfg-sink-common                                             - Sink common instructions down to the end block
+  --sink-common-insts                                                   - Sink common instructions (default = false)
+  --sink-freq-percent-threshold=<uint>                                  - Do not sink instructions that require cloning unless they execute less than this percent of the time.
+  --sink-insts-to-avoid-spills                                          - Sink instructions into loops to avoid register spills
+  --slp-look-ahead-users-budget=<uint>                                  - The maximum number of users to visit while visiting the predecessors. This prevents compilation time increase.
+  --slp-max-look-ahead-depth=<int>                                      - The maximum look-ahead depth for operand reordering scores
+  --slp-max-reg-size=<int>                                              - Attempt to vectorize for this register size in bits
+  --slp-max-store-lookup=<int>                                          - Maximum depth of the lookup for consecutive stores.
+  --slp-max-vf=<uint>                                                   - Maximum SLP vectorization factor (0=unlimited)
+  --slp-min-reg-size=<int>                                              - Attempt to vectorize for this register size in bits
+  --slp-min-tree-size=<uint>                                            - Only vectorize small trees if they are fully vectorizable
+  --slp-recursion-max-depth=<uint>                                      - Limit the recursion depth when building a vectorizable tree
+  --slp-schedule-budget=<int>                                           - Limit the size of the SLP scheduling region per block
+  --slp-threshold=<int>                                                 - Only vectorize if you gain more than this number 
+  --slp-vectorize-hor                                                   - Attempt to vectorize horizontal reductions
+  --slp-vectorize-hor-store                                             - Attempt to vectorize horizontal reductions feeding into a store
+  --small-loop-cost=<uint>                                              - The cost of a loop that is considered 'small' by the interleaver.
+  --sort-timers                                                         - In the report, sort the timers in each group in wall clock time order
+  --spec-exec-max-not-hoisted=<uint>                                    - Speculative execution is not applied to basic blocks where the number of instructions that would not be speculatively executed exceeds this limit.
+  --spec-exec-max-speculation-cost=<uint>                               - Speculative execution is not applied to basic blocks where the cost of the instructions to speculatively execute exceeds this limit.
+  --spec-exec-only-if-divergent-target                                  - Speculative execution is applied only to targets with divergent branches, even if the pass was configured to apply only to all targets.
+  --speculate-one-expensive-inst                                        - Allow exactly one expensive instruction to be speculatively executed
+  --split-dwarf-cross-cu-references                                     - Enable cross-cu references in DWO files
+  --split-dwarf-file=<string>                                           - Specify the name of the .dwo file to encode in the DWARF output
+  --split-dwarf-output=<filename>                                       - .dwo output filename
+  --split-machine-functions                                             - Split out cold basic blocks from machine functions based on profile information
+  --split-spill-mode=<value>                                            - Spill mode for splitting live ranges
+    =default                                                            -   Default
+    =size                                                               -   Optimize for size
+    =speed                                                              -   Optimize for speed
+  --spp-all-backedges                                                   - 
+  --spp-counted-loop-trip-width=<int>                                   - 
+  --spp-no-backedge                                                     - 
+  --spp-no-call                                                         - 
+  --spp-no-entry                                                        - 
+  --spp-print-base-pointers                                             - 
+  --spp-print-liveset                                                   - 
+  --spp-print-liveset-size                                              - 
+  --spp-rematerialization-threshold=<uint>                              - 
+  --spp-split-backedge                                                  - 
+  --sroa-strict-inbounds                                                - 
+  --ssc-dce-limit=<int>                                                 - 
+  --stack-safety-max-iterations=<int>                                   - 
+  --stack-safety-print                                                  - 
+  --stack-safety-run                                                    - 
+  --stack-size-section                                                  - Emit a section containing stack size metadata
+  --stack-symbol-ordering                                               - Order local stack symbols.
+  --stackcoloring-lifetime-start-on-first-use                           - Treat stack lifetimes as starting on first use, not on START marker.
+  --stackmap-version=<int>                                              - Specify the stackmap encoding version (default = 3)
+  --stackrealign                                                        - Force align the stack to the minimum alignment
+  --start-after=<pass-name>                                             - Resume compilation after a specific pass
+  --start-before=<pass-name>                                            - Resume compilation before a specific pass
+  --static-func-full-module-prefix                                      - Use full module build paths in the profile counter names for static functions.
+  --static-func-strip-dirname-prefix=<uint>                             - Strip specified level of directory name from source path in the profile counter name for static functions.
+  --static-likely-prob=<uint>                                           - branch probability threshold in percentageto be considered very likely
+  --stats                                                               - Enable statistics output from program (available with Asserts)
+  --stats-json                                                          - Display statistics as json data
+  --stop-after=<pass-name>                                              - Stop compilation after a specific pass
+  --stop-before=<pass-name>                                             - Stop compilation before a specific pass
+  --store-to-load-forwarding-conflict-detection                         - Enable conflict detection in loop-access analysis
+  --stress-cgp-ext-ld-promotion                                         - Stress test ext(promotable(ld)) -> promoted(ext(ld)) optimization in CodeGenPrepare
+  --stress-cgp-store-extract                                            - Stress test store(extract) optimizations in CodeGenPrepare
+  --stress-early-ifcvt                                                  - Turn all knobs to 11
+  --stress-ivchain                                                      - Stress test LSR IV chains
+  --stress-regalloc=<N>                                                 - Limit all regclasses to N registers
+  --stress-sched                                                        - Stress test instruction scheduling
+  --strict-dwarf                                                        - use strict dwarf
+  --structurizecfg-relaxed-uniform-regions                              - Allow relaxed uniform region checks
+  --structurizecfg-skip-uniform-regions                                 - Force whether the StructurizeCFG pass skips uniform regions
+  --switch-peel-threshold=<uint>                                        - Set the case probability threshold for peeling the case from a switch statement. A value greater than 100 will void this optimization
+  --switch-to-lookup                                                    - Convert switches to lookup tables (default = false)
+  --tail-dup-indirect-size=<uint>                                       - Maximum instructions to consider tail duplicating blocks that end with indirect branches.
+  --tail-dup-limit=<uint>                                               - 
+  --tail-dup-placement                                                  - Perform tail duplication during placement. Creates more fallthrough opportunites in outline branches.
+  --tail-dup-placement-aggressive-threshold=<uint>                      - Instruction cutoff for aggressive tail duplication during layout. Used at -O3. Tail merging during layout is forced to have a threshold that won't conflict.
+  --tail-dup-placement-penalty=<uint>                                   - Cost penalty for blocks that can avoid breaking CFG by copying. Copying can increase fallthrough, but it also increases icache pressure. This parameter controls the penalty to account for that. Percent as integer.
+  --tail-dup-placement-threshold=<uint>                                 - Instruction cutoff for tail duplication during layout. Tail merging during layout is forced to have a threshold that won't conflict.
+  --tail-dup-profile-percent-threshold=<uint>                           - If profile count information is used in tail duplication cost model, the gained fall through number from tail duplication should be at least this percent of hot count.
+  --tail-dup-size=<uint>                                                - Maximum instructions to consider tail duplicating
+  --tail-dup-verify                                                     - Verify sanity of PHI instructions during taildup
+  --tail-merge-size=<uint>                                              - Min number of instructions to consider tail merging
+  --tail-merge-threshold=<uint>                                         - Max number of predecessors to consider tail merging
+  --tailcallopt                                                         - Turn fastcc calls into tail calls by (potentially) changing ABI.
+  --target-abi=<string>                                                 - The name of the ABI to be targeted from the backend.
+  --temporal-reuse-threshold=<uint>                                     - Use this to specify the max. distance between array elements accessed in a loop so that the elements are classified to have temporal reuse
+  --terminal-rule                                                       - Apply the terminal rule
+  --thread-model=<value>                                                - Choose threading model
+    =posix                                                              -   POSIX thread model
+    =single                                                             -   Single thread model
+  --time-compilations=<N>                                               - Repeat compilation N times for timing
+  --time-passes                                                         - Time each pass, printing elapsed time for each on exit
+  --time-passes-per-run                                                 - Time each pass run, printing elapsed time for each run on exit
+  --tiny-trip-count-interleave-threshold=<uint>                         - We don't interleave loops with a estimated constant trip count below this number
+  --tls-size=<uint>                                                     - Bit size of immediate TLS offsets
+  --track-memory                                                        - Enable -time-passes memory tracking (this may be slow)
+  --trap-func=<string>                                                  - Emit a call to trap function rather than a trap instruction
+  --trap-unreachable                                                    - Enable generating trap for unreachable
+  --treat-scalable-fixed-error-as-warning                               - Treat issues where a fixed-width property is requested from a scalable type as a warning, instead of an error.
+  --triangle-chain-count=<uint>                                         - Number of triangle-shaped-CFG's that need to be in a row for the triangle tail duplication heuristic to kick in. 0 to disable.
+  --trim-var-locs                                                       - 
+  --two-entry-phi-node-folding-threshold=<uint>                         - Control the maximal total instruction cost that we are willing to speculatively execute to fold a 2-entry PHI node into a select (default = 4)
+  --twoaddr-reschedule                                                  - Coalesce copies by rescheduling (default=true)
+  --unique-basic-block-section-names                                    - Give unique names to every basic block section
+  --unique-section-names                                                - Give unique names to every section
+  --unlikely-branch-weight=<uint>                                       - Weight of the branch unlikely to be taken (default = 1)
+  --unroll-allow-loop-nests-peeling                                     - Allows loop nests to be peeled.
+  --unroll-allow-partial                                                - Allows loops to be partially unrolled until -unroll-threshold loop size is reached.
+  --unroll-allow-peeling                                                - Allows loops to be peeled when the dynamic trip count is known to be low.
+  --unroll-allow-remainder                                              - Allow generation of a loop remainder (extra iterations) when unrolling a loop.
+  --unroll-and-jam-count=<uint>                                         - Use this unroll count for all loops including those with unroll_and_jam_count pragma values, for testing purposes
+  --unroll-and-jam-threshold=<uint>                                     - Threshold to use for inner loop when doing unroll and jam.
+  --unroll-count=<uint>                                                 - Use this unroll count for all loops including those with unroll_count pragma values, for testing purposes
+  --unroll-force-peel-count=<uint>                                      - Force a peel count regardless of profiling information.
+  --unroll-full-max-count=<uint>                                        - Set the max unroll count for full unrolling, for testing purposes
+  --unroll-max-count=<uint>                                             - Set the max unroll count for partial and runtime unrolling, fortesting purposes
+  --unroll-max-iteration-count-to-analyze=<uint>                        - Don't allow loop unrolling to simulate more than this number ofiterations when checking full unroll profitability
+  --unroll-max-percent-threshold-boost=<uint>                           - The maximum 'boost' (represented as a percentage >= 100) applied to the threshold when aggressively unrolling a loop due to the dynamic cost savings. If completely unrolling a loop will reduce the total runtime from X to Y, we boost the loop unroll threshold to DefaultThreshold*std::min(MaxPercentThresholdBoost, X/Y). This limit avoids excessive code bloat.
+  --unroll-max-upperbound=<uint>                                        - The max of trip count upper bound that is considered in unrolling
+  --unroll-optsize-threshold=<uint>                                     - The cost threshold for loop unrolling when optimizing for size
+  --unroll-partial-threshold=<uint>                                     - The cost threshold for partial loop unrolling
+  --unroll-peel-count=<uint>                                            - Set the unroll peeling count, for testing purposes
+  --unroll-peel-max-count=<uint>                                        - Max average trip count which will cause loop peeling.
+  --unroll-peel-multi-deopt-exit                                        - Allow peeling of loops with multiple deopt exits.
+  --unroll-remainder                                                    - Allow the loop remainder to be unrolled.
+  --unroll-revisit-child-loops                                          - Enqueue and re-visit child loops in the loop PM after unrolling. This shouldn't typically be needed as child loops (or their clones) were already visited.
+  --unroll-runtime                                                      - Unroll loops with run-time trip counts
+  --unroll-runtime-epilog                                               - Allow runtime unrolled loops to be unrolled with epilog instead of prolog.
+  --unroll-runtime-multi-exit                                           - Allow runtime unrolling for loops with multiple exits, when epilog is generated
+  --unroll-runtime-other-exit-predictable                               - Assume the non latch exit block to be predictable
+  --unroll-threshold=<uint>                                             - The cost threshold for loop unrolling
+  --unroll-threshold-aggressive=<uint>                                  - Threshold (max size of unrolled loop) to use in aggressive (O3) optimizations
+  --unroll-threshold-default=<uint>                                     - Default threshold (max size of unrolled loop), used in all but O3 optimizations
+  --unroll-verify-domtree                                               - Verify domtree after unrolling
+  --unswitch-num-initial-unscaled-candidates=<int>                      - Number of unswitch candidates that are ignored when calculating cost multiplier.
+  --unswitch-siblings-toplevel-div=<int>                                - Toplevel siblings divisor for cost multiplier.
+  --unswitch-threshold=<int>                                            - The cost threshold for unswitching a loop.
+  --update-return-attrs                                                 - Update return attributes on calls within inlined body
+  --use-cfl-aa-in-codegen=<value>                                       - Enable the new, experimental CFL alias analysis in CodeGen
+    =none                                                               -   Disable CFL-AA
+    =steens                                                             -   Enable unification-based CFL-AA
+    =anders                                                             -   Enable inclusion-based CFL-AA
+    =both                                                               -   Enable both variants of CFL-AA
+  --use-ctors                                                           - Use .ctors instead of .init_array.
+  --use-dbg-addr                                                        - Use llvm.dbg.addr for all local variables
+  --use-dereferenceable-at-point-semantics=<uint>                       - Deref attributes and metadata infer facts at definition only
+  --use-dwarf-ranges-base-address-specifier                             - Use base address specifiers in debug_ranges
+  --use-gnu-debug-macro                                                 - Emit the GNU .debug_macro format with DWARF <5
+  --use-gpu-divergence-analysis                                         - turn the LegacyDivergenceAnalysis into a wrapper for GPUDivergenceAnalysis
+  --use-iterative-bfi-inference                                         - Apply an iterative post-processing to infer correct BFI counts
+  --use-leb128-directives                                               - Disable the usage of LEB128 directives, and generate .byte instead.
+  --use-lir-code-size-heurs                                             - Use loop idiom recognition code size heuristics when compilingwith -Os/-Oz
+  --use-mbpi                                                            - use Machine Branch Probability Info
+  --use-noalias-intrinsic-during-inlining                               - Use the llvm.experimental.noalias.scope.decl intrinsic during inlining.
+  --use-registers-for-deopt-values                                      - Allow using registers for non pointer deopt args
+  --use-registers-for-gc-values-in-landing-pad                          - Allow using registers for gc pointer in landing pad
+  --use-segment-set-for-physregs                                        - Use segment set for the computation of the live ranges of physregs.
+  --use-tbaa-in-sched-mi                                                - Enable use of TBAA during MI DAG construction
+  --use-unknown-locations=<value>                                       - Make an absence of debug location information explicit.
+    =Default                                                            -   At top of block or after label
+    =Enable                                                             -   In all cases
+    =Disable                                                            -   Never
+  --vec-extabi                                                          - Enable the AIX Extended Altivec ABI.
+  --vector-combine-max-scan-instrs=<uint>                               - Max number of instructions to scan for vector combining.
+  --vector-library=<value>                                              - Vector functions library
+    =none                                                               -   No vector functions library
+    =Accelerate                                                         -   Accelerate framework
+    =Darwin_libsystem_m                                                 -   Darwin libsystem_m
+    =LIBMVEC-X86                                                        -   GLIBC Vector Math library
+    =MASSV                                                              -   IBM MASS vector library
+    =SVML                                                               -   Intel SVML library
+  --vectorize-loops                                                     - Run the Loop vectorization passes
+  --vectorize-num-stores-pred=<uint>                                    - Max number of stores to be predicated behind an if.
+  --vectorize-scev-check-threshold=<uint>                               - The maximum number of SCEV checks allowed.
+  --vectorize-slp                                                       - Run the SLP vectorization passes
+  --vectorizer-maximize-bandwidth                                       - Maximize bandwidth when selecting vectorization factor which will be determined by the smallest type in loop.
+  --vectorizer-min-trip-count=<uint>                                    - Loops with a constant trip count that is smaller than this value are vectorized only if no scalar iteration overheads are incurred.
+  --verify-assumption-cache                                             - Enable verification of assumption cache
+  --verify-cfiinstrs                                                    - Verify Call Frame Information instructions
+  --verify-coalescing                                                   - Verify machine instrs before and after register coalescing
+  --verify-dom-info                                                     - Verify dominator info (time consuming)
+  --verify-indvars                                                      - Verify the ScalarEvolution result after running indvars. Has no effect in release builds. (Note: this adds additional SCEV queries potentially changing the analysis result)
+  --verify-legalizer-debug-locs=<value>                                 - Verify that debug locations are handled
+    =none                                                               -   No verification
+    =legalizations                                                      -   Verify legalizations
+    =legalizations+artifactcombiners                                    -   Verify legalizations and artifact combines
+  --verify-loop-info                                                    - Verify loop info (time consuming)
+  --verify-loop-lcssa                                                   - Verify loop lcssa form (time consuming)
+  --verify-machine-dom-info                                             - Verify machine dominator info (time consuming)
+  --verify-machineinstrs                                                - Verify generated machine code
+  --verify-memoryssa                                                    - Enable verification of MemorySSA.
+  --verify-misched                                                      - Verify machine instrs before and after machine scheduling
+  --verify-noalias-scope-decl-dom                                       - Ensure that llvm.experimental.noalias.scope.decl for identical scopes are not dominating
+  --verify-predicateinfo                                                - Verify PredicateInfo in legacy printer pass.
+  --verify-regalloc                                                     - Verify during register allocation
+  --verify-region-info                                                  - Verify region info (time consuming)
+  --verify-scev                                                         - Verify ScalarEvolution's backedge taken counts (slow)
+  --verify-scev-maps                                                    - Verify no dangling value in ScalarEvolution's ExprValueMap (slow)
+  --verify-scev-strict                                                  - Enable stricter verification with -verify-scev is passed
+  --view-bfi-func-name=<string>                                         - The option to specify the name of the function whose CFG will be displayed.
+  --view-block-freq-propagation-dags=<value>                            - Pop up a window to show a dag displaying how block frequencies propagation through the CFG.
+    =none                                                               -   do not display graphs.
+    =fraction                                                           -   display a graph using the fractional block frequency representation.
+    =integer                                                            -   display a graph using the raw integer fractional block frequency representation.
+    =count                                                              -   display a graph using the real profile count if available.
+  --view-block-layout-with-bfi=<value>                                  - Pop up a window to show a dag displaying MBP layout and associated block frequencies of the CFG.
+    =none                                                               -   do not display graphs.
+    =fraction                                                           -   display a graph using the fractional block frequency representation.
+    =integer                                                            -   display a graph using the raw integer fractional block frequency representation.
+    =count                                                              -   display a graph using the real profile count if available.
+  --view-dag-combine-lt-dags                                            - Pop up a window to show dags before the post legalize types dag combine pass
+  --view-dag-combine1-dags                                              - Pop up a window to show dags before the first dag combine pass
+  --view-dag-combine2-dags                                              - Pop up a window to show dags before the second dag combine pass
+  --view-edge-bundles                                                   - Pop up a window to show edge bundle graphs
+  --view-hot-freq-percent=<uint>                                        - An integer in percent used to specify the hot blocks/edges to be displayed in red: a block or edge whose frequency is no less than the max frequency of the function multiplied by this percent.
+  --view-isel-dags                                                      - Pop up a window to show isel dags as they are selected
+  --view-legalize-dags                                                  - Pop up a window to show dags before legalize
+  --view-legalize-types-dags                                            - Pop up a window to show dags before legalize types
+  --view-machine-block-freq-propagation-dags=<value>                    - Pop up a window to show a dag displaying how machine block frequencies propagate through the CFG.
+    =none                                                               -   do not display graphs.
+    =fraction                                                           -   display a graph using the fractional block frequency representation.
+    =integer                                                            -   display a graph using the raw integer fractional block frequency representation.
+    =count                                                              -   display a graph using the real profile count if available.
+  --view-misched-cutoff=<uint>                                          - Hide nodes with more predecessor/successor than cutoff
+  --view-misched-dags                                                   - Pop up a window to show MISched dags after they are processed
+  --view-sched-dags                                                     - Pop up a window to show sched dags as they are processed
+  --view-slp-tree                                                       - Display the SLP trees with Graphviz
+  --view-sunit-dags                                                     - Pop up a window to show SUnit dags after they are processed
+  --vplan-build-stress-test                                             - Build VPlan for every supported loop nest in the function and bail out right after the build (stress test the VPlan H-CFG construction in the VPlan-native vectorization path).
+  --vplan-print-in-dot-format                                           - Use dot format instead of plain text when dumping VPlans
+  --vplan-verify-hcfg                                                   - Verify VPlan H-CFG.
+  --write-relbf-to-summary                                              - Write relative block frequency to function summary 
+  -x=<string>                                                           - Input language ('ir' or 'mir')
+  --xcoff-traceback-table                                               - Emit the XCOFF traceback table
+
+Generic Options:
+
+  -h                                                                    - Alias for --help
+  --help                                                                - Display available options (--help-hidden for more)
+  --help-hidden                                                         - Display all available options
+  --help-list                                                           - Display list of available options (--help-list-hidden for more)
+  --help-list-hidden                                                    - Display list of all available options
+  --print-all-options                                                   - Print all option values after command line parsing
+  --print-options                                                       - Print non-default options after command line parsing
+  --version                                                             - Display the version of this program
+
+GlobalISel Combiner:
+Control the rules which are enabled. These options all take a comma separated list of rules to disable and may be specified by number or number range (e.g. 1-10). They may also be specified by name.
+
+  This option category has no options.

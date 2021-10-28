@@ -1634,6 +1634,12 @@ def atomic_load_64 :
 // immediate value on RISC targets that do not support immediates as large as
 // their GPRs).
 //
+// 選択DAGのパターン対応。
+// パターンとは、ターゲットに合わせた命令選択DAGで実際に照合されるものです。 
+// ターゲットで定義されている命令は、ほとんどの場合、暗黙的にパターンを定義しますが、
+// 一連の命令で動作が定義されている場合には、明示的にパターンを追加することもできます
+//（例：GPRほど大きな即値をサポートしていないRISCターゲットで、大きな即値をロードする場合など）。
+//
 
 class Pattern<dag patternToMatch, list<dag> resultInstrs> {
   dag             PatternToMatch  = patternToMatch;

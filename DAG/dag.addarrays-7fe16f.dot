@@ -1,0 +1,18 @@
+digraph "scheduler input for addarrays:vector.body.preheader" {
+	rankdir="BT";
+	label="scheduler input for addarrays:vector.body.preheader";
+
+	Node0x22e2ee8 [shape=record,shape=Mrecord,label="{EntryToken|t0|{<d0>ch}}"];
+	Node0x23a6a78 [shape=record,shape=Mrecord,label="{Register %38|t2|{<d0>i64}}"];
+	Node0x23ea698 [shape=record,shape=Mrecord,label="{{<s0>0|<s1>1|<s2>2}|CopyToReg|t3|{<d0>ch}}"];
+	Node0x23ea698:s0 -> Node0x22e2ee8:d0[color=blue,style=dashed];
+	Node0x23ea698:s1 -> Node0x23a6a78:d0;
+	Node0x23ea698:s2 -> Node0x2395390:d0;
+	Node0x2395738 [shape=record,shape=Mrecord,label="{Register $x0|t4|{<d0>i64}}"];
+	Node0x23e8a20 [shape=record,shape=Mrecord,label="{TargetConstant\<992\>|t5|{<d0>i64}}"];
+	Node0x2395390 [shape=record,shape=Mrecord,label="{{<s0>0|<s1>1}|ADDI|t6|{<d0>i64}}"];
+	Node0x2395390:s0 -> Node0x2395738:d0;
+	Node0x2395390:s1 -> Node0x23e8a20:d0;
+	Node0x0[ plaintext=circle, label ="GraphRoot"];
+	Node0x0 -> Node0x23ea698:d0[color=blue,style=dashed];
+}
