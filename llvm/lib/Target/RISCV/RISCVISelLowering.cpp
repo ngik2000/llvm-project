@@ -7635,6 +7635,7 @@ static bool CC_RISCV_GHC(unsigned ValNo, MVT ValVT, MVT LocVT,
 }
 
 // Transform physical registers into virtual registers.
+// 物理レジスタを仮想レジスタに変換します。
 SDValue RISCVTargetLowering::LowerFormalArguments(
     SDValue Chain, CallingConv::ID CallConv, bool IsVarArg,
     const SmallVectorImpl<ISD::InputArg> &Ins, const SDLoc &DL,
