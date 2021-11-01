@@ -1,0 +1,12 @@
+digraph "Scheduling-Units Graph for sunit-dag.test:" {
+	rankdir="BT";
+	label="Scheduling-Units Graph for sunit-dag.test:";
+
+	Node0xc73350 [shape=record,shape=Mrecord,label="{SU(0): CopyToReg\n    PseudoRET|0xc73350}"];
+	Node0xc73350 -> Node0xc73460;
+	Node0xc73460 [shape=record,shape=Mrecord,label="{SU(1): ADDW|0xc73460}"];
+	Node0xc73460 -> Node0xc73680;
+	Node0xc73460 -> Node0xc73570;
+	Node0xc73570 [shape=record,shape=Mrecord,label="{SU(2): CopyFromReg|0xc73570}"];
+	Node0xc73680 [shape=record,shape=Mrecord,label="{SU(3): CopyFromReg|0xc73680}"];
+}

@@ -1,580 +1,68 @@
 	.text
 	.attribute	4, 16
-	.attribute	5, "rv64i2p0"
+	.attribute	5, "rv64i2p0_v0p10"
 	.file	"vector_add.c"
 	.globl	make_crc32_table                # -- Begin function make_crc32_table
 	.p2align	1
 	.type	make_crc32_table,@function
 make_crc32_table:                       # @make_crc32_table
 # %bb.0:                                # %entry
-	addi	sp, sp, -64
-	sd	s0, 56(sp)                      # 8-byte Folded Spill
-	sd	s1, 48(sp)                      # 8-byte Folded Spill
-	sd	s2, 40(sp)                      # 8-byte Folded Spill
-	sd	s3, 32(sp)                      # 8-byte Folded Spill
-	sd	s4, 24(sp)                      # 8-byte Folded Spill
-	sd	s5, 16(sp)                      # 8-byte Folded Spill
-	sd	s6, 8(sp)                       # 8-byte Folded Spill
-	sd	s7, 0(sp)                       # 8-byte Folded Spill
-	mv	a6, zero
-	mv	a7, zero
-	addi	t0, zero, 7
-	addi	t1, zero, 6
-	addi	t2, zero, 5
-	addi	t4, zero, 4
-	addi	t5, zero, 3
-	addi	t6, zero, 2
-	addi	s2, zero, 1
-	lui	a1, 121713
-	slli	a1, a1, 3
-	addi	a5, a1, 800
-	lui	a1, 1
-	addiw	t3, a1, -2048
-	j	.LBB0_2
+	mv	a1, zero
+	vsetivli	zero, 8, e64, m2, ta, mu
+	vid.v	v26
+	lui	a2, 121713
+	slli	a2, a2, 3
+	addi	a2, a2, 800
+	lui	a3, 1
+	addiw	a3, a3, -2048
 .LBB0_1:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	add	a3, a0, a6
-	sd	a2, 8(a3)
-	sd	a1, 0(a3)
-	sd	a4, 16(a3)
-	sd	s1, 24(a3)
-	sd	s0, 32(a3)
-	sd	s7, 40(a3)
-	sd	s5, 48(a3)
-	sd	s3, 56(a3)
-	addi	a7, a7, 8
-	addi	s2, s2, 8
-	addi	t6, t6, 8
-	addi	t5, t5, 8
-	addi	t4, t4, 8
-	addi	t2, t2, 8
-	addi	t1, t1, 8
-	addi	a6, a6, 64
-	addi	t0, t0, 8
-	beq	a6, t3, .LBB0_130
-.LBB0_2:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	andi	a1, t0, 1
-	srli	s3, t0, 1
-	beqz	a1, .LBB0_4
-# %bb.3:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_4:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, t1, 1
-	srli	a2, t1, 1
-	beqz	a1, .LBB0_6
-# %bb.5:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_6:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, t2, 1
-	srli	a3, t2, 1
-	beqz	a1, .LBB0_8
-# %bb.7:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_8:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, t4, 1
-	srli	s0, t4, 1
-	beqz	a1, .LBB0_10
-# %bb.9:                                # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_10:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, t5, 1
-	srli	s1, t5, 1
-	beqz	a1, .LBB0_12
-# %bb.11:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_12:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, t6, 1
-	srli	a4, t6, 1
-	beqz	a1, .LBB0_14
-# %bb.13:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_14:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a7, 1
-	srli	s5, a7, 1
-	beqz	a1, .LBB0_16
-# %bb.15:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_16:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s2, 1
-	srli	s4, s2, 1
-	beqz	a1, .LBB0_18
-# %bb.17:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_18:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_20
-# %bb.19:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_20:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB0_22
-# %bb.21:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_22:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB0_24
-# %bb.23:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_24:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_26
-# %bb.25:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_26:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_28
-# %bb.27:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_28:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_30
-# %bb.29:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_30:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB0_32
-# %bb.31:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_32:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB0_34
-# %bb.33:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_34:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_36
-# %bb.35:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_36:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB0_38
-# %bb.37:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_38:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB0_40
-# %bb.39:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_40:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_42
-# %bb.41:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_42:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_44
-# %bb.43:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_44:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_46
-# %bb.45:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_46:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB0_48
-# %bb.47:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_48:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB0_50
-# %bb.49:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_50:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_52
-# %bb.51:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_52:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB0_54
-# %bb.53:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_54:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB0_56
-# %bb.55:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_56:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_58
-# %bb.57:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_58:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_60
-# %bb.59:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_60:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_62
-# %bb.61:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_62:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB0_64
-# %bb.63:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_64:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB0_66
-# %bb.65:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_66:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_68
-# %bb.67:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_68:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB0_70
-# %bb.69:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_70:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB0_72
-# %bb.71:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_72:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_74
-# %bb.73:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_74:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_76
-# %bb.75:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_76:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_78
-# %bb.77:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_78:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB0_80
-# %bb.79:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_80:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB0_82
-# %bb.81:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_82:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_84
-# %bb.83:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_84:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB0_86
-# %bb.85:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_86:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB0_88
-# %bb.87:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_88:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_90
-# %bb.89:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_90:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_92
-# %bb.91:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_92:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_94
-# %bb.93:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_94:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB0_96
-# %bb.95:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_96:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB0_98
-# %bb.97:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_98:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_100
-# %bb.99:                               # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_100:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB0_102
-# %bb.101:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-.LBB0_102:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB0_104
-# %bb.103:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a3, a3, a5
-.LBB0_104:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_106
-# %bb.105:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_106:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_108
-# %bb.107:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_108:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_110
-# %bb.109:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_110:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s5, 1
-	srli	s6, s5, 1
-	beqz	a1, .LBB0_112
-# %bb.111:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s6, s6, a5
-.LBB0_112:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB0_114
-# %bb.113:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s4, s4, a5
-.LBB0_114:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s3, 1
-	srli	s3, s3, 1
-	beqz	a1, .LBB0_116
-# %bb.115:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s3, s3, a5
-.LBB0_116:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a2, 1
-	srli	s5, a2, 1
-	beqz	a1, .LBB0_118
-# %bb.117:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s5, s5, a5
-.LBB0_118:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a3, 1
-	srli	s7, a3, 1
-	beqz	a1, .LBB0_120
-# %bb.119:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s7, s7, a5
-.LBB0_120:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB0_122
-# %bb.121:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s0, s0, a5
-.LBB0_122:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB0_124
-# %bb.123:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	s1, s1, a5
-.LBB0_124:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB0_126
-# %bb.125:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a4, a4, a5
-.LBB0_126:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a2, s6, 1
-	srli	a1, s6, 1
-	beqz	a2, .LBB0_128
-# %bb.127:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a1, a1, a5
-.LBB0_128:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	andi	a3, s4, 1
-	srli	a2, s4, 1
-	beqz	a3, .LBB0_1
-# %bb.129:                              # %vector.body
-                                        #   in Loop: Header=BB0_2 Depth=1
-	xor	a2, a2, a5
-	j	.LBB0_1
-.LBB0_130:                              # %for.end7
-	ld	s7, 0(sp)                       # 8-byte Folded Reload
-	ld	s6, 8(sp)                       # 8-byte Folded Reload
-	ld	s5, 16(sp)                      # 8-byte Folded Reload
-	ld	s4, 24(sp)                      # 8-byte Folded Reload
-	ld	s3, 32(sp)                      # 8-byte Folded Reload
-	ld	s2, 40(sp)                      # 8-byte Folded Reload
-	ld	s1, 48(sp)                      # 8-byte Folded Reload
-	ld	s0, 56(sp)                      # 8-byte Folded Reload
-	addi	sp, sp, 64
+	vand.vi	v28, v26, 1
+	vmseq.vi	v0, v28, 0
+	vsrl.vi	v28, v26, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	add	a4, a0, a1
+	vse64.v	v28, (a4)
+	addi	a1, a1, 64
+	vadd.vi	v26, v26, 8
+	bne	a1, a3, .LBB0_1
+# %bb.2:                                # %for.end7
 	ret
 .Lfunc_end0:
 	.size	make_crc32_table, .Lfunc_end0-make_crc32_table
@@ -628,625 +116,111 @@ update_crc32:                           # @update_crc32
 	.type	imatrix_calc_crc32,@function
 imatrix_calc_crc32:                     # @imatrix_calc_crc32
 # %bb.0:                                # %entry
-	addi	sp, sp, -80
-	sd	s0, 72(sp)                      # 8-byte Folded Spill
-	sd	s1, 64(sp)                      # 8-byte Folded Spill
-	sd	s2, 56(sp)                      # 8-byte Folded Spill
-	sd	s3, 48(sp)                      # 8-byte Folded Spill
-	sd	s4, 40(sp)                      # 8-byte Folded Spill
-	sd	s5, 32(sp)                      # 8-byte Folded Spill
-	sd	s6, 24(sp)                      # 8-byte Folded Spill
-	sd	s7, 16(sp)                      # 8-byte Folded Spill
-	sd	s8, 8(sp)                       # 8-byte Folded Spill
-	mv	a6, zero
-	mv	a7, zero
-	addi	t0, zero, 7
-	addi	t1, zero, 6
-	addi	t2, zero, 5
-	addi	t5, zero, 4
-	addi	t6, zero, 3
-	addi	s2, zero, 2
-	addi	s3, zero, 1
-	lui	a1, 121713
-	slli	a1, a1, 3
-	addi	a5, a1, 800
-	lui	a1, %hi(imatrix_calc_crc32.crc_table)
-	addi	t3, a1, %lo(imatrix_calc_crc32.crc_table)
-	lui	a1, 1
-	addiw	t4, a1, -2048
-	j	.LBB2_2
+	mv	a1, zero
+	vsetivli	zero, 8, e64, m2, ta, mu
+	vid.v	v26
+	lui	a2, 121713
+	slli	a2, a2, 3
+	addi	a2, a2, 800
+	lui	a3, %hi(imatrix_calc_crc32.crc_table)
+	addi	a3, a3, %lo(imatrix_calc_crc32.crc_table)
+	lui	a4, 1
+	addiw	a4, a4, -2048
 .LBB2_1:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	add	s0, a6, t3
-	sd	a2, 8(s0)
-	sd	a1, 0(s0)
-	sd	a4, 16(s0)
-	sd	a3, 24(s0)
-	sd	s1, 32(s0)
-	sd	s8, 40(s0)
-	sd	s6, 48(s0)
-	sd	s4, 56(s0)
-	addi	a7, a7, 8
-	addi	s3, s3, 8
-	addi	s2, s2, 8
-	addi	t6, t6, 8
-	addi	t5, t5, 8
-	addi	t2, t2, 8
-	addi	t1, t1, 8
-	addi	a6, a6, 64
-	addi	t0, t0, 8
-	beq	a6, t4, .LBB2_130
-.LBB2_2:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	andi	a1, t0, 1
-	srli	s4, t0, 1
-	beqz	a1, .LBB2_4
-# %bb.3:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_4:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, t1, 1
-	srli	a2, t1, 1
-	beqz	a1, .LBB2_6
-# %bb.5:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_6:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, t2, 1
-	srli	s0, t2, 1
-	beqz	a1, .LBB2_8
-# %bb.7:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_8:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, t5, 1
-	srli	s1, t5, 1
-	beqz	a1, .LBB2_10
-# %bb.9:                                # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_10:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, t6, 1
-	srli	a3, t6, 1
-	beqz	a1, .LBB2_12
-# %bb.11:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_12:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s2, 1
-	srli	a4, s2, 1
-	beqz	a1, .LBB2_14
-# %bb.13:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_14:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a7, 1
-	srli	s6, a7, 1
-	beqz	a1, .LBB2_16
-# %bb.15:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_16:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s3, 1
-	srli	s5, s3, 1
-	beqz	a1, .LBB2_18
-# %bb.17:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_18:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_20
-# %bb.19:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_20:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB2_22
-# %bb.21:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_22:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB2_24
-# %bb.23:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_24:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_26
-# %bb.25:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_26:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_28
-# %bb.27:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_28:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_30
-# %bb.29:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_30:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s6, 1
-	srli	s6, s6, 1
-	beqz	a1, .LBB2_32
-# %bb.31:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_32:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB2_34
-# %bb.33:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_34:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_36
-# %bb.35:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_36:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB2_38
-# %bb.37:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_38:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB2_40
-# %bb.39:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_40:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_42
-# %bb.41:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_42:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_44
-# %bb.43:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_44:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_46
-# %bb.45:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_46:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s6, 1
-	srli	s6, s6, 1
-	beqz	a1, .LBB2_48
-# %bb.47:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_48:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB2_50
-# %bb.49:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_50:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_52
-# %bb.51:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_52:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB2_54
-# %bb.53:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_54:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB2_56
-# %bb.55:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_56:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_58
-# %bb.57:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_58:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_60
-# %bb.59:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_60:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_62
-# %bb.61:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_62:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s6, 1
-	srli	s6, s6, 1
-	beqz	a1, .LBB2_64
-# %bb.63:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_64:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB2_66
-# %bb.65:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_66:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_68
-# %bb.67:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_68:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB2_70
-# %bb.69:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_70:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB2_72
-# %bb.71:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_72:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_74
-# %bb.73:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_74:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_76
-# %bb.75:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_76:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_78
-# %bb.77:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_78:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s6, 1
-	srli	s6, s6, 1
-	beqz	a1, .LBB2_80
-# %bb.79:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_80:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB2_82
-# %bb.81:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_82:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_84
-# %bb.83:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_84:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB2_86
-# %bb.85:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_86:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB2_88
-# %bb.87:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_88:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_90
-# %bb.89:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_90:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_92
-# %bb.91:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_92:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_94
-# %bb.93:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_94:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s6, 1
-	srli	s6, s6, 1
-	beqz	a1, .LBB2_96
-# %bb.95:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_96:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB2_98
-# %bb.97:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_98:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_100
-# %bb.99:                               # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_100:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	a2, a2, 1
-	beqz	a1, .LBB2_102
-# %bb.101:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-.LBB2_102:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s0, s0, 1
-	beqz	a1, .LBB2_104
-# %bb.103:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s0, s0, a5
-.LBB2_104:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_106
-# %bb.105:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_106:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_108
-# %bb.107:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_108:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_110
-# %bb.109:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_110:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s6, 1
-	srli	s7, s6, 1
-	beqz	a1, .LBB2_112
-# %bb.111:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s7, s7, a5
-.LBB2_112:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s5, 1
-	srli	s5, s5, 1
-	beqz	a1, .LBB2_114
-# %bb.113:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s5, s5, a5
-.LBB2_114:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s4, 1
-	srli	s4, s4, 1
-	beqz	a1, .LBB2_116
-# %bb.115:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s4, s4, a5
-.LBB2_116:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a2, 1
-	srli	s6, a2, 1
-	beqz	a1, .LBB2_118
-# %bb.117:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s6, s6, a5
-.LBB2_118:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s0, 1
-	srli	s8, s0, 1
-	beqz	a1, .LBB2_120
-# %bb.119:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s8, s8, a5
-.LBB2_120:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, s1, 1
-	srli	s1, s1, 1
-	beqz	a1, .LBB2_122
-# %bb.121:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	s1, s1, a5
-.LBB2_122:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a3, 1
-	srli	a3, a3, 1
-	beqz	a1, .LBB2_124
-# %bb.123:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a3, a3, a5
-.LBB2_124:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a1, a4, 1
-	srli	a4, a4, 1
-	beqz	a1, .LBB2_126
-# %bb.125:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a4, a4, a5
-.LBB2_126:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	a2, s7, 1
-	srli	a1, s7, 1
-	beqz	a2, .LBB2_128
-# %bb.127:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a1, a1, a5
-.LBB2_128:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	andi	s0, s5, 1
-	srli	a2, s5, 1
-	beqz	s0, .LBB2_1
-# %bb.129:                              # %vector.body
-                                        #   in Loop: Header=BB2_2 Depth=1
-	xor	a2, a2, a5
-	j	.LBB2_1
-.LBB2_130:                              # %for.body.preheader
+	vand.vi	v28, v26, 1
+	vmseq.vi	v0, v28, 0
+	vsrl.vi	v28, v26, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	vand.vi	v30, v28, 1
+	vmseq.vi	v0, v30, 0
+	vsrl.vi	v28, v28, 1
+	vxor.vx	v30, v28, a2
+	vmerge.vvm	v28, v30, v28, v0
+	add	a5, a1, a3
+	vse64.v	v28, (a5)
+	addi	a1, a1, 64
+	vadd.vi	v26, v26, 8
+	bne	a1, a4, .LBB2_1
+# %bb.2:                                # %for.body.preheader
 	mv	a1, zero
 	addi	a2, zero, 999
 	addi	a3, zero, -1
-	srli	a3, a3, 32
+	srli	a6, a3, 32
 	lui	a4, %hi(imatrix_calc_crc32.crc_table)
 	addi	a4, a4, %lo(imatrix_calc_crc32.crc_table)
-.LBB2_131:                              # %for.body
+.LBB2_3:                                # %for.body
                                         # =>This Inner Loop Header: Depth=1
 	lwu	a5, 0(a0)
+	xor	a1, a1, a6
+	xor	a3, a1, a5
+	andi	a3, a3, 255
+	slli	a3, a3, 3
+	add	a3, a3, a4
+	ld	a3, 0(a3)
+	srli	a1, a1, 8
 	xor	a1, a1, a3
-	xor	s1, a1, a5
-	andi	s1, s1, 255
-	slli	s1, s1, 3
-	add	s1, s1, a4
-	ld	s1, 0(s1)
+	srli	a3, a5, 8
+	xor	a3, a3, a1
+	andi	a3, a3, 255
+	slli	a3, a3, 3
+	add	a3, a3, a4
+	ld	a3, 0(a3)
 	srli	a1, a1, 8
-	xor	a1, a1, s1
-	srli	s1, a5, 8
-	xor	s1, s1, a1
-	andi	s1, s1, 255
-	slli	s1, s1, 3
-	add	s1, s1, a4
-	ld	s1, 0(s1)
-	srli	a1, a1, 8
-	xor	a1, a1, s1
-	srli	s1, a5, 16
-	xor	s1, s1, a1
-	andi	s1, s1, 255
-	slli	s1, s1, 3
-	add	s1, s1, a4
-	ld	s1, 0(s1)
-	srli	a1, a1, 8
-	xor	a1, a1, s1
-	srli	a5, a5, 24
-	andi	s1, a1, 255
-	xor	a5, a5, s1
-	slli	a5, a5, 3
-	add	a5, a5, a4
-	ld	a5, 0(a5)
-	srli	a1, a1, 8
-	xor	a1, a1, a5
 	xor	a1, a1, a3
+	srli	a3, a5, 16
+	xor	a3, a3, a1
+	andi	a3, a3, 255
+	slli	a3, a3, 3
+	add	a3, a3, a4
+	ld	a3, 0(a3)
+	srli	a1, a1, 8
+	xor	a1, a1, a3
+	srli	a3, a5, 24
+	andi	a5, a1, 255
+	xor	a3, a3, a5
+	slli	a3, a3, 3
+	add	a3, a3, a4
+	ld	a3, 0(a3)
+	srli	a1, a1, 8
+	xor	a1, a1, a3
+	xor	a1, a1, a6
 	addi	a2, a2, -1
 	addi	a0, a0, 4
-	bnez	a2, .LBB2_131
-# %bb.132:                              # %for.end
+	bnez	a2, .LBB2_3
+# %bb.4:                                # %for.end
 	mv	a0, a1
-	ld	s8, 8(sp)                       # 8-byte Folded Reload
-	ld	s7, 16(sp)                      # 8-byte Folded Reload
-	ld	s6, 24(sp)                      # 8-byte Folded Reload
-	ld	s5, 32(sp)                      # 8-byte Folded Reload
-	ld	s4, 40(sp)                      # 8-byte Folded Reload
-	ld	s3, 48(sp)                      # 8-byte Folded Reload
-	ld	s2, 56(sp)                      # 8-byte Folded Reload
-	ld	s1, 64(sp)                      # 8-byte Folded Reload
-	ld	s0, 72(sp)                      # 8-byte Folded Reload
-	addi	sp, sp, 80
 	ret
 .Lfunc_end2:
 	.size	imatrix_calc_crc32, .Lfunc_end2-imatrix_calc_crc32
@@ -1256,16 +230,6 @@ imatrix_calc_crc32:                     # @imatrix_calc_crc32
 	.type	addarrays,@function
 addarrays:                              # @addarrays
 # %bb.0:                                # %entry
-	addi	sp, sp, -80
-	sd	s0, 72(sp)                      # 8-byte Folded Spill
-	sd	s1, 64(sp)                      # 8-byte Folded Spill
-	sd	s2, 56(sp)                      # 8-byte Folded Spill
-	sd	s3, 48(sp)                      # 8-byte Folded Spill
-	sd	s4, 40(sp)                      # 8-byte Folded Spill
-	sd	s5, 32(sp)                      # 8-byte Folded Spill
-	sd	s6, 24(sp)                      # 8-byte Folded Spill
-	sd	s7, 16(sp)                      # 8-byte Folded Spill
-	sd	s8, 8(sp)                       # 8-byte Folded Spill
 	lui	a3, 1
 	addiw	a3, a3, -100
 	add	a4, a2, a3
@@ -1282,78 +246,41 @@ addarrays:                              # @addarrays
 	bnez	a3, .LBB3_3
 # %bb.1:                                # %vector.body.preheader
 	addi	a6, zero, 992
-	mv	a4, a0
+	mv	a7, a0
 	mv	a5, a1
 	mv	a3, a2
-	addi	a7, zero, 992
+	addi	a4, zero, 992
 .LBB3_2:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	lw	t0, 28(a4)
-	lw	t1, 24(a4)
-	lw	t2, 20(a4)
-	lw	t3, 16(a4)
-	lw	t4, 12(a4)
-	lw	t5, 8(a4)
-	lw	t6, 4(a4)
-	lw	s5, 0(a4)
-	lw	s2, 28(a5)
-	lw	s3, 24(a5)
-	lw	s4, 20(a5)
-	lw	s6, 16(a5)
-	lw	s0, 0(a5)
-	lw	s1, 4(a5)
-	lw	s7, 8(a5)
-	lw	s8, 12(a5)
-	add	s5, s5, s0
-	add	t6, t6, s1
-	add	t5, t5, s7
-	add	t4, t4, s8
-	add	t3, t3, s6
-	add	t2, t2, s4
-	add	s0, s3, t1
-	add	s1, s2, t0
-	sw	s1, 28(a3)
-	sw	s0, 24(a3)
-	sw	t2, 20(a3)
-	sw	t3, 16(a3)
-	sw	t4, 12(a3)
-	sw	t5, 8(a3)
-	sw	t6, 4(a3)
-	sw	s5, 0(a3)
-	addi	a7, a7, -8
+	vsetivli	zero, 8, e32, m1, ta, mu
+	vle32.v	v25, (a7)
+	vle32.v	v26, (a5)
+	vadd.vv	v25, v26, v25
+	vse32.v	v25, (a3)
+	addi	a4, a4, -8
 	addi	a3, a3, 32
 	addi	a5, a5, 32
-	addi	a4, a4, 32
-	bnez	a7, .LBB3_2
+	addi	a7, a7, 32
+	bnez	a4, .LBB3_2
 .LBB3_3:                                # %for.body.preheader
-	addi	a3, a6, -999
-	slli	a4, a6, 2
-	add	a2, a2, a4
-	add	a1, a1, a4
-	add	a0, a0, a4
+	addi	a4, a6, -999
+	slli	a3, a6, 2
+	add	a2, a2, a3
+	add	a1, a1, a3
+	add	a0, a0, a3
 .LBB3_4:                                # %for.body
                                         # =>This Inner Loop Header: Depth=1
-	lw	a4, 0(a0)
+	lw	a6, 0(a0)
 	lw	a5, 0(a1)
-	mv	s1, a3
-	add	a3, a5, a4
-	sw	a3, 0(a2)
-	addi	a3, s1, 1
+	mv	a3, a4
+	add	a4, a5, a6
+	sw	a4, 0(a2)
+	addi	a4, a3, 1
 	addi	a2, a2, 4
 	addi	a1, a1, 4
 	addi	a0, a0, 4
-	bgeu	a3, s1, .LBB3_4
+	bgeu	a4, a3, .LBB3_4
 # %bb.5:                                # %for.end
-	ld	s8, 8(sp)                       # 8-byte Folded Reload
-	ld	s7, 16(sp)                      # 8-byte Folded Reload
-	ld	s6, 24(sp)                      # 8-byte Folded Reload
-	ld	s5, 32(sp)                      # 8-byte Folded Reload
-	ld	s4, 40(sp)                      # 8-byte Folded Reload
-	ld	s3, 48(sp)                      # 8-byte Folded Reload
-	ld	s2, 56(sp)                      # 8-byte Folded Reload
-	ld	s1, 64(sp)                      # 8-byte Folded Reload
-	ld	s0, 72(sp)                      # 8-byte Folded Reload
-	addi	sp, sp, 80
 	ret
 .Lfunc_end3:
 	.size	addarrays, .Lfunc_end3-addarrays
@@ -1363,13 +290,11 @@ addarrays:                              # @addarrays
 	.type	main,@function
 main:                                   # @main
 # %bb.0:                                # %entry
-	addi	sp, sp, -48
-	sd	ra, 40(sp)                      # 8-byte Folded Spill
-	sd	s0, 32(sp)                      # 8-byte Folded Spill
-	sd	s1, 24(sp)                      # 8-byte Folded Spill
-	sd	s2, 16(sp)                      # 8-byte Folded Spill
-	sd	s3, 8(sp)                       # 8-byte Folded Spill
-	sd	s4, 0(sp)                       # 8-byte Folded Spill
+	addi	sp, sp, -32
+	sd	ra, 24(sp)                      # 8-byte Folded Spill
+	sd	s0, 16(sp)                      # 8-byte Folded Spill
+	sd	s1, 8(sp)                       # 8-byte Folded Spill
+	sd	s2, 0(sp)                       # 8-byte Folded Spill
 	mv	a0, zero
 	lui	a1, %hi(b)
 	addi	a1, a1, %lo(b)
@@ -1429,38 +354,11 @@ main:                                   # @main
 	addi	a3, zero, 992
 .LBB4_3:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	lw	a6, 28(a2)
-	lw	a7, 24(a2)
-	lw	t0, 20(a2)
-	lw	t1, 16(a2)
-	lw	t3, 12(a2)
-	lw	t5, 8(a2)
-	lw	t6, 4(a2)
-	lw	s3, 0(a2)
-	lw	t2, 28(a1)
-	lw	t4, 24(a1)
-	lw	s2, 20(a1)
-	lw	s4, 16(a1)
-	lw	s1, 0(a1)
-	lw	a4, 4(a1)
-	lw	s0, 8(a1)
-	lw	a5, 12(a1)
-	add	s3, s3, s1
-	add	t6, t6, a4
-	add	t5, t5, s0
-	add	t3, t3, a5
-	add	s1, s4, t1
-	add	a4, s2, t0
-	add	s0, t4, a7
-	add	a5, t2, a6
-	sw	a5, 28(a0)
-	sw	s0, 24(a0)
-	sw	a4, 20(a0)
-	sw	s1, 16(a0)
-	sw	t3, 12(a0)
-	sw	t5, 8(a0)
-	sw	t6, 4(a0)
-	sw	s3, 0(a0)
+	vsetivli	zero, 8, e32, m1, ta, mu
+	vle32.v	v25, (a2)
+	vle32.v	v26, (a1)
+	vadd.vv	v25, v26, v25
+	vse32.v	v25, (a0)
 	addi	a3, a3, -8
 	addi	a0, a0, 32
 	addi	a1, a1, 32
@@ -1614,13 +512,11 @@ main:                                   # @main
 	addi	a0, a0, %lo(.L.str.1)
 	call	printf
 	mv	a0, zero
-	ld	s4, 0(sp)                       # 8-byte Folded Reload
-	ld	s3, 8(sp)                       # 8-byte Folded Reload
-	ld	s2, 16(sp)                      # 8-byte Folded Reload
-	ld	s1, 24(sp)                      # 8-byte Folded Reload
-	ld	s0, 32(sp)                      # 8-byte Folded Reload
-	ld	ra, 40(sp)                      # 8-byte Folded Reload
-	addi	sp, sp, 48
+	ld	s2, 0(sp)                       # 8-byte Folded Reload
+	ld	s1, 8(sp)                       # 8-byte Folded Reload
+	ld	s0, 16(sp)                      # 8-byte Folded Reload
+	ld	ra, 24(sp)                      # 8-byte Folded Reload
+	addi	sp, sp, 32
 	ret
 .Lfunc_end4:
 	.size	main, .Lfunc_end4-main
