@@ -3,101 +3,106 @@ source_filename = "test.c"
 target datalayout = "e-m:e-p:64:64-i64:64-i128:128-n64-S128"
 target triple = "riscv64-unknown-unknown-elf"
 
-; Function Attrs: nofree nosync nounwind readnone
-define dso_local signext i32 @main() local_unnamed_addr #0 !dbg !8 {
+; Function Attrs: nofree norecurse nosync nounwind
+define dso_local void @add(i64* nocapture readonly %a, i64* nocapture readonly %b, i64* nocapture %c) local_unnamed_addr #0 !dbg !8 {
 entry:
-  %sum = alloca [100000 x i32], align 4
-  %0 = bitcast [100000 x i32]* %sum to i8*, !dbg !10
-  call void @llvm.lifetime.start.p0i8(i64 400000, i8* nonnull %0) #4, !dbg !10
-  call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 4 dereferenceable(400000) %0, i8 0, i64 400000, i1 false), !dbg !11
-  %1 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 1, !dbg !11
-  store i32 2, i32* %1, align 4, !dbg !11
-  %2 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 2, !dbg !11
-  store i32 3, i32* %2, align 4, !dbg !11
-  %3 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 3, !dbg !11
-  store i32 4, i32* %3, align 4, !dbg !11
-  br label %vector.body, !dbg !12
+  %scevgep = getelementptr i64, i64* %c, i64 100000, !dbg !10
+  %scevgep14 = getelementptr i64, i64* %a, i64 100000, !dbg !10
+  %scevgep17 = getelementptr i64, i64* %b, i64 100000, !dbg !10
+  %bound0 = icmp ugt i64* %scevgep14, %c, !dbg !10
+  %bound1 = icmp ugt i64* %scevgep, %a, !dbg !10
+  %found.conflict = and i1 %bound0, %bound1, !dbg !10
+  %bound019 = icmp ugt i64* %scevgep17, %c, !dbg !10
+  %bound120 = icmp ugt i64* %scevgep, %b, !dbg !10
+  %found.conflict21 = and i1 %bound019, %bound120, !dbg !10
+  %conflict.rdx = or i1 %found.conflict, %found.conflict21, !dbg !10
+  br i1 %conflict.rdx, label %for.body.preheader, label %vector.body, !dbg !10
 
-vector.body:                                      ; preds = %vector.body, %entry
-  %index = phi i64 [ 0, %entry ], [ %index.next, %vector.body ]
-  %vec.phi = phi <8 x i32> [ <i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, %entry ], [ %6, %vector.body ]
-  %offset.idx = or i64 %index, 1
-  %4 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 %offset.idx
-  %5 = bitcast i32* %4 to <8 x i32>*, !dbg !13
-  %wide.load = load <8 x i32>, <8 x i32>* %5, align 4, !dbg !13, !tbaa !14
-  %6 = add <8 x i32> %wide.load, %vec.phi, !dbg !18
-  %index.next = add nuw i64 %index, 8
-  %7 = icmp eq i64 %index.next, 99992
-  br i1 %7, label %for.body.for.body_crit_edge, label %vector.body, !llvm.loop !19
+for.body.preheader:                               ; preds = %vector.body, %entry
+  %indvars.iv.ph = phi i64 [ 0, %entry ], [ 99968, %vector.body ]
+  br label %for.body, !dbg !10
 
-for.body.for.body_crit_edge:                      ; preds = %vector.body
-  %8 = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %6), !dbg !12
-  %arrayidx.phi.trans.insert = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 99993
-  %.pre = load i32, i32* %arrayidx.phi.trans.insert, align 4, !dbg !13, !tbaa !14
-  %add = add nsw i32 %.pre, %8, !dbg !18
-  %arrayidx.phi.trans.insert.1 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 99994
-  %.pre.1 = load i32, i32* %arrayidx.phi.trans.insert.1, align 4, !dbg !13, !tbaa !14
-  %add.1 = add nsw i32 %.pre.1, %add, !dbg !18
-  %arrayidx.phi.trans.insert.2 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 99995
-  %.pre.2 = load i32, i32* %arrayidx.phi.trans.insert.2, align 4, !dbg !13, !tbaa !14
-  %add.2 = add nsw i32 %.pre.2, %add.1, !dbg !18
-  %arrayidx.phi.trans.insert.3 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 99996
-  %.pre.3 = load i32, i32* %arrayidx.phi.trans.insert.3, align 4, !dbg !13, !tbaa !14
-  %add.3 = add nsw i32 %.pre.3, %add.2, !dbg !18
-  %arrayidx.phi.trans.insert.4 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 99997
-  %.pre.4 = load i32, i32* %arrayidx.phi.trans.insert.4, align 4, !dbg !13, !tbaa !14
-  %add.4 = add nsw i32 %.pre.4, %add.3, !dbg !18
-  %arrayidx.phi.trans.insert.5 = getelementptr inbounds [100000 x i32], [100000 x i32]* %sum, i64 0, i64 99998
-  %.pre.5 = load i32, i32* %arrayidx.phi.trans.insert.5, align 4, !dbg !13, !tbaa !14
-  %add.5 = add nsw i32 %.pre.5, %add.4, !dbg !18
-  call void @llvm.lifetime.end.p0i8(i64 400000, i8* nonnull %0) #4, !dbg !23
-  ret i32 %add.5, !dbg !24
+vector.body:                                      ; preds = %entry, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %entry ], !dbg !11
+  %0 = getelementptr inbounds i64, i64* %a, i64 %index, !dbg !11
+  %1 = bitcast i64* %0 to <128 x i64>*, !dbg !12
+  %wide.load = load <128 x i64>, <128 x i64>* %1, align 8, !dbg !12, !tbaa !13, !alias.scope !17
+  %2 = getelementptr inbounds i64, i64* %b, i64 %index, !dbg !11
+  %3 = bitcast i64* %2 to <128 x i64>*, !dbg !20
+  %wide.load22 = load <128 x i64>, <128 x i64>* %3, align 8, !dbg !20, !tbaa !13, !alias.scope !21
+  %4 = add nsw <128 x i64> %wide.load22, %wide.load, !dbg !23
+  %5 = getelementptr inbounds i64, i64* %c, i64 %index, !dbg !11
+  %6 = bitcast i64* %5 to <128 x i64>*, !dbg !24
+  store <128 x i64> %4, <128 x i64>* %6, align 8, !dbg !24, !tbaa !13, !alias.scope !25, !noalias !27
+  %index.next = add nuw i64 %index, 128, !dbg !11
+  %7 = icmp eq i64 %index.next, 99968, !dbg !11
+  br i1 %7, label %for.body.preheader, label %vector.body, !dbg !11, !llvm.loop !28
+
+for.cond.cleanup:                                 ; preds = %for.body
+  ret void, !dbg !32
+
+for.body:                                         ; preds = %for.body.preheader, %for.body
+  %indvars.iv = phi i64 [ %indvars.iv.next, %for.body ], [ %indvars.iv.ph, %for.body.preheader ]
+  %arrayidx = getelementptr inbounds i64, i64* %a, i64 %indvars.iv, !dbg !12
+  %8 = load i64, i64* %arrayidx, align 8, !dbg !12, !tbaa !13
+  %arrayidx2 = getelementptr inbounds i64, i64* %b, i64 %indvars.iv, !dbg !20
+  %9 = load i64, i64* %arrayidx2, align 8, !dbg !20, !tbaa !13
+  %add = add nsw i64 %9, %8, !dbg !23
+  %arrayidx4 = getelementptr inbounds i64, i64* %c, i64 %indvars.iv, !dbg !33
+  store i64 %add, i64* %arrayidx4, align 8, !dbg !24, !tbaa !13
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !11
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 100000, !dbg !34
+  br i1 %exitcond.not, label %for.cond.cleanup, label %for.body, !dbg !10, !llvm.loop !35
 }
 
-; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
-declare void @llvm.lifetime.start.p0i8(i64 immarg, i8* nocapture) #1
+; Function Attrs: nofree nosync nounwind readnone
+define dso_local signext i32 @main() local_unnamed_addr #1 !dbg !36 {
+entry:
+  ret i32 0, !dbg !37
+}
 
-; Function Attrs: argmemonly mustprogress nofree nounwind willreturn writeonly
-declare void @llvm.memset.p0i8.i64(i8* nocapture writeonly, i8, i64, i1 immarg) #2
-
-; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
-declare void @llvm.lifetime.end.p0i8(i64 immarg, i8* nocapture) #1
-
-; Function Attrs: nofree nosync nounwind readnone willreturn
-declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #3
-
-attributes #0 = { nofree nosync nounwind readnone "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-features"="+64bit,+a,+c,+m,+relax,-save-restore" }
-attributes #1 = { argmemonly mustprogress nofree nosync nounwind willreturn }
-attributes #2 = { argmemonly mustprogress nofree nounwind willreturn writeonly }
-attributes #3 = { nofree nosync nounwind readnone willreturn }
-attributes #4 = { nounwind }
+attributes #0 = { nofree norecurse nosync nounwind "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-features"="+64bit,+a,+c,+m,+relax,-save-restore" }
+attributes #1 = { nofree nosync nounwind readnone "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-features"="+64bit,+a,+c,+m,+relax,-save-restore" }
 
 !llvm.dbg.cu = !{!0}
 !llvm.module.flags = !{!3, !4, !5, !6}
 !llvm.ident = !{!7}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "test.c", directory: "/home/t2000/llvm-project/test")
 !2 = !{}
 !3 = !{i32 2, !"Debug Info Version", i32 3}
 !4 = !{i32 1, !"wchar_size", i32 4}
 !5 = !{i32 1, !"target-abi", !"lp64"}
 !6 = !{i32 1, !"SmallDataLimit", i32 8}
-!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"}
-!8 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 3, type: !9, scopeLine: 3, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
+!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)"}
+!8 = distinct !DISubprogram(name: "add", scope: !1, file: !1, line: 3, type: !9, scopeLine: 3, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
 !9 = !DISubroutineType(types: !2)
-!10 = !DILocation(line: 4, column: 2, scope: !8)
-!11 = !DILocation(line: 4, column: 6, scope: !8)
-!12 = !DILocation(line: 7, column: 2, scope: !8)
-!13 = !DILocation(line: 9, column: 8, scope: !8)
-!14 = !{!15, !15, i64 0}
-!15 = !{!"int", !16, i64 0}
-!16 = !{!"omnipotent char", !17, i64 0}
-!17 = !{!"Simple C/C++ TBAA"}
-!18 = !DILocation(line: 9, column: 6, scope: !8)
-!19 = distinct !{!19, !12, !20, !21, !22}
-!20 = !DILocation(line: 10, column: 2, scope: !8)
-!21 = !{!"llvm.loop.mustprogress"}
-!22 = !{!"llvm.loop.isvectorized", i32 1}
-!23 = !DILocation(line: 14, column: 1, scope: !8)
-!24 = !DILocation(line: 13, column: 2, scope: !8)
+!10 = !DILocation(line: 5, column: 2, scope: !8)
+!11 = !DILocation(line: 5, column: 25, scope: !8)
+!12 = !DILocation(line: 7, column: 10, scope: !8)
+!13 = !{!14, !14, i64 0}
+!14 = !{!"long", !15, i64 0}
+!15 = !{!"omnipotent char", !16, i64 0}
+!16 = !{!"Simple C/C++ TBAA"}
+!17 = !{!18}
+!18 = distinct !{!18, !19}
+!19 = distinct !{!19, !"LVerDomain"}
+!20 = !DILocation(line: 7, column: 17, scope: !8)
+!21 = !{!22}
+!22 = distinct !{!22, !19}
+!23 = !DILocation(line: 7, column: 15, scope: !8)
+!24 = !DILocation(line: 7, column: 8, scope: !8)
+!25 = !{!26}
+!26 = distinct !{!26, !19}
+!27 = !{!18, !22}
+!28 = distinct !{!28, !10, !29, !30, !31}
+!29 = !DILocation(line: 8, column: 2, scope: !8)
+!30 = !{!"llvm.loop.mustprogress"}
+!31 = !{!"llvm.loop.isvectorized", i32 1}
+!32 = !DILocation(line: 9, column: 1, scope: !8)
+!33 = !DILocation(line: 7, column: 3, scope: !8)
+!34 = !DILocation(line: 5, column: 16, scope: !8)
+!35 = distinct !{!35, !10, !29, !30, !31}
+!36 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 11, type: !9, scopeLine: 11, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
+!37 = !DILocation(line: 22, column: 2, scope: !36)

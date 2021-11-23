@@ -2,67 +2,623 @@
 	.attribute	4, 16
 	.attribute	5, "rv64i2p0_v0p10"
 	.file	"vector_add.c"
-	.globl	make_crc32_table                # -- Begin function make_crc32_table
+	.section	.rodata,"a",@progbits
+	.p2align	8                               # -- Begin function make_crc32_table
+.LCPI0_0:
+	.quad	96                              # 0x60
+	.quad	97                              # 0x61
+	.quad	98                              # 0x62
+	.quad	99                              # 0x63
+	.quad	100                             # 0x64
+	.quad	101                             # 0x65
+	.quad	102                             # 0x66
+	.quad	103                             # 0x67
+	.quad	104                             # 0x68
+	.quad	105                             # 0x69
+	.quad	106                             # 0x6a
+	.quad	107                             # 0x6b
+	.quad	108                             # 0x6c
+	.quad	109                             # 0x6d
+	.quad	110                             # 0x6e
+	.quad	111                             # 0x6f
+	.quad	112                             # 0x70
+	.quad	113                             # 0x71
+	.quad	114                             # 0x72
+	.quad	115                             # 0x73
+	.quad	116                             # 0x74
+	.quad	117                             # 0x75
+	.quad	118                             # 0x76
+	.quad	119                             # 0x77
+	.quad	120                             # 0x78
+	.quad	121                             # 0x79
+	.quad	122                             # 0x7a
+	.quad	123                             # 0x7b
+	.quad	124                             # 0x7c
+	.quad	125                             # 0x7d
+	.quad	126                             # 0x7e
+	.quad	127                             # 0x7f
+.LCPI0_1:
+	.quad	64                              # 0x40
+	.quad	65                              # 0x41
+	.quad	66                              # 0x42
+	.quad	67                              # 0x43
+	.quad	68                              # 0x44
+	.quad	69                              # 0x45
+	.quad	70                              # 0x46
+	.quad	71                              # 0x47
+	.quad	72                              # 0x48
+	.quad	73                              # 0x49
+	.quad	74                              # 0x4a
+	.quad	75                              # 0x4b
+	.quad	76                              # 0x4c
+	.quad	77                              # 0x4d
+	.quad	78                              # 0x4e
+	.quad	79                              # 0x4f
+	.quad	80                              # 0x50
+	.quad	81                              # 0x51
+	.quad	82                              # 0x52
+	.quad	83                              # 0x53
+	.quad	84                              # 0x54
+	.quad	85                              # 0x55
+	.quad	86                              # 0x56
+	.quad	87                              # 0x57
+	.quad	88                              # 0x58
+	.quad	89                              # 0x59
+	.quad	90                              # 0x5a
+	.quad	91                              # 0x5b
+	.quad	92                              # 0x5c
+	.quad	93                              # 0x5d
+	.quad	94                              # 0x5e
+	.quad	95                              # 0x5f
+.LCPI0_2:
+	.quad	32                              # 0x20
+	.quad	33                              # 0x21
+	.quad	34                              # 0x22
+	.quad	35                              # 0x23
+	.quad	36                              # 0x24
+	.quad	37                              # 0x25
+	.quad	38                              # 0x26
+	.quad	39                              # 0x27
+	.quad	40                              # 0x28
+	.quad	41                              # 0x29
+	.quad	42                              # 0x2a
+	.quad	43                              # 0x2b
+	.quad	44                              # 0x2c
+	.quad	45                              # 0x2d
+	.quad	46                              # 0x2e
+	.quad	47                              # 0x2f
+	.quad	48                              # 0x30
+	.quad	49                              # 0x31
+	.quad	50                              # 0x32
+	.quad	51                              # 0x33
+	.quad	52                              # 0x34
+	.quad	53                              # 0x35
+	.quad	54                              # 0x36
+	.quad	55                              # 0x37
+	.quad	56                              # 0x38
+	.quad	57                              # 0x39
+	.quad	58                              # 0x3a
+	.quad	59                              # 0x3b
+	.quad	60                              # 0x3c
+	.quad	61                              # 0x3d
+	.quad	62                              # 0x3e
+	.quad	63                              # 0x3f
+	.text
+	.globl	make_crc32_table
 	.p2align	1
 	.type	make_crc32_table,@function
 make_crc32_table:                       # @make_crc32_table
 # %bb.0:                                # %entry
+	addi	sp, sp, -16
+	csrr	a1, vlenb
+	addi	a2, zero, 56
+	mul	a1, a1, a2
+	sub	sp, sp, a1
 	mv	a1, zero
-	vsetivli	zero, 8, e64, m2, ta, mu
-	vid.v	v26
+	lui	a2, %hi(.LCPI0_0)
+	addi	a2, a2, %lo(.LCPI0_0)
+	addi	a3, zero, 32
+	vsetvli	zero, a3, e64, m8, ta, mu
+	vle64.v	v8, (a2)
+	csrr	a2, vlenb
+	addi	a3, zero, 48
+	mul	a2, a2, a3
+	add	a2, a2, sp
+	addi	a2, a2, 16
+	vs8r.v	v8, (a2)                        # Unknown-size Folded Spill
+	lui	a2, %hi(.LCPI0_1)
+	addi	a2, a2, %lo(.LCPI0_1)
+	vle64.v	v8, (a2)
+	lui	a2, %hi(.LCPI0_2)
+	addi	a2, a2, %lo(.LCPI0_2)
+	vle64.v	v24, (a2)
+	vid.v	v16
 	lui	a2, 121713
 	slli	a2, a2, 3
 	addi	a2, a2, 800
-	lui	a3, 1
-	addiw	a3, a3, -2048
+	addi	a3, zero, 128
+	lui	a4, 1
+	addiw	a6, a4, -2048
 .LBB0_1:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vand.vi	v28, v26, 1
-	vmseq.vi	v0, v28, 0
-	vsrl.vi	v28, v26, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	add	a4, a0, a1
-	vse64.v	v28, (a4)
-	addi	a1, a1, 64
-	vadd.vi	v26, v26, 8
-	bne	a1, a3, .LBB0_1
+	csrr	a4, vlenb
+	slli	a4, a4, 5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v16, (a4)                       # Unknown-size Folded Spill
+	csrr	a4, vlenb
+	addi	a5, zero, 40
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v24, (a4)                       # Unknown-size Folded Spill
+	csrr	a4, vlenb
+	addi	a5, zero, 24
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	csrr	a4, vlenb
+	slli	a4, a4, 5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v16, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v16, 1
+	csrr	a4, vlenb
+	addi	a5, zero, 40
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v24, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v24, 1
+	vandi.w	v0, 1
+	vmseq.vi	v8, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v8, (a4)                        # Unknown-size Folded Spill
+	vmseq.vi	v1, v24, 0
+	vmseq.vi	v0, v16, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	vsrl.w 	v16, v8, 1
+	csrr	a4, vlenb
+	addi	a5, zero, 40
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	vsrl.w 	v24, v8, 1
+	vxor.w	v8, v16, a2
+	vmerge.vvm	v16, v8, v16, v0
+	vxor.w	v8, v24, a2
+	vmv1r.v	v0, v1
+	vmerge.vvm	v8, v8, v24, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	csrr	a4, vlenb
+	addi	a5, zero, 24
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	vsrl.w 	v8, v8, 1
+	vxor.w	v24, v8, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v8, v24, v8, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v24, v16, v8, v0
+	csrr	a4, vlenb
+	addi	a5, zero, 48
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	csrr	a4, vlenb
+	addi	a5, zero, 48
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	vandi.w	v16, 1
+	vmseq.vi	v0, v16, 0
+	add	a5, a0, a1
+	vse64.v	v24, (a5)
+	vsrl.w 	v24, v8, 1
+	vxor.w	v16, v24, a2
+	vmerge.vvm	v8, v16, v24, v0
+	vandi.w	v16, 1
+	vmseq.vi	v0, v16, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a4, sp, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v16, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v24, v8, a2
+	vmerge.vvm	v16, v24, v8, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	vandi.w	v24, 1
+	vmseq.vi	v0, v24, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v0, (a4)                        # Unknown-size Folded Spill
+	vsrl.w 	v24, v8, 1
+	vxor.w	v8, v24, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v8, v24, v0
+	vandi.w	v0, 1
+	vmseq.vi	v8, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v8, (a4)                        # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v8, v24, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v8, v8, v24, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a4, sp, 16
+	vl8re8.v	v16, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	addi	a4, sp, 16
+	vs8r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v24, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v16, v24, v0
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v16, v24, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a4, sp, 16
+	vl8re8.v	v16, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	addi	a4, sp, 16
+	vs8r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v24, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v16, v24, v0
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v16, v24, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v16, (a4)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a4, sp, 16
+	vl8re8.v	v16, (a4)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v8, v8, 1
+	vxor.w	v24, v8, a2
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v8, v24, v8, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 4
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v8, (a4)                        # Unknown-size Folded Spill
+	csrr	a4, vlenb
+	slli	a4, a4, 3
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	addi	a4, sp, 16
+	vs1r.v	v25, (a4)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v8, 1
+	vxor.w	v8, v24, a2
+	addi	a4, sp, 16
+	vl1r.v	v0, (a4)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v8, v24, v0
+	vandi.w	v8, 1
+	vsrl.w 	v16, v16, 1
+	addi	a4, a5, 256
+	vse64.v	v24, (a4)
+	csrr	a4, vlenb
+	addi	a7, zero, 40
+	mul	a4, a4, a7
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v24, (a4)                       # Unknown-size Folded Reload
+	vmseq.vi	v0, v8, 0
+	addi	a4, a5, 512
+	csrr	a7, vlenb
+	slli	a7, a7, 4
+	add	a7, a7, sp
+	addi	a7, a7, 16
+	vl8re8.v	v8, (a7)                        # Unknown-size Folded Reload
+	vse64.v	v8, (a4)
+	vxor.w	v8, v16, a2
+	vmerge.vvm	v8, v8, v16, v0
+	csrr	a4, vlenb
+	slli	a4, a4, 5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v16, (a4)                       # Unknown-size Folded Reload
+	addi	a4, a5, 768
+	vse64.v	v8, (a4)
+	csrr	a4, vlenb
+	addi	a5, zero, 24
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v8, (a4)                        # Unknown-size Folded Reload
+	vadd.w	v16, v16, a3
+	vadd.w	v24, v24, a3
+	vadd.w	v8, v8, a3
+	addi	a1, a1, 1024
+	csrr	a4, vlenb
+	addi	a5, zero, 48
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vl8re8.v	v0, (a4)                        # Unknown-size Folded Reload
+	vadd.w	v0, v0, a3
+	csrr	a4, vlenb
+	addi	a5, zero, 48
+	mul	a4, a4, a5
+	add	a4, a4, sp
+	addi	a4, a4, 16
+	vs8r.v	v0, (a4)                        # Unknown-size Folded Spill
+	bne	a1, a6, .LBB0_1
 # %bb.2:                                # %for.end7
+	csrr	a0, vlenb
+	addi	a1, zero, 56
+	mul	a0, a0, a1
+	add	sp, sp, a0
+	addi	sp, sp, 16
 	ret
 .Lfunc_end0:
 	.size	make_crc32_table, .Lfunc_end0-make_crc32_table
@@ -111,68 +667,619 @@ update_crc32:                           # @update_crc32
 .Lfunc_end1:
 	.size	update_crc32, .Lfunc_end1-update_crc32
                                         # -- End function
-	.globl	imatrix_calc_crc32              # -- Begin function imatrix_calc_crc32
+	.section	.rodata,"a",@progbits
+	.p2align	8                               # -- Begin function imatrix_calc_crc32
+.LCPI2_0:
+	.quad	96                              # 0x60
+	.quad	97                              # 0x61
+	.quad	98                              # 0x62
+	.quad	99                              # 0x63
+	.quad	100                             # 0x64
+	.quad	101                             # 0x65
+	.quad	102                             # 0x66
+	.quad	103                             # 0x67
+	.quad	104                             # 0x68
+	.quad	105                             # 0x69
+	.quad	106                             # 0x6a
+	.quad	107                             # 0x6b
+	.quad	108                             # 0x6c
+	.quad	109                             # 0x6d
+	.quad	110                             # 0x6e
+	.quad	111                             # 0x6f
+	.quad	112                             # 0x70
+	.quad	113                             # 0x71
+	.quad	114                             # 0x72
+	.quad	115                             # 0x73
+	.quad	116                             # 0x74
+	.quad	117                             # 0x75
+	.quad	118                             # 0x76
+	.quad	119                             # 0x77
+	.quad	120                             # 0x78
+	.quad	121                             # 0x79
+	.quad	122                             # 0x7a
+	.quad	123                             # 0x7b
+	.quad	124                             # 0x7c
+	.quad	125                             # 0x7d
+	.quad	126                             # 0x7e
+	.quad	127                             # 0x7f
+.LCPI2_1:
+	.quad	64                              # 0x40
+	.quad	65                              # 0x41
+	.quad	66                              # 0x42
+	.quad	67                              # 0x43
+	.quad	68                              # 0x44
+	.quad	69                              # 0x45
+	.quad	70                              # 0x46
+	.quad	71                              # 0x47
+	.quad	72                              # 0x48
+	.quad	73                              # 0x49
+	.quad	74                              # 0x4a
+	.quad	75                              # 0x4b
+	.quad	76                              # 0x4c
+	.quad	77                              # 0x4d
+	.quad	78                              # 0x4e
+	.quad	79                              # 0x4f
+	.quad	80                              # 0x50
+	.quad	81                              # 0x51
+	.quad	82                              # 0x52
+	.quad	83                              # 0x53
+	.quad	84                              # 0x54
+	.quad	85                              # 0x55
+	.quad	86                              # 0x56
+	.quad	87                              # 0x57
+	.quad	88                              # 0x58
+	.quad	89                              # 0x59
+	.quad	90                              # 0x5a
+	.quad	91                              # 0x5b
+	.quad	92                              # 0x5c
+	.quad	93                              # 0x5d
+	.quad	94                              # 0x5e
+	.quad	95                              # 0x5f
+.LCPI2_2:
+	.quad	32                              # 0x20
+	.quad	33                              # 0x21
+	.quad	34                              # 0x22
+	.quad	35                              # 0x23
+	.quad	36                              # 0x24
+	.quad	37                              # 0x25
+	.quad	38                              # 0x26
+	.quad	39                              # 0x27
+	.quad	40                              # 0x28
+	.quad	41                              # 0x29
+	.quad	42                              # 0x2a
+	.quad	43                              # 0x2b
+	.quad	44                              # 0x2c
+	.quad	45                              # 0x2d
+	.quad	46                              # 0x2e
+	.quad	47                              # 0x2f
+	.quad	48                              # 0x30
+	.quad	49                              # 0x31
+	.quad	50                              # 0x32
+	.quad	51                              # 0x33
+	.quad	52                              # 0x34
+	.quad	53                              # 0x35
+	.quad	54                              # 0x36
+	.quad	55                              # 0x37
+	.quad	56                              # 0x38
+	.quad	57                              # 0x39
+	.quad	58                              # 0x3a
+	.quad	59                              # 0x3b
+	.quad	60                              # 0x3c
+	.quad	61                              # 0x3d
+	.quad	62                              # 0x3e
+	.quad	63                              # 0x3f
+	.text
+	.globl	imatrix_calc_crc32
 	.p2align	1
 	.type	imatrix_calc_crc32,@function
 imatrix_calc_crc32:                     # @imatrix_calc_crc32
 # %bb.0:                                # %entry
+	addi	sp, sp, -16
+	csrr	a1, vlenb
+	addi	a2, zero, 56
+	mul	a1, a1, a2
+	sub	sp, sp, a1
 	mv	a1, zero
-	vsetivli	zero, 8, e64, m2, ta, mu
-	vid.v	v26
+	lui	a2, %hi(.LCPI2_0)
+	addi	a2, a2, %lo(.LCPI2_0)
+	addi	a3, zero, 32
+	vsetvli	zero, a3, e64, m8, ta, mu
+	vle64.v	v8, (a2)
+	csrr	a2, vlenb
+	addi	a3, zero, 48
+	mul	a2, a2, a3
+	add	a2, a2, sp
+	addi	a2, a2, 16
+	vs8r.v	v8, (a2)                        # Unknown-size Folded Spill
+	lui	a2, %hi(.LCPI2_1)
+	addi	a2, a2, %lo(.LCPI2_1)
+	vle64.v	v8, (a2)
+	lui	a2, %hi(.LCPI2_2)
+	addi	a2, a2, %lo(.LCPI2_2)
+	vle64.v	v24, (a2)
+	vid.v	v16
 	lui	a2, 121713
 	slli	a2, a2, 3
 	addi	a2, a2, 800
 	lui	a3, %hi(imatrix_calc_crc32.crc_table)
-	addi	a3, a3, %lo(imatrix_calc_crc32.crc_table)
-	lui	a4, 1
-	addiw	a4, a4, -2048
+	addi	a6, a3, %lo(imatrix_calc_crc32.crc_table)
+	addi	a4, zero, 128
+	lui	a5, 1
+	addiw	a7, a5, -2048
 .LBB2_1:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vand.vi	v28, v26, 1
-	vmseq.vi	v0, v28, 0
-	vsrl.vi	v28, v26, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	vand.vi	v30, v28, 1
-	vmseq.vi	v0, v30, 0
-	vsrl.vi	v28, v28, 1
-	vxor.vx	v30, v28, a2
-	vmerge.vvm	v28, v30, v28, v0
-	add	a5, a1, a3
-	vse64.v	v28, (a5)
-	addi	a1, a1, 64
-	vadd.vi	v26, v26, 8
-	bne	a1, a4, .LBB2_1
+	csrr	a3, vlenb
+	slli	a3, a3, 5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v16, (a3)                       # Unknown-size Folded Spill
+	csrr	a3, vlenb
+	addi	a5, zero, 40
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v24, (a3)                       # Unknown-size Folded Spill
+	csrr	a3, vlenb
+	addi	a5, zero, 24
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v8, (a3)                        # Unknown-size Folded Spill
+	csrr	a3, vlenb
+	slli	a3, a3, 5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v16, (a3)                       # Unknown-size Folded Reload
+	vandi.w	v16, 1
+	csrr	a3, vlenb
+	addi	a5, zero, 40
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v24, (a3)                       # Unknown-size Folded Reload
+	vandi.w	v24, 1
+	vandi.w	v0, 1
+	vmseq.vi	v8, v0, 0
+	csrr	a3, vlenb
+	slli	a3, a3, 3
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs1r.v	v8, (a3)                        # Unknown-size Folded Spill
+	vmseq.vi	v1, v24, 0
+	vmseq.vi	v0, v16, 0
+	csrr	a3, vlenb
+	slli	a3, a3, 5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v8, (a3)                        # Unknown-size Folded Reload
+	vsrl.w 	v16, v8, 1
+	csrr	a3, vlenb
+	addi	a5, zero, 40
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v8, (a3)                        # Unknown-size Folded Reload
+	vsrl.w 	v24, v8, 1
+	vxor.w	v8, v16, a2
+	vmerge.vvm	v16, v8, v16, v0
+	vxor.w	v8, v24, a2
+	vmv1r.v	v0, v1
+	vmerge.vvm	v8, v8, v24, v0
+	csrr	a3, vlenb
+	slli	a3, a3, 4
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v8, (a3)                        # Unknown-size Folded Spill
+	csrr	a3, vlenb
+	addi	a5, zero, 24
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v8, (a3)                        # Unknown-size Folded Reload
+	vsrl.w 	v8, v8, 1
+	vxor.w	v24, v8, a2
+	csrr	a3, vlenb
+	slli	a3, a3, 3
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl1r.v	v0, (a3)                        # Unknown-size Folded Reload
+	vmerge.vvm	v8, v24, v8, v0
+	csrr	a3, vlenb
+	slli	a3, a3, 3
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v8, (a3)                        # Unknown-size Folded Spill
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v16, v16, v8, v0
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v24, v16, v8, v0
+	csrr	a3, vlenb
+	addi	a5, zero, 48
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v8, (a3)                        # Unknown-size Folded Reload
+	csrr	a3, vlenb
+	addi	a5, zero, 48
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v8, (a3)                        # Unknown-size Folded Spill
+	vandi.w	v16, 1
+	vmseq.vi	v0, v16, 0
+	add	a3, a1, a6
+	vse64.v	v24, (a3)
+	vsrl.w 	v24, v8, 1
+	vxor.w	v16, v24, a2
+	vmerge.vvm	v8, v16, v24, v0
+	vandi.w	v16, 1
+	vmseq.vi	v0, v16, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a5, sp, 16
+	vs8r.v	v8, (a5)                        # Unknown-size Folded Spill
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v16, (a5)                       # Unknown-size Folded Reload
+	vandi.w	v8, 1
+	vmseq.vi	v0, v8, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v24, v8, a2
+	vmerge.vvm	v16, v24, v8, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v8, (a5)                        # Unknown-size Folded Reload
+	vandi.w	v24, 1
+	vmseq.vi	v0, v24, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v0, (a5)                        # Unknown-size Folded Spill
+	vsrl.w 	v24, v8, 1
+	vxor.w	v8, v24, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v8, v24, v0
+	vandi.w	v0, 1
+	vmseq.vi	v8, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v8, (a5)                        # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v8, v24, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v8, v8, v24, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs8r.v	v8, (a5)                        # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v16, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a5, sp, 16
+	vl8re8.v	v16, (a5)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	addi	a5, sp, 16
+	vs8r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v24, (a5)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v16, v24, v0
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v16, v24, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs8r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a5, sp, 16
+	vl8re8.v	v16, (a5)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	addi	a5, sp, 16
+	vs8r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v24, (a5)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v16, v24, v0
+	vandi.w	v0, 1
+	vmseq.vi	v16, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v24, 1
+	vxor.w	v16, v24, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v16, v24, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs8r.v	v16, (a5)                       # Unknown-size Folded Spill
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	vsrl.w 	v8, v8, 1
+	vxor.w	v16, v8, a2
+	vmv1r.v	v0, v25
+	vmerge.vvm	v8, v16, v8, v0
+	addi	a5, sp, 16
+	vl8re8.v	v16, (a5)                       # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v16, v16, 1
+	vxor.w	v24, v16, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v16, v24, v16, v0
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v8, v8, 1
+	vxor.w	v24, v8, a2
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v8, v24, v8, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 4
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vs8r.v	v8, (a5)                        # Unknown-size Folded Spill
+	csrr	a5, vlenb
+	slli	a5, a5, 3
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v8, (a5)                        # Unknown-size Folded Reload
+	vandi.w	v0, 1
+	vmseq.vi	v25, v0, 0
+	addi	a5, sp, 16
+	vs1r.v	v25, (a5)                       # Unknown-size Folded Spill
+	vsrl.w 	v24, v8, 1
+	vxor.w	v8, v24, a2
+	addi	a5, sp, 16
+	vl1r.v	v0, (a5)                        # Unknown-size Folded Reload
+	vmerge.vvm	v24, v8, v24, v0
+	vandi.w	v8, 1
+	vsrl.w 	v16, v16, 1
+	addi	a5, a3, 256
+	vse64.v	v24, (a5)
+	csrr	a5, vlenb
+	addi	t0, zero, 40
+	mul	a5, a5, t0
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v24, (a5)                       # Unknown-size Folded Reload
+	vmseq.vi	v0, v8, 0
+	addi	a5, a3, 512
+	csrr	t0, vlenb
+	slli	t0, t0, 4
+	add	t0, t0, sp
+	addi	t0, t0, 16
+	vl8re8.v	v8, (t0)                        # Unknown-size Folded Reload
+	vse64.v	v8, (a5)
+	vxor.w	v8, v16, a2
+	vmerge.vvm	v8, v8, v16, v0
+	csrr	a5, vlenb
+	slli	a5, a5, 5
+	add	a5, a5, sp
+	addi	a5, a5, 16
+	vl8re8.v	v16, (a5)                       # Unknown-size Folded Reload
+	addi	a3, a3, 768
+	vse64.v	v8, (a3)
+	csrr	a3, vlenb
+	addi	a5, zero, 24
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v8, (a3)                        # Unknown-size Folded Reload
+	vadd.w	v16, v16, a4
+	vadd.w	v24, v24, a4
+	vadd.w	v8, v8, a4
+	addi	a1, a1, 1024
+	csrr	a3, vlenb
+	addi	a5, zero, 48
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vl8re8.v	v0, (a3)                        # Unknown-size Folded Reload
+	vadd.w	v0, v0, a4
+	csrr	a3, vlenb
+	addi	a5, zero, 48
+	mul	a3, a3, a5
+	add	a3, a3, sp
+	addi	a3, a3, 16
+	vs8r.v	v0, (a3)                        # Unknown-size Folded Spill
+	bne	a1, a7, .LBB2_1
 # %bb.2:                                # %for.body.preheader
 	mv	a1, zero
 	addi	a2, zero, 999
@@ -221,6 +1328,11 @@ imatrix_calc_crc32:                     # @imatrix_calc_crc32
 	bnez	a2, .LBB2_3
 # %bb.4:                                # %for.end
 	mv	a0, a1
+	csrr	a1, vlenb
+	addi	a2, zero, 56
+	mul	a1, a1, a2
+	add	sp, sp, a1
+	addi	sp, sp, 16
 	ret
 .Lfunc_end2:
 	.size	imatrix_calc_crc32, .Lfunc_end2-imatrix_calc_crc32
@@ -230,56 +1342,52 @@ imatrix_calc_crc32:                     # @imatrix_calc_crc32
 	.type	addarrays,@function
 addarrays:                              # @addarrays
 # %bb.0:                                # %entry
-	lui	a3, 1
-	addiw	a3, a3, -100
-	add	a4, a2, a3
-	add	a5, a0, a3
-	add	a6, a1, a3
-	sltu	a5, a2, a5
-	sltu	a3, a0, a4
-	and	a3, a3, a5
-	sltu	a5, a2, a6
-	sltu	a4, a1, a4
-	and	a4, a4, a5
-	or	a3, a3, a4
+	lui	a1, 1
+	addiw	a1, a1, -100
+	add	a3, a2, a1
+	add	a1, a1, a0
+	sltu	a1, a2, a1
+	sltu	a3, a0, a3
+	and	a1, a1, a3
 	mv	a6, zero
-	bnez	a3, .LBB3_3
+	bnez	a1, .LBB3_3
 # %bb.1:                                # %vector.body.preheader
-	addi	a6, zero, 992
-	mv	a7, a0
-	mv	a5, a1
-	mv	a3, a2
-	addi	a4, zero, 992
+	addi	a6, zero, 896
+	addi	a7, zero, 64
+	addi	t0, zero, 153
+	mv	a5, a0
+	mv	a1, a2
+	addi	a3, zero, 896
 .LBB3_2:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vsetivli	zero, 8, e32, m1, ta, mu
-	vle32.v	v25, (a7)
-	vle32.v	v26, (a5)
-	vadd.vv	v25, v26, v25
-	vse32.v	v25, (a3)
-	addi	a4, a4, -8
-	addi	a3, a3, 32
-	addi	a5, a5, 32
-	addi	a7, a7, 32
-	bnez	a4, .LBB3_2
+	vsetvli	zero, a7, e32, m8, ta, mu
+	addi	a4, a5, 256
+	vle32.v	v8, (a4)
+	vle32.v	v16, (a5)
+	vadd.w	v8, v8, t0
+	vadd.w	v16, v16, t0
+	vse32.v	v16, (a1)
+	addi	a4, a1, 256
+	vse32.v	v8, (a4)
+	addi	a3, a3, -128
+	addi	a1, a1, 512
+	addi	a5, a5, 512
+	bnez	a3, .LBB3_2
 .LBB3_3:                                # %for.body.preheader
-	addi	a4, a6, -999
-	slli	a3, a6, 2
-	add	a2, a2, a3
-	add	a1, a1, a3
-	add	a0, a0, a3
+	addi	a3, a6, -999
+	slli	a4, a6, 2
+	add	a1, a2, a4
+	add	a0, a0, a4
 .LBB3_4:                                # %for.body
                                         # =>This Inner Loop Header: Depth=1
-	lw	a6, 0(a0)
-	lw	a5, 0(a1)
-	mv	a3, a4
-	add	a4, a5, a6
-	sw	a4, 0(a2)
-	addi	a4, a3, 1
-	addi	a2, a2, 4
+	lw	a2, 0(a0)
+	mv	a4, a3
+	addi	a2, a2, 153
+	sw	a2, 0(a1)
+	addi	a3, a3, 1
 	addi	a1, a1, 4
 	addi	a0, a0, 4
-	bgeu	a4, a3, .LBB3_4
+	bgeu	a3, a4, .LBB3_4
 # %bb.5:                                # %for.end
 	ret
 .Lfunc_end3:
@@ -294,7 +1402,6 @@ main:                                   # @main
 	sd	ra, 24(sp)                      # 8-byte Folded Spill
 	sd	s0, 16(sp)                      # 8-byte Folded Spill
 	sd	s1, 8(sp)                       # 8-byte Folded Spill
-	sd	s2, 0(sp)                       # 8-byte Folded Spill
 	mv	a0, zero
 	lui	a1, %hi(b)
 	addi	a1, a1, %lo(b)
@@ -347,172 +1454,134 @@ main:                                   # @main
 # %bb.2:                                # %vector.body.preheader
 	lui	a0, %hi(s)
 	addi	a0, a0, %lo(s)
-	lui	a1, %hi(b)
-	addi	a1, a1, %lo(b)
-	lui	a2, %hi(a)
-	addi	a2, a2, %lo(a)
-	addi	a3, zero, 992
+	lui	a1, %hi(a)
+	addi	a1, a1, %lo(a)
+	addi	a2, zero, 896
+	addi	a3, zero, 64
+	addi	a4, zero, 153
 .LBB4_3:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vsetivli	zero, 8, e32, m1, ta, mu
-	vle32.v	v25, (a2)
-	vle32.v	v26, (a1)
-	vadd.vv	v25, v26, v25
-	vse32.v	v25, (a0)
-	addi	a3, a3, -8
-	addi	a0, a0, 32
-	addi	a1, a1, 32
-	addi	a2, a2, 32
-	bnez	a3, .LBB4_3
-# %bb.4:                                # %for.body.i
-	lui	a7, 1
-	addiw	a1, a7, -128
-	lui	a2, %hi(a)
-	addi	a2, a2, %lo(a)
-	add	a3, a2, a1
-	lw	a3, 0(a3)
-	lui	a4, %hi(b)
-	addi	a4, a4, %lo(b)
-	add	a5, a4, a1
+	vsetvli	zero, a3, e32, m8, ta, mu
+	addi	a5, a1, 256
+	vle32.v	v8, (a5)
+	vle32.v	v16, (a1)
+	vadd.w	v8, v8, a4
+	vadd.w	v16, v16, a4
+	vse32.v	v16, (a0)
+	addi	a5, a0, 256
+	vse32.v	v8, (a5)
+	addi	a2, a2, -128
+	addi	a0, a0, 512
+	addi	a1, a1, 512
+	bnez	a2, .LBB4_3
+# %bb.4:                                # %for.body.i.preheader
+	mv	a0, zero
+	lui	a1, %hi(a)
+	addi	a1, a1, %lo(a)
+	lui	a2, 1
+	addiw	a2, a2, -512
+	lui	a3, %hi(s)
+	addi	a3, a3, %lo(s)
+	addi	a4, zero, 412
+.LBB4_5:                                # %for.body.i
+                                        # =>This Inner Loop Header: Depth=1
+	add	a5, a1, a0
+	add	a5, a5, a2
 	lw	a5, 0(a5)
-	add	a3, a3, a5
-	lui	a6, %hi(s)
-	addi	s0, a6, %lo(s)
-	add	s2, s0, a1
-	sw	a3, 0(s2)
-	addiw	a1, a7, -124
-	add	a3, a2, a1
-	lw	t0, 0(a3)
-	add	s1, a4, a1
-	lw	s1, 0(s1)
-	addiw	a5, a7, -120
-	add	a0, a2, a5
-	lw	a0, 0(a0)
-	add	a3, a4, a5
-	lw	a3, 0(a3)
-	add	s1, s1, t0
-	add	a1, a1, s0
-	sw	s1, 0(a1)
-	add	a0, a0, a3
-	add	a1, s0, a5
-	sw	a0, 0(a1)
-	addiw	a0, a7, -116
-	add	a1, a2, a0
-	lw	t0, 0(a1)
-	add	a3, a4, a0
-	lw	a3, 0(a3)
-	addiw	a5, a7, -112
-	add	s1, a2, a5
-	lw	s1, 0(s1)
-	add	a1, a4, a5
-	lw	a1, 0(a1)
-	add	a3, a3, t0
-	add	a0, a0, s0
-	sw	a3, 0(a0)
-	add	a0, a1, s1
-	add	a1, s0, a5
-	sw	a0, 0(a1)
-	addiw	a0, a7, -108
-	add	a1, a2, a0
-	lw	a1, 0(a1)
-	add	a3, a4, a0
-	lw	a3, 0(a3)
-	addiw	a5, a7, -104
-	add	a2, a2, a5
-	lw	a2, 0(a2)
-	add	a4, a4, a5
-	lw	a4, 0(a4)
-	add	a1, a1, a3
-	add	a0, a0, s0
-	sw	a1, 0(a0)
-	add	a0, a4, a2
-	add	a1, s0, a5
-	sw	a0, 0(a1)
-	lw	a2, %lo(s)(a6)
+	addi	a5, a5, 153
+	add	s1, a3, a0
+	add	s1, s1, a2
+	addi	a0, a0, 4
+	sw	a5, 0(s1)
+	bne	a0, a4, .LBB4_5
+# %bb.6:                                # %for.body11.preheader
+	lui	s1, %hi(s)
+	lw	a2, %lo(s)(s1)
 	lui	a0, %hi(.L.str)
-	addi	s1, a0, %lo(.L.str)
-	mv	a0, s1
+	addi	s0, a0, %lo(.L.str)
+	mv	a0, s0
 	mv	a1, zero
 	call	printf
-	lw	a2, 248(s0)
+	addi	s1, s1, %lo(s)
+	lw	a2, 248(s1)
 	addi	a1, zero, 62
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 496(s0)
+	lw	a2, 496(s1)
 	addi	a1, zero, 124
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 744(s0)
+	lw	a2, 744(s1)
 	addi	a1, zero, 186
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 992(s0)
+	lw	a2, 992(s1)
 	addi	a1, zero, 248
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 1240(s0)
+	lw	a2, 1240(s1)
 	addi	a1, zero, 310
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 1488(s0)
+	lw	a2, 1488(s1)
 	addi	a1, zero, 372
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 1736(s0)
+	lw	a2, 1736(s1)
 	addi	a1, zero, 434
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	lw	a2, 1984(s0)
+	lw	a2, 1984(s1)
 	addi	a1, zero, 496
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1116
+	addi	a0, s1, 1116
 	lw	a2, 1116(a0)
 	addi	a1, zero, 558
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1240
+	addi	a0, s1, 1240
 	lw	a2, 1240(a0)
 	addi	a1, zero, 620
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1364
+	addi	a0, s1, 1364
 	lw	a2, 1364(a0)
 	addi	a1, zero, 682
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1488
+	addi	a0, s1, 1488
 	lw	a2, 1488(a0)
 	addi	a1, zero, 744
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1612
+	addi	a0, s1, 1612
 	lw	a2, 1612(a0)
 	addi	a1, zero, 806
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1736
+	addi	a0, s1, 1736
 	lw	a2, 1736(a0)
 	addi	a1, zero, 868
-	mv	a0, s1
+	mv	a0, s0
 	call	printf
-	addi	a0, s0, 1860
+	addi	a0, s1, 1860
 	lw	a2, 1860(a0)
 	addi	a1, zero, 930
-	mv	a0, s1
-	call	printf
-	lw	a2, 0(s2)
-	addi	a1, zero, 992
-	mv	a0, s1
-	call	printf
 	mv	a0, s0
+	call	printf
+	addi	a0, s1, 1984
+	lw	a2, 1984(a0)
+	addi	a1, zero, 992
+	mv	a0, s0
+	call	printf
+	mv	a0, s1
 	call	imatrix_calc_crc32
 	mv	a1, a0
 	lui	a0, %hi(.L.str.1)
 	addi	a0, a0, %lo(.L.str.1)
 	call	printf
 	mv	a0, zero
-	ld	s2, 0(sp)                       # 8-byte Folded Reload
 	ld	s1, 8(sp)                       # 8-byte Folded Reload
 	ld	s0, 16(sp)                      # 8-byte Folded Reload
 	ld	ra, 24(sp)                      # 8-byte Folded Reload
@@ -581,5 +1650,5 @@ b:
 	.asciz	"CRC32=%lu\n"
 	.size	.L.str.1, 11
 
-	.ident	"clang version 13.0.0 (https://github.com/ngik2000/llvm-project d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"
+	.ident	"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)"
 	.section	".note.GNU-stack","",@progbits

@@ -26,8 +26,8 @@ unsigned long imatrix_calc_crc32(int *a)
 void addarrays(int *a, int *b, int *c)
 {
   int i;
-  for(i = 0; i < 999; i++)
-    c[i] = a[i] + b[i];
+  for(i = 0; i < N; i++)
+    c[i] = a[i] + 0b10011001;
 }
 
 int main(void)
@@ -35,8 +35,8 @@ int main(void)
   int i, y;
   int d = 0;
   for(y=0; y<N; y++) {
-      a[y] = init_data[d     % (999)];
-      b[y] = init_data[(d+1) % (999)];
+      a[y] = init_data[d     % (N)];
+      b[y] = init_data[(d+1) % (N)];
       d +=2;
   }
   

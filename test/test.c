@@ -1,14 +1,23 @@
 #include <stdio.h>
 
-int main(){
-	int sum[100000]={1,2,3,4};
-	int x = 0;
+void add(long int* a, long int* b, long int* c){
 
-	for (int i=1;i<100000;i++)
+	for (int i=0;i<100000;i++)
 	{
-		x  +=sum[i-1];
+		c[i] = a[i] + b[i];
 	}
-	sum[0] = x;
+}
 
-	return sum[0];
+int main(){
+	long int a[100000]={0.0}, b[100000]={0.0}, c[100000]={0.0};
+
+	for (int i=0;i<100000;i++)
+	{
+		a[i] = i+1;
+		b[i] = i+2;
+	}
+
+	add(a, b, c);
+
+	return 0;
 }

@@ -116,6 +116,86 @@ class RVInstSetVL<dag outs, dag ins, string opcodestr, string argstr>
   let Defs = [VTYPE, VL];
 }
 
+class RVInstVVMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins,
+               string opcodestr, string argstr>
+    : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
+  bits<5> vs2;
+  bits<5> vs1;
+  bits<5> vd;
+  bit vm;
+
+  let Inst{31-27} = funct5;
+  let Inst{26-25} = 0b10;
+  let Inst{24-20} = vs2;
+  let Inst{19-15} = vs1;
+  let Inst{14-12} = opv.Value;
+  let Inst{11-7} = vd;
+  let Opcode = 0b0001011;
+
+  let Uses = [VTYPE, VL];
+  let RVVConstraint = VMConstraint;
+}
+
+class RVInstVXMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins,
+                string opcodestr, string argstr>
+    : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
+  bits<5> vs2;
+  bits<5> rs1;
+  bits<5> vd;
+  bit vm;
+
+  let Inst{31-27} = funct5;
+  let Inst{26-25} = 0b10;
+  let Inst{24-20} = vs2;
+  let Inst{19-15} = rs1;
+  let Inst{14-12} = opv.Value;
+  let Inst{11-7} = vd;
+  let Opcode = 0b0001011;
+
+  let Uses = [VTYPE, VL];
+  let RVVConstraint = VMConstraint;
+}
+
+class RVInstIVIMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string opcodestr,
+                string argstr>
+    : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
+  bits<5> vs2;
+  bits<5> imm;
+  bits<5> vd;
+  bit vm;
+
+  let Inst{31-27} = funct5;
+  let Inst{26-25} = 0b10;
+  let Inst{24-20} = vs2;
+  let Inst{19-15} = imm;
+  let Inst{14-12} = opv.Value;
+  let Inst{11-7} = vd;
+  let Opcode = 0b0001011;
+
+  let Uses = [VTYPE, VL];
+  let RVVConstraint = VMConstraint;
+}
+
+class RVInstIVI8MIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string opcodestr,
+                string argstr>
+    : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
+  bits<8> imm;
+  bits<5> vd;
+  bit vm;
+
+  let Inst{31-27} = funct5;
+  let Inst{26-25} = 0b10;
+  let Inst{24-23} = 0b00;
+  let Inst{22-15} = imm;
+  let Inst{14} = 0b0;
+  let Inst{13-12} = 0b00;
+  let Inst{11-7} = vd;
+  let Opcode = 0b0001011;
+
+  let Uses = [VTYPE, VL];
+  let RVVConstraint = VMConstraint;
+}
+
 class RVInstVV<bits<6> funct6, RISCVVFormat opv, dag outs, dag ins,
                string opcodestr, string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {

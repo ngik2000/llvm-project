@@ -1,0 +1,725 @@
+# After Instruction Selection:
+# Machine code for function make_crc32_table: IsSSA, TracksLiveness
+Function Live Ins: $x10 in %4
+
+bb.0.entry:
+  successors: %bb.1(0x80000000); %bb.1(100.00%)
+  liveins: $x10
+  %4:gpr = COPY $x10
+  %7:vrm2 = PseudoVID_V_M2 8, 6
+  %8:vrm2 = COPY %7:vrm2
+  %9:gpr = COPY $x0
+  %5:gpr = COPY %9:gpr
+  %6:vrm2 = COPY %8:vrm2
+
+bb.1.vector.body:
+; predecessors: %bb.0, %bb.1
+  successors: %bb.2(0x04000000), %bb.1(0x7c000000); %bb.2(3.12%), %bb.1(96.88%)
+
+  %0:gpr = PHI %5:gpr, %bb.0, %3:gpr, %bb.1, debug-location !12; ./crc.h:10:27
+  %1:vrm2 = PHI %6:vrm2, %bb.0, %2:vrm2, %bb.1
+  %10:vrm2 = COPY %1:vrm2, debug-location !13; ./crc.h:13:19
+  %11:vrm2 = PseudoVAND_VI_M2 %10:vrm2, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %12:vr = PseudoVMSEQ_VI_M2 killed %11:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %13:vrm2 = PseudoVSRL_VI_M2 %10:vrm2, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %14:gpr = LUI 121713
+  %15:gpr = SLLI killed %14:gpr, 3
+  %16:gpr = ADDI killed %15:gpr, 800
+  %17:vrm2 = PseudoVXOR_VX_M2 %13:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %19:vmv0 = COPY %12:vr, debug-location !13; ./crc.h:13:19
+  %18:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %17:vrm2, %13:vrm2, killed %19:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %20:vrm2 = PseudoVAND_VI_M2 %18:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %21:vr = PseudoVMSEQ_VI_M2 killed %20:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %22:vrm2 = PseudoVSRL_VI_M2 %18:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %23:vrm2 = PseudoVXOR_VX_M2 %22:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %25:vmv0 = COPY %21:vr, debug-location !13; ./crc.h:13:19
+  %24:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %23:vrm2, %22:vrm2, killed %25:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %26:vrm2 = PseudoVAND_VI_M2 %24:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %27:vr = PseudoVMSEQ_VI_M2 killed %26:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %28:vrm2 = PseudoVSRL_VI_M2 %24:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %29:vrm2 = PseudoVXOR_VX_M2 %28:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %31:vmv0 = COPY %27:vr, debug-location !13; ./crc.h:13:19
+  %30:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %29:vrm2, %28:vrm2, killed %31:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %32:vrm2 = PseudoVAND_VI_M2 %30:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %33:vr = PseudoVMSEQ_VI_M2 killed %32:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %34:vrm2 = PseudoVSRL_VI_M2 %30:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %35:vrm2 = PseudoVXOR_VX_M2 %34:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %37:vmv0 = COPY %33:vr, debug-location !13; ./crc.h:13:19
+  %36:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %35:vrm2, %34:vrm2, killed %37:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %38:vrm2 = PseudoVAND_VI_M2 %36:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %39:vr = PseudoVMSEQ_VI_M2 killed %38:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %40:vrm2 = PseudoVSRL_VI_M2 %36:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %41:vrm2 = PseudoVXOR_VX_M2 %40:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %43:vmv0 = COPY %39:vr, debug-location !13; ./crc.h:13:19
+  %42:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %41:vrm2, %40:vrm2, killed %43:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %44:vrm2 = PseudoVAND_VI_M2 %42:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %45:vr = PseudoVMSEQ_VI_M2 killed %44:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %46:vrm2 = PseudoVSRL_VI_M2 %42:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %47:vrm2 = PseudoVXOR_VX_M2 %46:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %49:vmv0 = COPY %45:vr, debug-location !13; ./crc.h:13:19
+  %48:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %47:vrm2, %46:vrm2, killed %49:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %50:vrm2 = PseudoVAND_VI_M2 %48:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %51:vr = PseudoVMSEQ_VI_M2 killed %50:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %52:vrm2 = PseudoVSRL_VI_M2 %48:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %53:vrm2 = PseudoVXOR_VX_M2 %52:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %55:vmv0 = COPY %51:vr, debug-location !13; ./crc.h:13:19
+  %54:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %53:vrm2, %52:vrm2, killed %55:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %56:vrm2 = PseudoVAND_VI_M2 %54:vrm2nov0, 1, 8, 6, debug-location !13; ./crc.h:13:19
+  early-clobber %57:vr = PseudoVMSEQ_VI_M2 killed %56:vrm2, 0, 8, 6, debug-location !13; ./crc.h:13:19
+  %58:vrm2 = PseudoVSRL_VI_M2 %54:vrm2nov0, 1, 8, 6, debug-location !14; ./crc.h:13:17
+  %59:vrm2 = PseudoVXOR_VX_M2 %58:vrm2, %16:gpr, 8, 6, debug-location !14; ./crc.h:13:17
+  %61:vmv0 = COPY %57:vr, debug-location !13; ./crc.h:13:19
+  %60:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %59:vrm2, %58:vrm2, killed %61:vmv0, 8, 6, debug-location !14; ./crc.h:13:17
+  %62:gpr = ADD %4:gpr, %0:gpr, debug-location !15; ./crc.h:20:22
+  PseudoVSE64_V_M2 killed %60:vrm2nov0, killed %62:gpr, 8, 6, debug-location !15 :: (store (s512) into %ir.uglygep2, align 8, !tbaa !16); ./crc.h:20:22
+  %63:vrm2 = PseudoVADD_VI_M2 %10:vrm2, 8, 8, 6
+  %64:vrm2 = COPY %63:vrm2
+  %2:vrm2 = COPY %64:vrm2
+  %3:gpr = nuw nsw ADDI %0:gpr, 64, debug-location !12; ./crc.h:10:27
+  %65:gpr = LUI 1
+  %66:gpr = ADDIW killed %65:gpr, -2048
+  BNE %3:gpr, killed %66:gpr, %bb.1, debug-location !12; ./crc.h:10:27
+  PseudoBR %bb.2, debug-location !12; ./crc.h:10:27
+
+bb.2.for.end7:
+; predecessors: %bb.1
+
+  PseudoRET debug-location !24; ./crc.h:22:1
+
+# End machine code for function make_crc32_table.
+
+# After Instruction Selection:
+# Machine code for function update_crc32: IsSSA, TracksLiveness
+Function Live Ins: $x10 in %0, $x11 in %1, $x12 in %2
+
+bb.0.entry:
+  liveins: $x10, $x11, $x12
+  %2:gpr = COPY $x12
+  %1:gpr = COPY $x11
+  %0:gpr = COPY $x10
+  %3:gpr = ADDI $x0, -1
+  %4:gpr = SRLI killed %3:gpr, 32
+  %5:gpr = XOR %0:gpr, %4:gpr, debug-location !27; ./crc.h:27:27
+  %6:gpr = XOR %5:gpr, %1:gpr, debug-location !28; ./crc.h:32:26
+  %7:gpr = ANDI killed %6:gpr, 255, debug-location !29; ./crc.h:32:34
+  %8:gpr = SLLI killed %7:gpr, 3, debug-location !30; ./crc.h:32:13
+  %9:gpr = ADD %2:gpr, killed %8:gpr, debug-location !30; ./crc.h:32:13
+  %10:gpr = LD killed %9:gpr, 0, debug-location !30 :: (load (s64) from %ir.arrayidx, !tbaa !16); ./crc.h:32:13
+  %11:gpr = SRLI %5:gpr, 8, debug-location !31; ./crc.h:32:47
+  %12:gpr = XOR killed %10:gpr, killed %11:gpr, debug-location !32; ./crc.h:32:42
+  %13:gpr = SRLI %1:gpr, 8, debug-location !33; ./crc.h:31:21
+  %14:gpr = XOR killed %13:gpr, %12:gpr, debug-location !28; ./crc.h:32:26
+  %15:gpr = ANDI killed %14:gpr, 255, debug-location !29; ./crc.h:32:34
+  %16:gpr = SLLI killed %15:gpr, 3, debug-location !30; ./crc.h:32:13
+  %17:gpr = ADD %2:gpr, killed %16:gpr, debug-location !30; ./crc.h:32:13
+  %18:gpr = LD killed %17:gpr, 0, debug-location !30 :: (load (s64) from %ir.arrayidx.1, !tbaa !16); ./crc.h:32:13
+  %19:gpr = SRLI %12:gpr, 8, debug-location !31; ./crc.h:32:47
+  %20:gpr = XOR killed %18:gpr, killed %19:gpr, debug-location !32; ./crc.h:32:42
+  %21:gpr = SRLI %1:gpr, 16, debug-location !33; ./crc.h:31:21
+  %22:gpr = XOR killed %21:gpr, %20:gpr, debug-location !28; ./crc.h:32:26
+  %23:gpr = ANDI killed %22:gpr, 255, debug-location !29; ./crc.h:32:34
+  %24:gpr = SLLI killed %23:gpr, 3, debug-location !30; ./crc.h:32:13
+  %25:gpr = ADD %2:gpr, killed %24:gpr, debug-location !30; ./crc.h:32:13
+  %26:gpr = LD killed %25:gpr, 0, debug-location !30 :: (load (s64) from %ir.arrayidx.2, !tbaa !16); ./crc.h:32:13
+  %27:gpr = SRLI %20:gpr, 8, debug-location !31; ./crc.h:32:47
+  %28:gpr = XOR killed %26:gpr, killed %27:gpr, debug-location !32; ./crc.h:32:42
+  %29:gpr = SRLI %1:gpr, 24, debug-location !33; ./crc.h:31:21
+  %30:gpr = XOR killed %29:gpr, %28:gpr, debug-location !28; ./crc.h:32:26
+  %31:gpr = ANDI killed %30:gpr, 255, debug-location !29; ./crc.h:32:34
+  %32:gpr = SLLI killed %31:gpr, 3, debug-location !30; ./crc.h:32:13
+  %33:gpr = ADD %2:gpr, killed %32:gpr, debug-location !30; ./crc.h:32:13
+  %34:gpr = LD killed %33:gpr, 0, debug-location !30 :: (load (s64) from %ir.arrayidx.3, !tbaa !16); ./crc.h:32:13
+  %35:gpr = SRLI %28:gpr, 8, debug-location !31; ./crc.h:32:47
+  %36:gpr = XOR killed %34:gpr, killed %35:gpr, debug-location !32; ./crc.h:32:42
+  %37:gpr = XOR killed %36:gpr, %4:gpr, debug-location !34; ./crc.h:34:14
+  $x10 = COPY %37:gpr, debug-location !35; ./crc.h:34:5
+  PseudoRET implicit $x10, debug-location !35; ./crc.h:34:5
+
+# End machine code for function update_crc32.
+
+# After Instruction Selection:
+# Machine code for function imatrix_calc_crc32: IsSSA, TracksLiveness
+Function Live Ins: $x10 in %11
+
+bb.0.entry:
+  successors: %bb.1(0x80000000); %bb.1(100.00%)
+  liveins: $x10
+  %11:gpr = COPY $x10
+  %14:vrm2 = PseudoVID_V_M2 8, 6
+  %15:vrm2 = COPY %14:vrm2
+  %16:gpr = COPY $x0
+  %12:gpr = COPY %16:gpr
+  %13:vrm2 = COPY %15:vrm2
+
+bb.1.vector.body:
+; predecessors: %bb.0, %bb.1
+  successors: %bb.2(0x04000000), %bb.1(0x7c000000); %bb.2(3.12%), %bb.1(96.88%)
+
+  %0:gpr = PHI %12:gpr, %bb.0, %3:gpr, %bb.1, debug-location !39; ./crc.h:10:27 @[ vector_add.c:19:5 ]
+  %1:vrm2 = PHI %13:vrm2, %bb.0, %2:vrm2, %bb.1
+  %17:vrm2 = COPY %1:vrm2, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %18:vrm2 = PseudoVAND_VI_M2 %17:vrm2, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %19:vr = PseudoVMSEQ_VI_M2 killed %18:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %20:vrm2 = PseudoVSRL_VI_M2 %17:vrm2, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %21:gpr = LUI 121713
+  %22:gpr = SLLI killed %21:gpr, 3
+  %23:gpr = ADDI killed %22:gpr, 800
+  %24:vrm2 = PseudoVXOR_VX_M2 %20:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %26:vmv0 = COPY %19:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %25:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %24:vrm2, %20:vrm2, killed %26:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %27:vrm2 = PseudoVAND_VI_M2 %25:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %28:vr = PseudoVMSEQ_VI_M2 killed %27:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %29:vrm2 = PseudoVSRL_VI_M2 %25:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %30:vrm2 = PseudoVXOR_VX_M2 %29:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %32:vmv0 = COPY %28:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %31:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %30:vrm2, %29:vrm2, killed %32:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %33:vrm2 = PseudoVAND_VI_M2 %31:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %34:vr = PseudoVMSEQ_VI_M2 killed %33:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %35:vrm2 = PseudoVSRL_VI_M2 %31:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %36:vrm2 = PseudoVXOR_VX_M2 %35:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %38:vmv0 = COPY %34:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %37:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %36:vrm2, %35:vrm2, killed %38:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %39:vrm2 = PseudoVAND_VI_M2 %37:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %40:vr = PseudoVMSEQ_VI_M2 killed %39:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %41:vrm2 = PseudoVSRL_VI_M2 %37:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %42:vrm2 = PseudoVXOR_VX_M2 %41:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %44:vmv0 = COPY %40:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %43:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %42:vrm2, %41:vrm2, killed %44:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %45:vrm2 = PseudoVAND_VI_M2 %43:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %46:vr = PseudoVMSEQ_VI_M2 killed %45:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %47:vrm2 = PseudoVSRL_VI_M2 %43:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %48:vrm2 = PseudoVXOR_VX_M2 %47:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %50:vmv0 = COPY %46:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %49:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %48:vrm2, %47:vrm2, killed %50:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %51:vrm2 = PseudoVAND_VI_M2 %49:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %52:vr = PseudoVMSEQ_VI_M2 killed %51:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %53:vrm2 = PseudoVSRL_VI_M2 %49:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %54:vrm2 = PseudoVXOR_VX_M2 %53:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %56:vmv0 = COPY %52:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %55:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %54:vrm2, %53:vrm2, killed %56:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %57:vrm2 = PseudoVAND_VI_M2 %55:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %58:vr = PseudoVMSEQ_VI_M2 killed %57:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %59:vrm2 = PseudoVSRL_VI_M2 %55:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %60:vrm2 = PseudoVXOR_VX_M2 %59:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %62:vmv0 = COPY %58:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %61:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %60:vrm2, %59:vrm2, killed %62:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %63:vrm2 = PseudoVAND_VI_M2 %61:vrm2nov0, 1, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  early-clobber %64:vr = PseudoVMSEQ_VI_M2 killed %63:vrm2, 0, 8, 6, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %65:vrm2 = PseudoVSRL_VI_M2 %61:vrm2nov0, 1, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %66:vrm2 = PseudoVXOR_VX_M2 %65:vrm2, %23:gpr, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %68:vmv0 = COPY %64:vr, debug-location !40; ./crc.h:13:19 @[ vector_add.c:19:5 ]
+  %67:vrm2nov0 = PseudoVMERGE_VVM_M2 killed %66:vrm2, %65:vrm2, killed %68:vmv0, 8, 6, debug-location !41; ./crc.h:13:17 @[ vector_add.c:19:5 ]
+  %69:gpr = LUI target-flags(riscv-hi) @imatrix_calc_crc32.crc_table, debug-location !42; ./crc.h:20:22 @[ vector_add.c:19:5 ]
+  %70:gpr = ADDI killed %69:gpr, target-flags(riscv-lo) @imatrix_calc_crc32.crc_table, debug-location !42; ./crc.h:20:22 @[ vector_add.c:19:5 ]
+  %71:gpr = ADD %0:gpr, killed %70:gpr, debug-location !42; ./crc.h:20:22 @[ vector_add.c:19:5 ]
+  PseudoVSE64_V_M2 killed %67:vrm2nov0, killed %71:gpr, 8, 6, debug-location !42 :: (store (s512) into %ir.uglygep4, align 8, !tbaa !16); ./crc.h:20:22 @[ vector_add.c:19:5 ]
+  %72:vrm2 = PseudoVADD_VI_M2 %17:vrm2, 8, 8, 6
+  %73:vrm2 = COPY %72:vrm2
+  %2:vrm2 = COPY %73:vrm2
+  %3:gpr = nuw nsw ADDI %0:gpr, 64, debug-location !39; ./crc.h:10:27 @[ vector_add.c:19:5 ]
+  %74:gpr = LUI 1
+  %75:gpr = ADDIW killed %74:gpr, -2048
+  BNE %3:gpr, killed %75:gpr, %bb.1, debug-location !39; ./crc.h:10:27 @[ vector_add.c:19:5 ]
+  PseudoBR %bb.2, debug-location !39; ./crc.h:10:27 @[ vector_add.c:19:5 ]
+
+bb.2.for.body.preheader:
+; predecessors: %bb.1
+  successors: %bb.3(0x80000000); %bb.3(100.00%)
+
+  %78:gpr = COPY $x0
+  %77:gpr = COPY %78:gpr
+  %76:gpr = ADDI $x0, 999
+  %79:gpr = ADDI $x0, -1
+  %4:gpr = SRLI killed %79:gpr, 32
+
+bb.3.for.body:
+; predecessors: %bb.2, %bb.3
+  successors: %bb.4(0x04000000), %bb.3(0x7c000000); %bb.4(3.12%), %bb.3(96.88%)
+
+  %5:gpr = PHI %11:gpr, %bb.2, %10:gpr, %bb.3
+  %6:gpr = PHI %76:gpr, %bb.2, %9:gpr, %bb.3
+  %7:gpr = PHI %77:gpr, %bb.2, %8:gpr, %bb.3
+  %80:gpr = LWU %5:gpr, 0, debug-location !47 :: (load (s32) from %ir.lsr.iv1, !tbaa !48); vector_add.c:22:31
+  %81:gpr = XOR %7:gpr, %4:gpr, debug-location !50; ./crc.h:27:27 @[ vector_add.c:22:13 ]
+  %82:gpr = XOR %81:gpr, %80:gpr, debug-location !52; ./crc.h:32:26 @[ vector_add.c:22:13 ]
+  %83:gpr = ANDI killed %82:gpr, 255, debug-location !53; ./crc.h:32:34 @[ vector_add.c:22:13 ]
+  %84:gpr = SLLI killed %83:gpr, 3, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %85:gpr = LUI target-flags(riscv-hi) @imatrix_calc_crc32.crc_table, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %86:gpr = ADDI killed %85:gpr, target-flags(riscv-lo) @imatrix_calc_crc32.crc_table, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %87:gpr = ADD killed %84:gpr, %86:gpr, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %88:gpr = LD killed %87:gpr, 0, debug-location !54 :: (load (s64) from %ir.arrayidx.i7, !tbaa !16); ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %89:gpr = SRLI %81:gpr, 8, debug-location !55; ./crc.h:32:47 @[ vector_add.c:22:13 ]
+  %90:gpr = XOR killed %88:gpr, killed %89:gpr, debug-location !56; ./crc.h:32:42 @[ vector_add.c:22:13 ]
+  %91:gpr = SRLI %80:gpr, 8, debug-location !57; ./crc.h:31:21 @[ vector_add.c:22:13 ]
+  %92:gpr = XOR killed %91:gpr, %90:gpr, debug-location !52; ./crc.h:32:26 @[ vector_add.c:22:13 ]
+  %93:gpr = ANDI killed %92:gpr, 255, debug-location !53; ./crc.h:32:34 @[ vector_add.c:22:13 ]
+  %94:gpr = SLLI killed %93:gpr, 3, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %95:gpr = ADD killed %94:gpr, %86:gpr, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %96:gpr = LD killed %95:gpr, 0, debug-location !54 :: (load (s64) from %ir.arrayidx.1.i, !tbaa !16); ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %97:gpr = SRLI %90:gpr, 8, debug-location !55; ./crc.h:32:47 @[ vector_add.c:22:13 ]
+  %98:gpr = XOR killed %97:gpr, killed %96:gpr, debug-location !56; ./crc.h:32:42 @[ vector_add.c:22:13 ]
+  %99:gpr = SRLI %80:gpr, 16, debug-location !57; ./crc.h:31:21 @[ vector_add.c:22:13 ]
+  %100:gpr = XOR %98:gpr, killed %99:gpr, debug-location !52; ./crc.h:32:26 @[ vector_add.c:22:13 ]
+  %101:gpr = ANDI killed %100:gpr, 255, debug-location !53; ./crc.h:32:34 @[ vector_add.c:22:13 ]
+  %102:gpr = SLLI killed %101:gpr, 3, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %103:gpr = ADD killed %102:gpr, %86:gpr, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %104:gpr = LD killed %103:gpr, 0, debug-location !54 :: (load (s64) from %ir.arrayidx.2.i, !tbaa !16); ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %105:gpr = SRLI %98:gpr, 8, debug-location !55; ./crc.h:32:47 @[ vector_add.c:22:13 ]
+  %106:gpr = XOR killed %105:gpr, killed %104:gpr, debug-location !56; ./crc.h:32:42 @[ vector_add.c:22:13 ]
+  %107:gpr = SRLI %80:gpr, 24, debug-location !57; ./crc.h:31:21 @[ vector_add.c:22:13 ]
+  %108:gpr = ANDI %106:gpr, 255, debug-location !53; ./crc.h:32:34 @[ vector_add.c:22:13 ]
+  %109:gpr = XOR killed %108:gpr, killed %107:gpr, debug-location !53; ./crc.h:32:34 @[ vector_add.c:22:13 ]
+  %110:gpr = SLLI killed %109:gpr, 3, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %111:gpr = ADD killed %110:gpr, %86:gpr, debug-location !54; ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %112:gpr = LD killed %111:gpr, 0, debug-location !54 :: (load (s64) from %ir.arrayidx.3.i, !tbaa !16); ./crc.h:32:13 @[ vector_add.c:22:13 ]
+  %113:gpr = SRLI %106:gpr, 8, debug-location !55; ./crc.h:32:47 @[ vector_add.c:22:13 ]
+  %114:gpr = XOR killed %112:gpr, killed %113:gpr, debug-location !58; ./crc.h:34:14 @[ vector_add.c:22:13 ]
+  %8:gpr = XOR killed %114:gpr, %4:gpr, debug-location !58; ./crc.h:34:14 @[ vector_add.c:22:13 ]
+  %9:gpr = nsw ADDI %6:gpr, -1, debug-location !59; vector_add.c:21:19
+  %10:gpr = ADDI %5:gpr, 4, debug-location !59; vector_add.c:21:19
+  %115:gpr = COPY $x0
+  BNE %9:gpr, %115:gpr, %bb.3, debug-location !46; vector_add.c:21:5
+  PseudoBR %bb.4, debug-location !46; vector_add.c:21:5
+
+bb.4.for.end:
+; predecessors: %bb.3
+
+  $x10 = COPY %8:gpr, debug-location !62; vector_add.c:23:5
+  PseudoRET implicit $x10, debug-location !62; vector_add.c:23:5
+
+# End machine code for function imatrix_calc_crc32.
+
+# After Instruction Selection:
+# Machine code for function addarrays: IsSSA, TracksLiveness
+Function Live Ins: $x10 in %21, $x11 in %22, $x12 in %23
+
+bb.0.entry:
+  successors: %bb.3(0x40000000), %bb.1(0x40000000); %bb.3(50.00%), %bb.1(50.00%)
+  liveins: $x10, $x11, $x12
+  %23:gpr = COPY $x12
+  %22:gpr = COPY $x11
+  %21:gpr = COPY $x10
+  %25:gpr = LUI 1
+  %26:gpr = ADDIW killed %25:gpr, -100
+  %27:gpr = ADD %23:gpr, %26:gpr, debug-location !64; vector_add.c:29:3
+  %28:gpr = ADD %21:gpr, %26:gpr, debug-location !64; vector_add.c:29:3
+  %29:gpr = ADD %22:gpr, %26:gpr, debug-location !64; vector_add.c:29:3
+  %30:gpr = SLTU %23:gpr, killed %28:gpr, debug-location !64; vector_add.c:29:3
+  %31:gpr = SLTU %21:gpr, %27:gpr, debug-location !64; vector_add.c:29:3
+  %32:gpr = AND killed %30:gpr, killed %31:gpr, debug-location !64; vector_add.c:29:3
+  %33:gpr = SLTU %23:gpr, killed %29:gpr, debug-location !64; vector_add.c:29:3
+  %34:gpr = SLTU %22:gpr, %27:gpr, debug-location !64; vector_add.c:29:3
+  %35:gpr = AND killed %33:gpr, killed %34:gpr, debug-location !64; vector_add.c:29:3
+  %36:gpr = OR killed %32:gpr, killed %35:gpr, debug-location !64; vector_add.c:29:3
+  %37:gpr = COPY $x0
+  %24:gpr = COPY %37:gpr
+  BNE killed %36:gpr, %37:gpr, %bb.3, debug-location !64; vector_add.c:29:3
+  PseudoBR %bb.1, debug-location !64; vector_add.c:29:3
+
+bb.1.vector.body.preheader:
+; predecessors: %bb.0
+  successors: %bb.2(0x80000000); %bb.2(100.00%)
+
+  %38:gpr = ADDI $x0, 992
+
+bb.2.vector.body:
+; predecessors: %bb.1, %bb.2
+  successors: %bb.3(0x04000000), %bb.2(0x7c000000); %bb.3(3.12%), %bb.2(96.88%)
+
+  %0:gpr = PHI %21:gpr, %bb.1, %7:gpr, %bb.2, debug-location !65; vector_add.c:29:24
+  %1:gpr = PHI %22:gpr, %bb.1, %6:gpr, %bb.2, debug-location !65; vector_add.c:29:24
+  %2:gpr = PHI %23:gpr, %bb.1, %5:gpr, %bb.2, debug-location !65; vector_add.c:29:24
+  %3:gpr = PHI %38:gpr, %bb.1, %4:gpr, %bb.2, debug-location !65; vector_add.c:29:24
+  %40:vr = PseudoVLE32_V_M1 %0:gpr, 8, 5, debug-location !66 :: (load (s256) from %ir.lsr.iv1820, align 4, !tbaa !48, !alias.scope !67); vector_add.c:30:12
+  %41:vr = PseudoVLE32_V_M1 %1:gpr, 8, 5, debug-location !70 :: (load (s256) from %ir.lsr.iv1517, align 4, !tbaa !48, !alias.scope !71); vector_add.c:30:19
+  %42:vr = PseudoVADD_VV_M1 killed %41:vr, killed %40:vr, 8, 5, debug-location !73; vector_add.c:30:17
+  PseudoVSE32_V_M1 killed %42:vr, %2:gpr, 8, 5, debug-location !74 :: (store (s256) into %ir.lsr.iv1214, align 4, !tbaa !48, !alias.scope !75, !noalias !77); vector_add.c:30:10
+  %4:gpr = nsw ADDI %3:gpr, -8, debug-location !65; vector_add.c:29:24
+  %5:gpr = ADDI %2:gpr, 32, debug-location !65; vector_add.c:29:24
+  %6:gpr = ADDI %1:gpr, 32, debug-location !65; vector_add.c:29:24
+  %7:gpr = ADDI %0:gpr, 32, debug-location !65; vector_add.c:29:24
+  %39:gpr = ADDI $x0, 992
+  %43:gpr = COPY $x0
+  BNE %4:gpr, %43:gpr, %bb.2, debug-location !65; vector_add.c:29:24
+  PseudoBR %bb.3, debug-location !65; vector_add.c:29:24
+
+bb.3.for.body.preheader:
+; predecessors: %bb.0, %bb.2
+  successors: %bb.4(0x80000000); %bb.4(100.00%)
+
+  %8:gpr = PHI %24:gpr, %bb.0, %39:gpr, %bb.2
+  %9:gpr = nuw nsw ADDI %8:gpr, -999, debug-location !64; vector_add.c:29:3
+  %44:gpr = SLLI %8:gpr, 2, debug-location !64; vector_add.c:29:3
+  %10:gpr = ADD %23:gpr, %44:gpr, debug-location !64; vector_add.c:29:3
+  %11:gpr = ADD %22:gpr, %44:gpr, debug-location !64; vector_add.c:29:3
+  %12:gpr = ADD %21:gpr, %44:gpr, debug-location !64; vector_add.c:29:3
+
+bb.4.for.body:
+; predecessors: %bb.3, %bb.4
+  successors: %bb.5(0x04000000), %bb.4(0x7c000000); %bb.5(3.12%), %bb.4(96.88%)
+
+  %13:gpr = PHI %12:gpr, %bb.3, %20:gpr, %bb.4
+  %14:gpr = PHI %11:gpr, %bb.3, %19:gpr, %bb.4
+  %15:gpr = PHI %10:gpr, %bb.3, %18:gpr, %bb.4
+  %16:gpr = PHI %9:gpr, %bb.3, %17:gpr, %bb.4
+  %45:gpr = LW %13:gpr, 0, debug-location !66 :: (load (s32) from %ir.lsr.iv8, !tbaa !48); vector_add.c:30:12
+  %46:gpr = LW %14:gpr, 0, debug-location !70 :: (load (s32) from %ir.lsr.iv5, !tbaa !48); vector_add.c:30:19
+  %47:gpr = ADD killed %46:gpr, killed %45:gpr, debug-location !73; vector_add.c:30:17
+  SW killed %47:gpr, %15:gpr, 0, debug-location !74 :: (store (s32) into %ir.lsr.iv2, !tbaa !48); vector_add.c:30:10
+  %17:gpr = ADDI %16:gpr, 1, debug-location !80; vector_add.c:29:16
+  %18:gpr = ADDI %15:gpr, 4, debug-location !80; vector_add.c:29:16
+  %19:gpr = ADDI %14:gpr, 4, debug-location !80; vector_add.c:29:16
+  %20:gpr = ADDI %13:gpr, 4, debug-location !80; vector_add.c:29:16
+  BGEU %17:gpr, %16:gpr, %bb.4, debug-location !64; vector_add.c:29:3
+  PseudoBR %bb.5, debug-location !64; vector_add.c:29:3
+
+bb.5.for.end:
+; predecessors: %bb.4
+
+  PseudoRET debug-location !82; vector_add.c:31:1
+
+# End machine code for function addarrays.
+
+# After Instruction Selection:
+# Machine code for function main: IsSSA, TracksLiveness
+
+bb.0.entry:
+  successors: %bb.1(0x80000000); %bb.1(100.00%)
+
+  %21:gpr = LUI target-flags(riscv-hi) @b
+  %18:gpr = ADDI killed %21:gpr, target-flags(riscv-lo) @b
+  %22:gpr = LUI target-flags(riscv-hi) @a
+  %17:gpr = ADDI killed %22:gpr, target-flags(riscv-lo) @a
+  %23:gpr = LUI target-flags(riscv-hi) @init_data
+  %0:gpr = LD killed %23:gpr, target-flags(riscv-lo) @init_data :: (dereferenceable load (s64) from @init_data, !tbaa !84)
+  %24:gpr = COPY $x0
+  %20:gpr = COPY %24:gpr
+  %19:gpr = ADDI $x0, 999
+
+bb.1.for.body:
+; predecessors: %bb.0, %bb.1
+  successors: %bb.2(0x04000000), %bb.1(0x7c000000); %bb.2(3.12%), %bb.1(96.88%)
+
+  %1:gpr = PHI %17:gpr, %bb.0, %8:gpr, %bb.1
+  %2:gpr = PHI %18:gpr, %bb.0, %7:gpr, %bb.1
+  %3:gpr = PHI %19:gpr, %bb.0, %6:gpr, %bb.1
+  %4:gpr = PHI %20:gpr, %bb.0, %5:gpr, %bb.1
+  %25:gpr = SLLI %4:gpr, 32, debug-location !87; vector_add.c:38:30
+  %26:gpr = SRLI killed %25:gpr, 32, debug-location !87; vector_add.c:38:30
+  %27:gpr = LUI 26241
+  %28:gpr = ADDIW killed %27:gpr, -1471
+  %29:gpr = MUL killed %26:gpr, %28:gpr, debug-location !87; vector_add.c:38:30
+  %30:gpr = SRLI killed %29:gpr, 32, debug-location !87; vector_add.c:38:30
+  %31:gpr = SUB %4:gpr, %30:gpr, debug-location !87; vector_add.c:38:30
+  %32:gpr = SRLIW killed %31:gpr, 1, debug-location !87; vector_add.c:38:30
+  %33:gpr = ADD killed %32:gpr, %30:gpr, debug-location !87; vector_add.c:38:30
+  %34:gpr = SRLI killed %33:gpr, 9, debug-location !87; vector_add.c:38:30
+  %35:gpr = ADDI $x0, 999
+  %36:gpr = MUL killed %34:gpr, %35:gpr, debug-location !87; vector_add.c:38:30
+  %37:gpr = SUB %4:gpr, killed %36:gpr, debug-location !87; vector_add.c:38:30
+  %38:gpr = SLLI killed %37:gpr, 32, debug-location !88; vector_add.c:38:14
+  %39:gpr = SRLI killed %38:gpr, 30, debug-location !88; vector_add.c:38:14
+  %40:gpr = ADD %0:gpr, killed %39:gpr, debug-location !88; vector_add.c:38:14
+  %41:gpr = LW killed %40:gpr, 0, debug-location !88 :: (load (s32) from %ir.arrayidx, !tbaa !48); vector_add.c:38:14
+  SW killed %41:gpr, %1:gpr, 0, debug-location !89 :: (store (s32) into %ir.lsr.iv1416, !tbaa !48); vector_add.c:38:12
+  %42:gpr = ORI %4:gpr, 1, debug-location !90; vector_add.c:39:26
+  %43:gpr = SLLI %42:gpr, 32, debug-location !91; vector_add.c:39:30
+  %44:gpr = SRLI killed %43:gpr, 32, debug-location !91; vector_add.c:39:30
+  %45:gpr = MUL killed %44:gpr, %28:gpr, debug-location !91; vector_add.c:39:30
+  %46:gpr = SRLI killed %45:gpr, 32, debug-location !91; vector_add.c:39:30
+  %47:gpr = SUB %42:gpr, %46:gpr, debug-location !91; vector_add.c:39:30
+  %48:gpr = SRLIW killed %47:gpr, 1, debug-location !91; vector_add.c:39:30
+  %49:gpr = ADD killed %48:gpr, %46:gpr, debug-location !91; vector_add.c:39:30
+  %50:gpr = SRLI killed %49:gpr, 9, debug-location !91; vector_add.c:39:30
+  %51:gpr = MUL killed %50:gpr, %35:gpr, debug-location !91; vector_add.c:39:30
+  %52:gpr = SUB %42:gpr, killed %51:gpr, debug-location !91; vector_add.c:39:30
+  %53:gpr = SLLI killed %52:gpr, 32, debug-location !92; vector_add.c:39:14
+  %54:gpr = SRLI killed %53:gpr, 30, debug-location !92; vector_add.c:39:14
+  %55:gpr = ADD %0:gpr, killed %54:gpr, debug-location !92; vector_add.c:39:14
+  %56:gpr = LW killed %55:gpr, 0, debug-location !92 :: (load (s32) from %ir.arrayidx5, !tbaa !48); vector_add.c:39:14
+  SW killed %56:gpr, %2:gpr, 0, debug-location !93 :: (store (s32) into %ir.lsr.iv1113, !tbaa !48); vector_add.c:39:12
+  %5:gpr = nuw nsw ADDI %4:gpr, 2, debug-location !94; vector_add.c:40:9
+  %6:gpr = nsw ADDI %3:gpr, -1, debug-location !95; vector_add.c:37:13
+  %7:gpr = ADDI %2:gpr, 4, debug-location !95; vector_add.c:37:13
+  %8:gpr = ADDI %1:gpr, 4, debug-location !95; vector_add.c:37:13
+  %57:gpr = COPY $x0
+  BNE %6:gpr, %57:gpr, %bb.1, debug-location !86; vector_add.c:37:3
+  PseudoBR %bb.2, debug-location !86; vector_add.c:37:3
+
+bb.2.vector.body.preheader:
+; predecessors: %bb.1
+  successors: %bb.3(0x80000000); %bb.3(100.00%)
+
+  %62:gpr = LUI target-flags(riscv-hi) @s
+  %60:gpr = ADDI killed %62:gpr, target-flags(riscv-lo) @s
+  %63:gpr = LUI target-flags(riscv-hi) @b
+  %59:gpr = ADDI killed %63:gpr, target-flags(riscv-lo) @b
+  %64:gpr = LUI target-flags(riscv-hi) @a
+  %58:gpr = ADDI killed %64:gpr, target-flags(riscv-lo) @a
+  %61:gpr = ADDI $x0, 992
+
+bb.3.vector.body:
+; predecessors: %bb.2, %bb.3
+  successors: %bb.4(0x04000000), %bb.3(0x7c000000); %bb.4(3.12%), %bb.3(96.88%)
+
+  %9:gpr = PHI %58:gpr, %bb.2, %16:gpr, %bb.3, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %10:gpr = PHI %59:gpr, %bb.2, %15:gpr, %bb.3, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %11:gpr = PHI %60:gpr, %bb.2, %14:gpr, %bb.3, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %12:gpr = PHI %61:gpr, %bb.2, %13:gpr, %bb.3, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %65:vr = PseudoVLE32_V_M1 %9:gpr, 8, 5, debug-location !101 :: (load (s256) from %ir.lsr.iv68, align 4, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %66:vr = PseudoVLE32_V_M1 %10:gpr, 8, 5, debug-location !102 :: (load (s256) from %ir.lsr.iv35, align 4, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %67:vr = PseudoVADD_VV_M1 killed %66:vr, killed %65:vr, 8, 5, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  PseudoVSE32_V_M1 killed %67:vr, %11:gpr, 8, 5, debug-location !104 :: (store (s256) into %ir.lsr.iv12, align 4, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %13:gpr = nsw ADDI %12:gpr, -8, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %14:gpr = ADDI %11:gpr, 32, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %15:gpr = ADDI %10:gpr, 32, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %16:gpr = ADDI %9:gpr, 32, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  %68:gpr = COPY $x0
+  BNE %13:gpr, %68:gpr, %bb.3, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+  PseudoBR %bb.4, debug-location !100; vector_add.c:29:24 @[ vector_add.c:43:3 ]
+
+bb.4.for.body.i:
+; predecessors: %bb.3
+
+  %69:gpr = LUI 1
+  %70:gpr = ADDIW %69:gpr, -128
+  %71:gpr = LUI target-flags(riscv-hi) @a
+  %72:gpr = ADDI killed %71:gpr, target-flags(riscv-lo) @a
+  %73:gpr = ADD %72:gpr, %70:gpr
+  %74:gpr = LW killed %73:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 992)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %75:gpr = LUI target-flags(riscv-hi) @b
+  %76:gpr = ADDI killed %75:gpr, target-flags(riscv-lo) @b
+  %77:gpr = ADD %76:gpr, %70:gpr
+  %78:gpr = LW killed %77:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 992)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %79:gpr = ADD killed %78:gpr, killed %74:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %80:gpr = LUI target-flags(riscv-hi) @s
+  %81:gpr = ADDI %80:gpr, target-flags(riscv-lo) @s
+  %82:gpr = ADD %81:gpr, %70:gpr
+  SW killed %79:gpr, %82:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 992)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %83:gpr = ADDIW %69:gpr, -124
+  %84:gpr = ADD %72:gpr, %83:gpr
+  %85:gpr = LW killed %84:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 993)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %86:gpr = ADD %76:gpr, %83:gpr
+  %87:gpr = LW killed %86:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 993)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %88:gpr = ADD killed %87:gpr, killed %85:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %89:gpr = ADD %81:gpr, %83:gpr
+  SW killed %88:gpr, killed %89:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 993)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %90:gpr = ADDIW %69:gpr, -120
+  %91:gpr = ADD %72:gpr, %90:gpr
+  %92:gpr = LW killed %91:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 994)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %93:gpr = ADD %76:gpr, %90:gpr
+  %94:gpr = LW killed %93:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 994)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %95:gpr = ADD killed %94:gpr, killed %92:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %96:gpr = ADD %81:gpr, %90:gpr
+  SW killed %95:gpr, killed %96:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 994)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %97:gpr = ADDIW %69:gpr, -116
+  %98:gpr = ADD %72:gpr, %97:gpr
+  %99:gpr = LW killed %98:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 995)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %100:gpr = ADD %76:gpr, %97:gpr
+  %101:gpr = LW killed %100:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 995)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %102:gpr = ADD killed %101:gpr, killed %99:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %103:gpr = ADD %81:gpr, %97:gpr
+  SW killed %102:gpr, killed %103:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 995)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %104:gpr = ADDIW %69:gpr, -112
+  %105:gpr = ADD %72:gpr, %104:gpr
+  %106:gpr = LW killed %105:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 996)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %107:gpr = ADD %76:gpr, %104:gpr
+  %108:gpr = LW killed %107:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 996)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %109:gpr = ADD killed %108:gpr, killed %106:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %110:gpr = ADD %81:gpr, %104:gpr
+  SW killed %109:gpr, killed %110:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 996)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %111:gpr = ADDIW %69:gpr, -108
+  %112:gpr = ADD %72:gpr, %111:gpr
+  %113:gpr = LW killed %112:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 997)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %114:gpr = ADD %76:gpr, %111:gpr
+  %115:gpr = LW killed %114:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 997)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %116:gpr = ADD killed %115:gpr, killed %113:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %117:gpr = ADD %81:gpr, %111:gpr
+  SW killed %116:gpr, killed %117:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 997)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %118:gpr = ADDIW %69:gpr, -104
+  %119:gpr = ADD %72:gpr, %118:gpr
+  %120:gpr = LW killed %119:gpr, 0, debug-location !101 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @a, i64 0, i64 998)`, !tbaa !48); vector_add.c:30:12 @[ vector_add.c:43:3 ]
+  %121:gpr = ADD %76:gpr, %118:gpr
+  %122:gpr = LW killed %121:gpr, 0, debug-location !102 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @b, i64 0, i64 998)`, !tbaa !48); vector_add.c:30:19 @[ vector_add.c:43:3 ]
+  %123:gpr = ADD killed %122:gpr, killed %120:gpr, debug-location !103; vector_add.c:30:17 @[ vector_add.c:43:3 ]
+  %124:gpr = ADD %81:gpr, %118:gpr
+  SW killed %123:gpr, killed %124:gpr, 0, debug-location !104 :: (store (s32) into `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 998)`, !tbaa !48); vector_add.c:30:10 @[ vector_add.c:43:3 ]
+  %125:gpr = LW %80:gpr, target-flags(riscv-lo) @s, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 0)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %126:gpr = LUI target-flags(riscv-hi) @.str, debug-location !108; vector_add.c:45:5
+  %127:gpr = ADDI killed %126:gpr, target-flags(riscv-lo) @.str, debug-location !108; vector_add.c:45:5
+  %128:gpr = COPY $x0
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %128:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %125:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %129:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %130:gpr = LW %81:gpr, 248, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 62)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %131:gpr = ADDI $x0, 62
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %131:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %130:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %132:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %133:gpr = LW %81:gpr, 496, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 124)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %134:gpr = ADDI $x0, 124
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %134:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %133:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %135:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %136:gpr = LW %81:gpr, 744, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 186)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %137:gpr = ADDI $x0, 186
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %137:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %136:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %138:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %139:gpr = LW %81:gpr, 992, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 248)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %140:gpr = ADDI $x0, 248
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %140:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %139:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %141:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %142:gpr = LW %81:gpr, 1240, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 310)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %143:gpr = ADDI $x0, 310
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %143:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %142:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %144:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %145:gpr = LW %81:gpr, 1488, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 372)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %146:gpr = ADDI $x0, 372
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %146:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %145:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %147:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %148:gpr = LW %81:gpr, 1736, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 434)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %149:gpr = ADDI $x0, 434
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %149:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %148:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %150:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %151:gpr = LW %81:gpr, 1984, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 496)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %152:gpr = ADDI $x0, 496
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %152:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %151:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %153:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %154:gpr = ADDI %81:gpr, 1116
+  %155:gpr = LW killed %154:gpr, 1116, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 558)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %156:gpr = ADDI $x0, 558
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %156:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %155:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %157:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %158:gpr = ADDI %81:gpr, 1240
+  %159:gpr = LW killed %158:gpr, 1240, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 620)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %160:gpr = ADDI $x0, 620
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %160:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %159:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %161:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %162:gpr = ADDI %81:gpr, 1364
+  %163:gpr = LW killed %162:gpr, 1364, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 682)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %164:gpr = ADDI $x0, 682
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %164:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %163:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %165:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %166:gpr = ADDI %81:gpr, 1488
+  %167:gpr = LW killed %166:gpr, 1488, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 744)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %168:gpr = ADDI $x0, 744
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %168:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %167:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %169:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %170:gpr = ADDI %81:gpr, 1612
+  %171:gpr = LW killed %170:gpr, 1612, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 806)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %172:gpr = ADDI $x0, 806
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %172:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %171:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %173:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %174:gpr = ADDI %81:gpr, 1736
+  %175:gpr = LW killed %174:gpr, 1736, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 868)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %176:gpr = ADDI $x0, 868
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %176:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %175:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %177:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %178:gpr = ADDI %81:gpr, 1860
+  %179:gpr = LW killed %178:gpr, 1860, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 930)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %180:gpr = ADDI $x0, 930
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %180:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %179:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %181:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  %182:gpr = LW %82:gpr, 0, debug-location !107 :: (dereferenceable load (s32) from `i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 992)`, !tbaa !48); vector_add.c:45:31
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %183:gpr = ADDI $x0, 992
+  $x10 = COPY %127:gpr, debug-location !108; vector_add.c:45:5
+  $x11 = COPY %183:gpr, debug-location !108; vector_add.c:45:5
+  $x12 = COPY %182:gpr, debug-location !108; vector_add.c:45:5
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit $x12, implicit-def $x2, implicit-def $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !108; vector_add.c:45:5
+  %184:gpr = COPY $x10, debug-location !108; vector_add.c:45:5
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !109; vector_add.c:46:25
+  $x10 = COPY %81:gpr, debug-location !109; vector_add.c:46:25
+  PseudoCALL target-flags(riscv-call) @imatrix_calc_crc32, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit-def $x2, implicit-def $x10, debug-location !109; vector_add.c:46:25
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !109; vector_add.c:46:25
+  %185:gpr = COPY $x10, debug-location !109; vector_add.c:46:25
+  ADJCALLSTACKDOWN 0, 0, implicit-def dead $x2, implicit $x2, debug-location !110; vector_add.c:46:3
+  %186:gpr = LUI target-flags(riscv-hi) @.str.1, debug-location !110; vector_add.c:46:3
+  %187:gpr = ADDI killed %186:gpr, target-flags(riscv-lo) @.str.1, debug-location !110; vector_add.c:46:3
+  $x10 = COPY %187:gpr, debug-location !110; vector_add.c:46:3
+  $x11 = COPY %185:gpr, debug-location !110; vector_add.c:46:3
+  PseudoCALL target-flags(riscv-call) @printf, <regmask $x1 $x3 $x4 $x8 $x9 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27>, implicit-def dead $x1, implicit $x10, implicit $x11, implicit-def $x2, implicit-def $x10, debug-location !110; vector_add.c:46:3
+  ADJCALLSTACKUP 0, 0, implicit-def dead $x2, implicit $x2, debug-location !110; vector_add.c:46:3
+  %188:gpr = COPY $x10, debug-location !110; vector_add.c:46:3
+  $x10 = COPY %128:gpr, debug-location !111; vector_add.c:47:3
+  PseudoRET implicit $x10, debug-location !111; vector_add.c:47:3
+
+# End machine code for function main.
