@@ -208,136 +208,123 @@ for.end:                                          ; preds = %for.body
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind
-define dso_local void @addarrays(i32* nocapture readonly %a, i32* nocapture readnone %b, i32* nocapture %c) local_unnamed_addr #2 !dbg !62 {
+define dso_local void @addarrays(i32* nocapture %a, i32* nocapture readnone %b, i32* nocapture readnone %c) local_unnamed_addr #2 !dbg !62 {
 entry:
-  %scevgep = getelementptr i32, i32* %c, i64 999, !dbg !63
-  %scevgep11 = getelementptr i32, i32* %a, i64 999, !dbg !63
-  %bound0 = icmp ugt i32* %scevgep11, %c, !dbg !63
-  %bound1 = icmp ugt i32* %scevgep, %a, !dbg !63
-  %found.conflict = and i1 %bound0, %bound1, !dbg !63
-  br i1 %found.conflict, label %for.body.preheader, label %vector.body, !dbg !63
+  br label %vector.body, !dbg !63
 
-vector.body:                                      ; preds = %entry, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %entry ], !dbg !64
+vector.body:                                      ; preds = %vector.body, %entry
+  %index = phi i64 [ 0, %entry ], [ %index.next, %vector.body ], !dbg !64
   %0 = getelementptr inbounds i32, i32* %a, i64 %index, !dbg !64
   %1 = bitcast i32* %0 to <128 x i32>*, !dbg !65
-  %wide.load = load <128 x i32>, <128 x i32>* %1, align 4, !dbg !65, !tbaa !45, !alias.scope !66
-  %2 = add nsw <128 x i32> %wide.load, <i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153>, !dbg !69
-  %3 = getelementptr inbounds i32, i32* %c, i64 %index, !dbg !64
-  %4 = bitcast i32* %3 to <128 x i32>*, !dbg !70
-  store <128 x i32> %2, <128 x i32>* %4, align 4, !dbg !70, !tbaa !45, !alias.scope !71, !noalias !66
+  %wide.load = load <128 x i32>, <128 x i32>* %1, align 4, !dbg !65, !tbaa !45
+  %2 = add nsw <128 x i32> %wide.load, <i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78>, !dbg !65
+  %3 = bitcast i32* %0 to <128 x i32>*, !dbg !65
+  store <128 x i32> %2, <128 x i32>* %3, align 4, !dbg !65, !tbaa !45
   %index.next = add nuw i64 %index, 128, !dbg !64
-  %5 = icmp eq i64 %index.next, 896, !dbg !64
-  br i1 %5, label %for.body.preheader, label %vector.body, !dbg !64, !llvm.loop !73
+  %4 = icmp eq i64 %index.next, 896, !dbg !64
+  br i1 %4, label %for.body, label %vector.body, !dbg !64, !llvm.loop !66
 
-for.body.preheader:                               ; preds = %vector.body, %entry
-  %indvars.iv.ph = phi i64 [ 0, %entry ], [ 896, %vector.body ]
-  br label %for.body, !dbg !63
-
-for.body:                                         ; preds = %for.body.preheader, %for.body
-  %indvars.iv = phi i64 [ %indvars.iv.next, %for.body ], [ %indvars.iv.ph, %for.body.preheader ]
-  %arrayidx = getelementptr inbounds i32, i32* %a, i64 %indvars.iv, !dbg !65
-  %6 = load i32, i32* %arrayidx, align 4, !dbg !65, !tbaa !45
-  %add = add nsw i32 %6, 153, !dbg !69
-  %arrayidx2 = getelementptr inbounds i32, i32* %c, i64 %indvars.iv, !dbg !75
-  store i32 %add, i32* %arrayidx2, align 4, !dbg !70, !tbaa !45
+for.body:                                         ; preds = %vector.body, %for.body
+  %indvars.iv = phi i64 [ %indvars.iv.next, %for.body ], [ 896, %vector.body ]
+  %arrayidx = getelementptr inbounds i32, i32* %a, i64 %indvars.iv, !dbg !68
+  %5 = load i32, i32* %arrayidx, align 4, !dbg !65, !tbaa !45
+  %add = add nsw i32 %5, 78, !dbg !65
+  store i32 %add, i32* %arrayidx, align 4, !dbg !65, !tbaa !45
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !64
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 999, !dbg !76
-  br i1 %exitcond.not, label %for.end, label %for.body, !dbg !63, !llvm.loop !77
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 999, !dbg !69
+  br i1 %exitcond.not, label %for.end, label %for.body, !dbg !63, !llvm.loop !70
 
 for.end:                                          ; preds = %for.body
-  ret void, !dbg !78
+  ret void, !dbg !72
 }
 
 ; Function Attrs: nofree nounwind
-define dso_local signext i32 @main() local_unnamed_addr #3 !dbg !79 {
+define dso_local signext i32 @main() local_unnamed_addr #3 !dbg !73 {
 entry:
-  %0 = load i32*, i32** @init_data, align 8, !tbaa !80
-  br label %for.body, !dbg !82
+  %0 = load i32*, i32** @init_data, align 8, !tbaa !74
+  br label %for.body, !dbg !76
 
 for.body:                                         ; preds = %entry, %for.body
   %indvars.iv = phi i64 [ 0, %entry ], [ %indvars.iv.next, %for.body ]
   %d.031 = phi i32 [ 0, %entry ], [ %add8, %for.body ]
-  %rem = urem i32 %d.031, 999, !dbg !83
-  %idxprom = zext i32 %rem to i64, !dbg !84
-  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %idxprom, !dbg !84
-  %1 = load i32, i32* %arrayidx, align 4, !dbg !84, !tbaa !45
-  %arrayidx2 = getelementptr inbounds [999 x i32], [999 x i32]* @a, i64 0, i64 %indvars.iv, !dbg !85
-  store i32 %1, i32* %arrayidx2, align 4, !dbg !86, !tbaa !45
-  %add = or i32 %d.031, 1, !dbg !87
-  %rem3 = urem i32 %add, 999, !dbg !88
-  %idxprom4 = zext i32 %rem3 to i64, !dbg !89
-  %arrayidx5 = getelementptr inbounds i32, i32* %0, i64 %idxprom4, !dbg !89
-  %2 = load i32, i32* %arrayidx5, align 4, !dbg !89, !tbaa !45
-  %arrayidx7 = getelementptr inbounds [999 x i32], [999 x i32]* @b, i64 0, i64 %indvars.iv, !dbg !90
-  store i32 %2, i32* %arrayidx7, align 4, !dbg !91, !tbaa !45
-  %add8 = add nuw nsw i32 %d.031, 2, !dbg !92
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !93
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 999, !dbg !94
-  br i1 %exitcond.not, label %vector.body, label %for.body, !dbg !82, !llvm.loop !95
+  %rem = urem i32 %d.031, 999, !dbg !77
+  %idxprom = zext i32 %rem to i64, !dbg !78
+  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %idxprom, !dbg !78
+  %1 = load i32, i32* %arrayidx, align 4, !dbg !78, !tbaa !45
+  %arrayidx2 = getelementptr inbounds [999 x i32], [999 x i32]* @a, i64 0, i64 %indvars.iv, !dbg !79
+  store i32 %1, i32* %arrayidx2, align 4, !dbg !80, !tbaa !45
+  %add = or i32 %d.031, 1, !dbg !81
+  %rem3 = urem i32 %add, 999, !dbg !82
+  %idxprom4 = zext i32 %rem3 to i64, !dbg !83
+  %arrayidx5 = getelementptr inbounds i32, i32* %0, i64 %idxprom4, !dbg !83
+  %2 = load i32, i32* %arrayidx5, align 4, !dbg !83, !tbaa !45
+  %arrayidx7 = getelementptr inbounds [999 x i32], [999 x i32]* @b, i64 0, i64 %indvars.iv, !dbg !84
+  store i32 %2, i32* %arrayidx7, align 4, !dbg !85, !tbaa !45
+  %add8 = add nuw nsw i32 %d.031, 2, !dbg !86
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !87
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 999, !dbg !88
+  br i1 %exitcond.not, label %vector.body, label %for.body, !dbg !76, !llvm.loop !89
 
 vector.body:                                      ; preds = %for.body, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %for.body ], !dbg !97
-  %3 = getelementptr inbounds [999 x i32], [999 x i32]* @a, i64 0, i64 %index, !dbg !97
-  %4 = bitcast i32* %3 to <128 x i32>*, !dbg !99
-  %wide.load = load <128 x i32>, <128 x i32>* %4, align 4, !dbg !99, !tbaa !45
-  %5 = add nsw <128 x i32> %wide.load, <i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153, i32 153>, !dbg !100
-  %6 = getelementptr inbounds [999 x i32], [999 x i32]* @s, i64 0, i64 %index, !dbg !97
-  %7 = bitcast i32* %6 to <128 x i32>*, !dbg !101
-  store <128 x i32> %5, <128 x i32>* %7, align 4, !dbg !101, !tbaa !45
-  %index.next = add nuw i64 %index, 128, !dbg !97
-  %8 = icmp eq i64 %index.next, 896, !dbg !97
-  br i1 %8, label %for.body.i, label %vector.body, !dbg !97, !llvm.loop !102
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %for.body ], !dbg !91
+  %3 = getelementptr inbounds [999 x i32], [999 x i32]* @a, i64 0, i64 %index, !dbg !91
+  %4 = bitcast i32* %3 to <128 x i32>*, !dbg !93
+  %wide.load = load <128 x i32>, <128 x i32>* %4, align 4, !dbg !93, !tbaa !45
+  %5 = add nsw <128 x i32> %wide.load, <i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78, i32 78>, !dbg !93
+  %6 = bitcast i32* %3 to <128 x i32>*, !dbg !93
+  store <128 x i32> %5, <128 x i32>* %6, align 4, !dbg !93, !tbaa !45
+  %index.next = add nuw i64 %index, 128, !dbg !91
+  %7 = icmp eq i64 %index.next, 896, !dbg !91
+  br i1 %7, label %for.body.i, label %vector.body, !dbg !91, !llvm.loop !94
 
 for.body.i:                                       ; preds = %vector.body, %for.body.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %for.body.i ], [ 896, %vector.body ]
-  %arrayidx.i = getelementptr inbounds [999 x i32], [999 x i32]* @a, i64 0, i64 %indvars.iv.i, !dbg !99
-  %9 = load i32, i32* %arrayidx.i, align 4, !dbg !99, !tbaa !45
-  %add.i = add nsw i32 %9, 153, !dbg !100
-  %arrayidx2.i = getelementptr inbounds [999 x i32], [999 x i32]* @s, i64 0, i64 %indvars.iv.i, !dbg !105
-  store i32 %add.i, i32* %arrayidx2.i, align 4, !dbg !101, !tbaa !45
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1, !dbg !97
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 999, !dbg !106
-  br i1 %exitcond.not.i, label %for.body11.preheader, label %for.body.i, !dbg !103, !llvm.loop !107
+  %arrayidx.i = getelementptr inbounds [999 x i32], [999 x i32]* @a, i64 0, i64 %indvars.iv.i, !dbg !97
+  %8 = load i32, i32* %arrayidx.i, align 4, !dbg !93, !tbaa !45
+  %add.i = add nsw i32 %8, 78, !dbg !93
+  store i32 %add.i, i32* %arrayidx.i, align 4, !dbg !93, !tbaa !45
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1, !dbg !91
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 999, !dbg !98
+  br i1 %exitcond.not.i, label %for.body11.preheader, label %for.body.i, !dbg !95, !llvm.loop !99
 
 for.body11.preheader:                             ; preds = %for.body.i
-  %10 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 0), align 4, !dbg !109, !tbaa !45
-  %call = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 0, i32 signext %10), !dbg !110
-  %11 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 62), align 4, !dbg !109, !tbaa !45
-  %call.1 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 62, i32 signext %11), !dbg !110
-  %12 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 124), align 4, !dbg !109, !tbaa !45
-  %call.2 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 124, i32 signext %12), !dbg !110
-  %13 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 186), align 4, !dbg !109, !tbaa !45
-  %call.3 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 186, i32 signext %13), !dbg !110
-  %14 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 248), align 4, !dbg !109, !tbaa !45
-  %call.4 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 248, i32 signext %14), !dbg !110
-  %15 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 310), align 4, !dbg !109, !tbaa !45
-  %call.5 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 310, i32 signext %15), !dbg !110
-  %16 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 372), align 4, !dbg !109, !tbaa !45
-  %call.6 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 372, i32 signext %16), !dbg !110
-  %17 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 434), align 4, !dbg !109, !tbaa !45
-  %call.7 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 434, i32 signext %17), !dbg !110
-  %18 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 496), align 4, !dbg !109, !tbaa !45
-  %call.8 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 496, i32 signext %18), !dbg !110
-  %19 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 558), align 4, !dbg !109, !tbaa !45
-  %call.9 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 558, i32 signext %19), !dbg !110
-  %20 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 620), align 4, !dbg !109, !tbaa !45
-  %call.10 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 620, i32 signext %20), !dbg !110
-  %21 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 682), align 4, !dbg !109, !tbaa !45
-  %call.11 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 682, i32 signext %21), !dbg !110
-  %22 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 744), align 4, !dbg !109, !tbaa !45
-  %call.12 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 744, i32 signext %22), !dbg !110
-  %23 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 806), align 4, !dbg !109, !tbaa !45
-  %call.13 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 806, i32 signext %23), !dbg !110
-  %24 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 868), align 4, !dbg !109, !tbaa !45
-  %call.14 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 868, i32 signext %24), !dbg !110
-  %25 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 930), align 4, !dbg !109, !tbaa !45
-  %call.15 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 930, i32 signext %25), !dbg !110
-  %26 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 992), align 4, !dbg !109, !tbaa !45
-  %call.16 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 992, i32 signext %26), !dbg !110
-  %call17 = tail call i64 @imatrix_calc_crc32(i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 0)), !dbg !111
-  %call18 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([11 x i8], [11 x i8]* @.str.1, i64 0, i64 0), i64 %call17), !dbg !112
-  ret i32 0, !dbg !113
+  %9 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 0), align 4, !dbg !100, !tbaa !45
+  %call = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 0, i32 signext %9), !dbg !101
+  %10 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 62), align 4, !dbg !100, !tbaa !45
+  %call.1 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 62, i32 signext %10), !dbg !101
+  %11 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 124), align 4, !dbg !100, !tbaa !45
+  %call.2 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 124, i32 signext %11), !dbg !101
+  %12 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 186), align 4, !dbg !100, !tbaa !45
+  %call.3 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 186, i32 signext %12), !dbg !101
+  %13 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 248), align 4, !dbg !100, !tbaa !45
+  %call.4 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 248, i32 signext %13), !dbg !101
+  %14 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 310), align 4, !dbg !100, !tbaa !45
+  %call.5 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 310, i32 signext %14), !dbg !101
+  %15 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 372), align 4, !dbg !100, !tbaa !45
+  %call.6 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 372, i32 signext %15), !dbg !101
+  %16 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 434), align 4, !dbg !100, !tbaa !45
+  %call.7 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 434, i32 signext %16), !dbg !101
+  %17 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 496), align 4, !dbg !100, !tbaa !45
+  %call.8 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 496, i32 signext %17), !dbg !101
+  %18 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 558), align 4, !dbg !100, !tbaa !45
+  %call.9 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 558, i32 signext %18), !dbg !101
+  %19 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 620), align 4, !dbg !100, !tbaa !45
+  %call.10 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 620, i32 signext %19), !dbg !101
+  %20 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 682), align 4, !dbg !100, !tbaa !45
+  %call.11 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 682, i32 signext %20), !dbg !101
+  %21 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 744), align 4, !dbg !100, !tbaa !45
+  %call.12 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 744, i32 signext %21), !dbg !101
+  %22 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 806), align 4, !dbg !100, !tbaa !45
+  %call.13 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 806, i32 signext %22), !dbg !101
+  %23 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 868), align 4, !dbg !100, !tbaa !45
+  %call.14 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 868, i32 signext %23), !dbg !101
+  %24 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 930), align 4, !dbg !100, !tbaa !45
+  %call.15 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 930, i32 signext %24), !dbg !101
+  %25 = load i32, i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 992), align 4, !dbg !100, !tbaa !45
+  %call.16 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 signext 992, i32 signext %25), !dbg !101
+  %call17 = tail call i64 @imatrix_calc_crc32(i32* getelementptr inbounds ([999 x i32], [999 x i32]* @s, i64 0, i64 0)), !dbg !102
+  %call18 = tail call signext i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([11 x i8], [11 x i8]* @.str.1, i64 0, i64 0), i64 %call17), !dbg !103
+  ret i32 0, !dbg !104
 }
 
 ; Function Attrs: nofree nounwind
@@ -353,14 +340,14 @@ attributes #4 = { nofree nounwind "frame-pointer"="none" "no-trapping-math"="tru
 !llvm.module.flags = !{!3, !4, !5, !6}
 !llvm.ident = !{!7}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project bc6a8e38f3c2d3df7c82431f238b21c52f22488e)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "vector_add.c", directory: "/home/t2000/llvm-project/test")
 !2 = !{}
 !3 = !{i32 2, !"Debug Info Version", i32 3}
 !4 = !{i32 1, !"wchar_size", i32 4}
 !5 = !{i32 1, !"target-abi", !"lp64"}
 !6 = !{i32 1, !"SmallDataLimit", i32 8}
-!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)"}
+!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project bc6a8e38f3c2d3df7c82431f238b21c52f22488e)"}
 !8 = distinct !DISubprogram(name: "make_crc32_table", scope: !9, file: !9, line: 6, type: !10, scopeLine: 7, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
 !9 = !DIFile(filename: "./crc.h", directory: "/home/t2000/llvm-project/test")
 !10 = !DISubroutineType(types: !2)
@@ -418,52 +405,43 @@ attributes #4 = { nofree nounwind "frame-pointer"="none" "no-trapping-math"="tru
 !62 = distinct !DISubprogram(name: "addarrays", scope: !1, file: !1, line: 26, type: !10, scopeLine: 27, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
 !63 = !DILocation(line: 29, column: 3, scope: !62)
 !64 = !DILocation(line: 29, column: 22, scope: !62)
-!65 = !DILocation(line: 30, column: 12, scope: !62)
-!66 = !{!67}
-!67 = distinct !{!67, !68}
-!68 = distinct !{!68, !"LVerDomain"}
-!69 = !DILocation(line: 30, column: 17, scope: !62)
-!70 = !DILocation(line: 30, column: 10, scope: !62)
-!71 = !{!72}
-!72 = distinct !{!72, !68}
-!73 = distinct !{!73, !63, !74, !22, !23}
-!74 = !DILocation(line: 30, column: 19, scope: !62)
-!75 = !DILocation(line: 30, column: 5, scope: !62)
-!76 = !DILocation(line: 29, column: 16, scope: !62)
-!77 = distinct !{!77, !63, !74, !22, !23}
-!78 = !DILocation(line: 31, column: 1, scope: !62)
-!79 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 33, type: !10, scopeLine: 34, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
-!80 = !{!81, !81, i64 0}
-!81 = !{!"any pointer", !18, i64 0}
-!82 = !DILocation(line: 37, column: 3, scope: !79)
-!83 = !DILocation(line: 38, column: 30, scope: !79)
-!84 = !DILocation(line: 38, column: 14, scope: !79)
-!85 = !DILocation(line: 38, column: 7, scope: !79)
-!86 = !DILocation(line: 38, column: 12, scope: !79)
-!87 = !DILocation(line: 39, column: 26, scope: !79)
-!88 = !DILocation(line: 39, column: 30, scope: !79)
-!89 = !DILocation(line: 39, column: 14, scope: !79)
-!90 = !DILocation(line: 39, column: 7, scope: !79)
-!91 = !DILocation(line: 39, column: 12, scope: !79)
-!92 = !DILocation(line: 40, column: 9, scope: !79)
-!93 = !DILocation(line: 37, column: 18, scope: !79)
-!94 = !DILocation(line: 37, column: 13, scope: !79)
-!95 = distinct !{!95, !82, !96, !22}
-!96 = !DILocation(line: 41, column: 3, scope: !79)
-!97 = !DILocation(line: 29, column: 22, scope: !62, inlinedAt: !98)
-!98 = distinct !DILocation(line: 43, column: 3, scope: !79)
-!99 = !DILocation(line: 30, column: 12, scope: !62, inlinedAt: !98)
-!100 = !DILocation(line: 30, column: 17, scope: !62, inlinedAt: !98)
-!101 = !DILocation(line: 30, column: 10, scope: !62, inlinedAt: !98)
-!102 = distinct !{!102, !103, !104, !22, !23}
-!103 = !DILocation(line: 29, column: 3, scope: !62, inlinedAt: !98)
-!104 = !DILocation(line: 30, column: 19, scope: !62, inlinedAt: !98)
-!105 = !DILocation(line: 30, column: 5, scope: !62, inlinedAt: !98)
-!106 = !DILocation(line: 29, column: 16, scope: !62, inlinedAt: !98)
-!107 = distinct !{!107, !103, !104, !22, !108, !23}
-!108 = !{!"llvm.loop.unroll.runtime.disable"}
-!109 = !DILocation(line: 45, column: 31, scope: !79)
-!110 = !DILocation(line: 45, column: 5, scope: !79)
-!111 = !DILocation(line: 46, column: 25, scope: !79)
-!112 = !DILocation(line: 46, column: 3, scope: !79)
-!113 = !DILocation(line: 47, column: 3, scope: !79)
+!65 = !DILocation(line: 30, column: 10, scope: !62)
+!66 = distinct !{!66, !63, !67, !22, !23}
+!67 = !DILocation(line: 30, column: 13, scope: !62)
+!68 = !DILocation(line: 30, column: 5, scope: !62)
+!69 = !DILocation(line: 29, column: 16, scope: !62)
+!70 = distinct !{!70, !63, !67, !22, !71, !23}
+!71 = !{!"llvm.loop.unroll.runtime.disable"}
+!72 = !DILocation(line: 31, column: 1, scope: !62)
+!73 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 33, type: !10, scopeLine: 34, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
+!74 = !{!75, !75, i64 0}
+!75 = !{!"any pointer", !18, i64 0}
+!76 = !DILocation(line: 37, column: 3, scope: !73)
+!77 = !DILocation(line: 38, column: 30, scope: !73)
+!78 = !DILocation(line: 38, column: 14, scope: !73)
+!79 = !DILocation(line: 38, column: 7, scope: !73)
+!80 = !DILocation(line: 38, column: 12, scope: !73)
+!81 = !DILocation(line: 39, column: 26, scope: !73)
+!82 = !DILocation(line: 39, column: 30, scope: !73)
+!83 = !DILocation(line: 39, column: 14, scope: !73)
+!84 = !DILocation(line: 39, column: 7, scope: !73)
+!85 = !DILocation(line: 39, column: 12, scope: !73)
+!86 = !DILocation(line: 40, column: 9, scope: !73)
+!87 = !DILocation(line: 37, column: 18, scope: !73)
+!88 = !DILocation(line: 37, column: 13, scope: !73)
+!89 = distinct !{!89, !76, !90, !22}
+!90 = !DILocation(line: 41, column: 3, scope: !73)
+!91 = !DILocation(line: 29, column: 22, scope: !62, inlinedAt: !92)
+!92 = distinct !DILocation(line: 43, column: 3, scope: !73)
+!93 = !DILocation(line: 30, column: 10, scope: !62, inlinedAt: !92)
+!94 = distinct !{!94, !95, !96, !22, !23}
+!95 = !DILocation(line: 29, column: 3, scope: !62, inlinedAt: !92)
+!96 = !DILocation(line: 30, column: 13, scope: !62, inlinedAt: !92)
+!97 = !DILocation(line: 30, column: 5, scope: !62, inlinedAt: !92)
+!98 = !DILocation(line: 29, column: 16, scope: !62, inlinedAt: !92)
+!99 = distinct !{!99, !95, !96, !22, !71, !23}
+!100 = !DILocation(line: 45, column: 31, scope: !73)
+!101 = !DILocation(line: 45, column: 5, scope: !73)
+!102 = !DILocation(line: 46, column: 25, scope: !73)
+!103 = !DILocation(line: 46, column: 3, scope: !73)
+!104 = !DILocation(line: 47, column: 3, scope: !73)

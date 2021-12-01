@@ -27,7 +27,7 @@ void addarrays(int *a, int *b, int *c)
 {
   int i;
   for(i = 0; i < N; i++)
-    c[i] = a[i] + 0b10011001;
+    a[i] += 0b1001110;
 }
 
 int main(void)

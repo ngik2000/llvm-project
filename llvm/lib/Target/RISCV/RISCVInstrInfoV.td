@@ -77,6 +77,30 @@ def simm5_plus1 : Operand<XLenVT>, ImmLeaf<XLenVT,
   }];
 }
 
+def simm8 : Operand<XLenVT>, ImmLeaf<XLenVT, [{return isInt<8>(Imm);}]> {
+  let ParserMatchClass = SImmAsmOperand<8>;
+  let EncoderMethod = "getImmOpValue";
+  let DecoderMethod = "decodeSImmOperand<8>";
+  let MCOperandPredicate = [{
+    int64_t Imm;
+    if (MCOp.evaluateAsConstantImm(Imm))
+      return isInt<8>(Imm);
+    return MCOp.is  reSymbolRef();
+  }];
+} 
+
+def simm13 : Operand<XLenVT>, ImmLeaf<XLenVT, [{return isInt<13>(Imm);}]> {
+  let ParserMatchClass = SImmAsmOperand<13>;
+  let EncoderMethod = "getImmOpValue";
+  let DecoderMethod = "decodeSImmOperand<13>";
+  let MCOperandPredicate = [{
+    int64_t Imm;
+    if (MCOp.evaluateAsConstantImm(Imm))
+      return isInt<13>(Imm);
+    return MCOp.is  reSymbolRef();
+  }];
+} 
+
 //===----------------------------------------------------------------------===//
 // Scheduling definitions.
 //===----------------------------------------------------------------------===//
@@ -255,6 +279,18 @@ class VALUVIMIQS<bits<5> funct5, RISCVVFormat opv, string opcodestr, Operand opt
                 (ins VR:$vs2, optype:$imm, VMaskOp:$vm),
                 opcodestr, "$vd, $vs2, $imm$vm">;
 
+// op vd, vs2, imm8, vm
+class VALUVI8MIQS<bits<5> funct5 , RISCVVFormat opv, string opcodestr, Operand optype = simm8>
+    : RVInstIVI8MIQS<funct5, opv, (outs VR:$vd),
+                (ins VR:$vs2, optype:$imm, VMaskOp:$vm),
+                opcodestr, "$vd, $imm$vm">;
+
+// op vd, vs2, imm13, vm
+class VALUVI13MIQS<bits<4> funct4 , RISCVVFormat opv, string opcodestr, Operand optype = simm13>
+    : RVInstIVI13MIQS<funct4, opv, (outs VR:$vd),
+                (ins VR:$vs2, optype:$imm, VMaskOp:$vm),
+                opcodestr, "$vd, $imm$vm">;
+
 // op vd, vs2, vs1, vm
 class VALUVV<bits<6> funct6, RISCVVFormat opv, string opcodestr>
     : RVInstVV<funct6, opv, (outs VR:$vd),
@@ -381,12 +417,21 @@ class VAMONoWd<RISCVAMOOP amoop, RISCVWidth width, string opcodestr>
 // 命令クラスの組み合わせ。
 // これらのマルチクラスを使用して、より簡単に命令を定義します。
 //===----------------------------------------------------------------------===//
-multiclass VALU_IV_V_X_I_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv, Operand optype = simm5> {
+multiclass VALU_IV_V_X_I_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv, Operand optype = simm5, bits<5> funct5_i = 0b00101> {
   def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
            Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
   def X  : VALUVXMIQS<funct5, opv, opcodestr # ".w">,
            Sched<[WriteVIALUX, ReadVIALUV, ReadVIALUX, ReadVMask]>;
-  def I  : VALUVIMIQS<funct5, opv, opcodestr # ".w", optype>,
+  def I  : VALUVI8MIQS<funct5_i, opv, opcodestr # "i.w">,
+           Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
+}
+
+multiclass VLOG_IV_V_X_I_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv, Operand optype = simm5, bits<4> funct4 = 0b0011> {
+  def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
+           Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
+  def X  : VALUVXMIQS<funct5, opv, opcodestr # ".w">,
+           Sched<[WriteVIALUX, ReadVIALUV, ReadVIALUX, ReadVMask]>;
+  def I  : VALUVI13MIQS<funct4, opv, opcodestr # "i.w">,
            Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
 }
 
@@ -978,7 +1023,7 @@ def VS8R_V : VWholeStore<7, "vs8r.v", VRM8>,
 // Vector Single-Width Integer Add and Subtract
 // ベクトル 単一幅の整数の加算・減算
 defm VADD_V : VALU_IV_V_X_I_MIQS<"vadd", 0b00001, OPIVV>;
-defm VSUB_V : VALU_IV_V_X_MIQS<"vsub", 0b00001, OPFVV>;
+defm VSUB_V : VALU_IV_V_X_I_MIQS<"vsub", 0b00001, OPFVV>;
 defm VRSUB_V : VALU_IV_X_I<"vrsub", 0b000011>;
 
 def : InstAlias<"vneg.v $vd, $vs$vm", (VRSUB_VX VR:$vd, VR:$vs, X0, VMaskOp:$vm)>;
@@ -1033,9 +1078,9 @@ defm VMSBC_V : VALUNoVm_IV_V_X<"vmsbc", 0b010011>;
 } // Constraints = "@earlyclobber $vd", RVVConstraint = NoConstraint
 
 // Vector Bitwise Logical Instructions
-defm VAND_V : VALU_IV_V_X_I_MIQS<"vand", 0b00001, OPMVX>;
-defm VOR_V : VALU_IV_V_X_I_MIQS<"vor", 0b00001, OPIVX>;
-defm VXOR_V : VALU_IV_V_X_I_MIQS<"vxor", 0b00001, OPFVF>;
+defm VAND_V : VLOG_IV_V_X_I_MIQS<"vand", 0b00001, OPMVX>;
+defm VOR_V : VLOG_IV_V_X_I_MIQS<"vor", 0b00001, OPIVX>;
+defm VXOR_V : VLOG_IV_V_X_I_MIQS<"vxor", 0b00001, OPFVF>;
 
 def : InstAlias<"vnot.v $vd, $vs$vm",
                 (VXOR_VI VR:$vd, VR:$vs, -1, VMaskOp:$vm)>;

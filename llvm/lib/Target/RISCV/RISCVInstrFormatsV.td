@@ -187,8 +187,23 @@ class RVInstIVI8MIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string
   let Inst{26-25} = 0b10;
   let Inst{24-23} = 0b00;
   let Inst{22-15} = imm;
-  let Inst{14} = 0b0;
-  let Inst{13-12} = 0b00;
+  let Inst{14-12} = opv.Value;
+  let Inst{11-7} = vd;
+  let Opcode = 0b0001011;
+
+  let Uses = [VTYPE, VL];
+  let RVVConstraint = VMConstraint;
+}
+
+class RVInstIVI13MIQS<bits<4> funct4, RISCVVFormat opv, dag outs, dag ins, string opcodestr,
+                string argstr>
+    : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
+  bits<13> imm;
+  bits<5> vd;
+
+  let Inst{31-28} = funct4;
+  let Inst{27-15} = imm;
+  let Inst{14-12} = !and(opv.Value, 0b011);
   let Inst{11-7} = vd;
   let Opcode = 0b0001011;
 

@@ -1342,53 +1342,37 @@ imatrix_calc_crc32:                     # @imatrix_calc_crc32
 	.type	addarrays,@function
 addarrays:                              # @addarrays
 # %bb.0:                                # %entry
-	lui	a1, 1
-	addiw	a1, a1, -100
-	add	a3, a2, a1
-	add	a1, a1, a0
-	sltu	a1, a2, a1
-	sltu	a3, a0, a3
-	and	a1, a1, a3
-	mv	a6, zero
-	bnez	a1, .LBB3_3
-# %bb.1:                                # %vector.body.preheader
-	addi	a6, zero, 896
-	addi	a7, zero, 64
-	addi	t0, zero, 153
-	mv	a5, a0
-	mv	a1, a2
-	addi	a3, zero, 896
-.LBB3_2:                                # %vector.body
+	addi	a1, zero, 896
+	addi	a2, zero, 64
+	addi	a3, zero, 78
+	mv	a4, a0
+.LBB3_1:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vsetvli	zero, a7, e32, m8, ta, mu
-	addi	a4, a5, 256
-	vle32.v	v8, (a4)
-	vle32.v	v16, (a5)
-	vadd.w	v8, v8, t0
-	vadd.w	v16, v16, t0
-	vse32.v	v16, (a1)
-	addi	a4, a1, 256
-	vse32.v	v8, (a4)
-	addi	a3, a3, -128
-	addi	a1, a1, 512
-	addi	a5, a5, 512
-	bnez	a3, .LBB3_2
-.LBB3_3:                                # %for.body.preheader
-	addi	a3, a6, -999
-	slli	a4, a6, 2
-	add	a1, a2, a4
-	add	a0, a0, a4
-.LBB3_4:                                # %for.body
+	vsetvli	zero, a2, e32, m8, ta, mu
+	addi	a5, a4, 256
+	vle32.v	v8, (a5)
+	vle32.v	v16, (a4)
+	vadd.w	v8, v8, a3
+	vadd.w	v16, v16, a3
+	vse32.v	v16, (a4)
+	vse32.v	v8, (a5)
+	addi	a1, a1, -128
+	addi	a4, a4, 512
+	bnez	a1, .LBB3_1
+# %bb.2:                                # %for.body.preheader
+	mv	a1, zero
+	addi	a0, a0, 1792
+	addi	a0, a0, 1792
+	addi	a2, zero, 412
+.LBB3_3:                                # %for.body
                                         # =>This Inner Loop Header: Depth=1
-	lw	a2, 0(a0)
-	mv	a4, a3
-	addi	a2, a2, 153
-	sw	a2, 0(a1)
-	addi	a3, a3, 1
+	add	a3, a0, a1
+	lw	a4, 0(a3)
+	addi	a4, a4, 78
 	addi	a1, a1, 4
-	addi	a0, a0, 4
-	bgeu	a3, a4, .LBB3_4
-# %bb.5:                                # %for.end
+	sw	a4, 0(a3)
+	bne	a1, a2, .LBB3_3
+# %bb.4:                                # %for.end
 	ret
 .Lfunc_end3:
 	.size	addarrays, .Lfunc_end3-addarrays
@@ -1452,48 +1436,38 @@ main:                                   # @main
 	addi	a2, a2, 4
 	bnez	s1, .LBB4_1
 # %bb.2:                                # %vector.body.preheader
-	lui	a0, %hi(s)
-	addi	a0, a0, %lo(s)
-	lui	a1, %hi(a)
-	addi	a1, a1, %lo(a)
-	addi	a2, zero, 896
-	addi	a3, zero, 64
-	addi	a4, zero, 153
+	lui	a0, %hi(a)
+	addi	a0, a0, %lo(a)
+	addi	a1, zero, 896
+	addi	a2, zero, 64
+	addi	a3, zero, 78
 .LBB4_3:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vsetvli	zero, a3, e32, m8, ta, mu
-	addi	a5, a1, 256
-	vle32.v	v8, (a5)
-	vle32.v	v16, (a1)
-	vadd.w	v8, v8, a4
-	vadd.w	v16, v16, a4
+	vsetvli	zero, a2, e32, m8, ta, mu
+	addi	a4, a0, 256
+	vle32.v	v8, (a4)
+	vle32.v	v16, (a0)
+	vadd.w	v8, v8, a3
+	vadd.w	v16, v16, a3
 	vse32.v	v16, (a0)
-	addi	a5, a0, 256
-	vse32.v	v8, (a5)
-	addi	a2, a2, -128
+	vse32.v	v8, (a4)
+	addi	a1, a1, -128
 	addi	a0, a0, 512
-	addi	a1, a1, 512
-	bnez	a2, .LBB4_3
+	bnez	a1, .LBB4_3
 # %bb.4:                                # %for.body.i.preheader
 	mv	a0, zero
 	lui	a1, %hi(a)
 	addi	a1, a1, %lo(a)
-	lui	a2, 1
-	addiw	a2, a2, -512
-	lui	a3, %hi(s)
-	addi	a3, a3, %lo(s)
-	addi	a4, zero, 412
+	addi	a2, zero, 412
 .LBB4_5:                                # %for.body.i
                                         # =>This Inner Loop Header: Depth=1
-	add	a5, a1, a0
-	add	a5, a5, a2
-	lw	a5, 0(a5)
-	addi	a5, a5, 153
-	add	s1, a3, a0
-	add	s1, s1, a2
+	add	a3, a1, a0
+	addi	a3, a3, 1792
+	lw	a4, 1792(a3)
+	addi	a4, a4, 78
 	addi	a0, a0, 4
-	sw	a5, 0(s1)
-	bne	a0, a4, .LBB4_5
+	sw	a4, 1792(a3)
+	bne	a0, a2, .LBB4_5
 # %bb.6:                                # %for.body11.preheader
 	lui	s1, %hi(s)
 	lw	a2, %lo(s)(s1)
@@ -1650,5 +1624,5 @@ b:
 	.asciz	"CRC32=%lu\n"
 	.size	.L.str.1, 11
 
-	.ident	"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)"
+	.ident	"clang version 13.0.0 (https://github.com/ngik2000/llvm-project bc6a8e38f3c2d3df7c82431f238b21c52f22488e)"
 	.section	".note.GNU-stack","",@progbits

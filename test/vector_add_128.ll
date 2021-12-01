@@ -348,14 +348,14 @@ attributes #4 = { nofree nounwind "frame-pointer"="none" "no-trapping-math"="tru
 !llvm.module.flags = !{!3, !4, !5, !6}
 !llvm.ident = !{!7}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project bc6a8e38f3c2d3df7c82431f238b21c52f22488e)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "vector_add_128.c", directory: "/home/t2000/llvm-project/test")
 !2 = !{}
 !3 = !{i32 2, !"Debug Info Version", i32 3}
 !4 = !{i32 1, !"wchar_size", i32 4}
 !5 = !{i32 1, !"target-abi", !"lp64"}
 !6 = !{i32 1, !"SmallDataLimit", i32 8}
-!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 2b290128e446bfb4e761d3f92554a014fa10b107)"}
+!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project bc6a8e38f3c2d3df7c82431f238b21c52f22488e)"}
 !8 = distinct !DISubprogram(name: "make_crc32_table", scope: !9, file: !9, line: 6, type: !10, scopeLine: 7, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
 !9 = !DIFile(filename: "./crc.h", directory: "/home/t2000/llvm-project/test")
 !10 = !DISubroutineType(types: !2)
