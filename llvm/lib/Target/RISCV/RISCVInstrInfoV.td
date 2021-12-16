@@ -417,6 +417,8 @@ class VAMONoWd<RISCVAMOOP amoop, RISCVWidth width, string opcodestr>
 // 命令クラスの組み合わせ。
 // これらのマルチクラスを使用して、より簡単に命令を定義します。
 //===----------------------------------------------------------------------===//
+
+// multiclass for vadd, vsub.
 multiclass VALU_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype = simm5, bits<5> funct5 = 0b00001, bits<5> funct5_i = 0b00101> {
   def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
            Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
@@ -426,6 +428,7 @@ multiclass VALU_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype
            Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
 }
 
+//multiclass for vand, vor, vxor.
 multiclass VLOG_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype = simm5, bits<5> funct5 = 0b00001, bits<4> funct4 = 0b0011> {
   def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
            Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
@@ -435,6 +438,7 @@ multiclass VLOG_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype
            Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
 }
 
+//This multiclass is not currently used for MIQS instructions.
 multiclass VALU_IV_V_X_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv> {
   def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
            Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
@@ -442,6 +446,7 @@ multiclass VALU_IV_V_X_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv> 
            Sched<[WriteVIALUX, ReadVIALUV, ReadVIALUX, ReadVMask]>;
 }
 
+//multiclass for MIQSshift instruction. but MIQS is not support vector or scalar shift. def V and def X are dummies to make the build successful.
 multiclass VSHT_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype = simm5, bits<5> funct5 = 0b00010> {
   def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
            Sched<[WriteVShiftV, ReadVShiftV, ReadVShiftV, ReadVMask]>;

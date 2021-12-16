@@ -116,6 +116,9 @@ class RVInstSetVL<dag outs, dag ins, string opcodestr, string argstr>
   let Defs = [VTYPE, VL];
 }
 
+// This class is an instruction format for vector-vector arithmetic instructions.
+// <size> the suffix for MIQS vector add and subtract instructions, is fixed at 0b10, a 32-bit W.
+// This format is only supported for integer arithmetic instructions.
 class RVInstVVMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins,
                string opcodestr, string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
@@ -136,6 +139,9 @@ class RVInstVVMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins,
   let RVVConstraint = VMConstraint;
 }
 
+// This class is an instruction format for vector-scalar arithmetic instructions.
+// <size> the suffix for MIQS vector add and subtract instructions, is fixed at 0b10, a 32-bit W.
+// This format is only supported for integer arithmetic instructions.
 class RVInstVXMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins,
                 string opcodestr, string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
@@ -156,6 +162,10 @@ class RVInstVXMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins,
   let RVVConstraint = VMConstraint;
 }
 
+// This class is an instruction format for vector-immediate arithmetic instructions.
+// <size> the suffix for MIQS vector add and subtract instructions, is fixed at 0b10, a 32-bit W.
+// This format is only supported for integer arithmetic instructions.
+// This format is support 5-bit immediate.
 class RVInstIVIMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string opcodestr,
                 string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
@@ -176,6 +186,12 @@ class RVInstIVIMIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string 
   let RVVConstraint = VMConstraint;
 }
 
+// This class is an instruction format for vector-immediate arithmetic instructions.
+// <size> the suffix for MIQS vector add and subtract instructions, is fixed at 0b10, a 32-bit W.
+// This format is only supported for integer arithmetic instructions.
+// This format is support 8-bit immediate.
+// *Although 8-bit immediate values appear to be supported in the encoding,
+// only 5-bit immediate values can be stored in an 8-bit immediate field.
 class RVInstIVI8MIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string opcodestr,
                 string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
@@ -195,6 +211,12 @@ class RVInstIVI8MIQS<bits<5> funct5, RISCVVFormat opv, dag outs, dag ins, string
   let RVVConstraint = VMConstraint;
 }
 
+// This class is an instruction format for vector-immediate arithmetic instructions.
+// <size> the suffix for MIQS vector add and subtract instructions, is fixed at 0b10, a 32-bit W.
+// This format is only supported for integer arithmetic instructions.
+// This format is support 13-bit immediate.
+// *Although 13-bit immediate values appear to be supported in the encoding,
+// only 5-bit immediate values can be stored in an 13-bit immediate field.
 class RVInstIVI13MIQS<bits<4> funct4, RISCVVFormat opv, dag outs, dag ins, string opcodestr,
                 string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
