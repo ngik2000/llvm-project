@@ -1,17 +1,19 @@
 #include <stdio.h>
 
+#define N 999
+
 void add(int* a, int* b, int* c){
 
-	for (int i=0;i<100000;i++)
+	for (int i=0;i<N;i++)
 	{
-		c[i] = a[i] - 0b1001;
+		c[i] = a[i] + b[i];
 	}
 }
 
 int main(){
-	int a[100000]={0.0}, b[100000]={0.0}, c[100000]={0.0};
+	int a[N]={0}, b[N]={0}, c[N]={0};
 
-	for (int i=0;i<100000;i++)
+	for (int i=0;i<N;i++)
 	{
 		a[i] = i+1;
 		b[i] = i+2;
