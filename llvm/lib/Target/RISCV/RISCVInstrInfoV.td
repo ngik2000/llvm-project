@@ -1027,7 +1027,10 @@ def VS8R_V : VWholeStore<7, "vs8r.v", VRM8>,
 
 // Vector Single-Width Integer Add and Subtract
 // ベクトル 単一幅の整数の加算・減算
-defm VADD_V : VALU_IV_V_X_I_MIQS<"vadd", OPIVV>;
+def VADD_VV : VALUVVMIQS<0b00001, OPIVV, "vadd.w">,
+Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
+def VADD_VI : VALUVI8MIQS<0b00001, OPIVV, "vaddi.w">,
+Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
 defm VSUB_V : VALU_IV_V_X_I_MIQS<"vsub", OPFVV>;
 defm VRSUB_V : VALU_IV_X_I<"vrsub", 0b000011>;
 
