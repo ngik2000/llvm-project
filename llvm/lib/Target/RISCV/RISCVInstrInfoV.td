@@ -417,37 +417,30 @@ class VAMONoWd<RISCVAMOOP amoop, RISCVWidth width, string opcodestr>
 // 命令クラスの組み合わせ。
 // これらのマルチクラスを使用して、より簡単に命令を定義します。
 //===----------------------------------------------------------------------===//
-multiclass VALU_IV_V_X_I_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv, Operand optype = simm5, bits<5> funct5_i = 0b00101> {
-  def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
+multiclass VALU_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype = simm5> {
+  def V  : VALUVVMIQS<0b00001, opv, opcodestr # ".w">,
            Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
-  def X  : VALUVXMIQS<funct5, opv, opcodestr # ".w">,
+  def X  : VALUVXMIQS<0b00001, opv, opcodestr # ".w">,
            Sched<[WriteVIALUX, ReadVIALUV, ReadVIALUX, ReadVMask]>;
-  def I  : VALUVI8MIQS<funct5_i, opv, opcodestr # "i.w">,
+  def I  : VALUVI8MIQS<0b00101, opv, opcodestr # "i.w">,
            Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
 }
 
-multiclass VLOG_IV_V_X_I_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv, Operand optype = simm5, bits<4> funct4 = 0b0011> {
-  def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
+multiclass VLOG_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype = simm5> {
+  def V  : VALUVVMIQS<0b00001, opv, opcodestr # ".w">,
            Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
-  def X  : VALUVXMIQS<funct5, opv, opcodestr # ".w">,
+  def X  : VALUVXMIQS<0b00001, opv, opcodestr # ".w">,
            Sched<[WriteVIALUX, ReadVIALUV, ReadVIALUX, ReadVMask]>;
-  def I  : VALUVI13MIQS<funct4, opv, opcodestr # "i.w">,
+  def I  : VALUVI13MIQS<0b0011, opv, opcodestr # "i.w">,
            Sched<[WriteVIALUI, ReadVIALUV, ReadVMask]>;
 }
 
-multiclass VALU_IV_V_X_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv> {
-  def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
-           Sched<[WriteVIALUV, ReadVIALUV, ReadVIALUV, ReadVMask]>;
-  def X  : VALUVXMIQS<funct5, opv, opcodestr # ".w">,
-           Sched<[WriteVIALUX, ReadVIALUV, ReadVIALUX, ReadVMask]>;
-}
-
-multiclass VSHT_IV_V_X_I_MIQS<string opcodestr, bits<5> funct5, RISCVVFormat opv, Operand optype = simm5> {
-  def V  : VALUVVMIQS<funct5, opv, opcodestr # ".w">,
+multiclass VSHT_IV_V_X_I_MIQS<string opcodestr, RISCVVFormat opv, Operand optype = simm5> {
+  def V  : VALUVVMIQS<0b00010, opv, opcodestr # ".w">,
            Sched<[WriteVShiftV, ReadVShiftV, ReadVShiftV, ReadVMask]>;
-  def X  : VALUVXMIQS<funct5, opv, opcodestr # ".w">,
+  def X  : VALUVXMIQS<0b00010, opv, opcodestr # ".w">,
            Sched<[WriteVShiftX, ReadVShiftV, ReadVShiftX, ReadVMask]>;
-  def I  : VALUVIMIQS<funct5, opv, opcodestr # ".w ", optype>,
+  def I  : VALUVIMIQS<0b00010, opv, opcodestr # ".w ", optype>,
            Sched<[WriteVShiftI, ReadVShiftV, ReadVMask]>;
 }
 
