@@ -19,23 +19,23 @@ entry:
   br i1 %conflict.rdx, label %for.body.preheader, label %vector.body, !dbg !10
 
 for.body.preheader:                               ; preds = %vector.body, %entry
-  %indvars.iv.ph = phi i64 [ 0, %entry ], [ 896, %vector.body ]
+  %indvars.iv.ph = phi i64 [ 0, %entry ], [ 960, %vector.body ]
   br label %for.body, !dbg !10
 
 vector.body:                                      ; preds = %entry, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %entry ], !dbg !11
   %0 = getelementptr inbounds i32, i32* %a, i64 %index, !dbg !11
-  %1 = bitcast i32* %0 to <128 x i32>*, !dbg !12
-  %wide.load = load <128 x i32>, <128 x i32>* %1, align 4, !dbg !12, !tbaa !13, !alias.scope !17
+  %1 = bitcast i32* %0 to <64 x i32>*, !dbg !12
+  %wide.load = load <64 x i32>, <64 x i32>* %1, align 4, !dbg !12, !tbaa !13, !alias.scope !17
   %2 = getelementptr inbounds i32, i32* %b, i64 %index, !dbg !11
-  %3 = bitcast i32* %2 to <128 x i32>*, !dbg !20
-  %wide.load22 = load <128 x i32>, <128 x i32>* %3, align 4, !dbg !20, !tbaa !13, !alias.scope !21
-  %4 = add nsw <128 x i32> %wide.load22, %wide.load, !dbg !23
+  %3 = bitcast i32* %2 to <64 x i32>*, !dbg !20
+  %wide.load22 = load <64 x i32>, <64 x i32>* %3, align 4, !dbg !20, !tbaa !13, !alias.scope !21
+  %4 = add nsw <64 x i32> %wide.load22, %wide.load, !dbg !23
   %5 = getelementptr inbounds i32, i32* %c, i64 %index, !dbg !11
-  %6 = bitcast i32* %5 to <128 x i32>*, !dbg !24
-  store <128 x i32> %4, <128 x i32>* %6, align 4, !dbg !24, !tbaa !13, !alias.scope !25, !noalias !27
-  %index.next = add nuw i64 %index, 128, !dbg !11
-  %7 = icmp eq i64 %index.next, 896, !dbg !11
+  %6 = bitcast i32* %5 to <64 x i32>*, !dbg !24
+  store <64 x i32> %4, <64 x i32>* %6, align 4, !dbg !24, !tbaa !13, !alias.scope !25, !noalias !27
+  %index.next = add nuw i64 %index, 64, !dbg !11
+  %7 = icmp eq i64 %index.next, 960, !dbg !11
   br i1 %7, label %for.body.preheader, label %vector.body, !dbg !11, !llvm.loop !28
 
 for.cond.cleanup:                                 ; preds = %for.body
@@ -68,14 +68,14 @@ attributes #1 = { nofree nosync nounwind readnone "frame-pointer"="none" "min-le
 !llvm.module.flags = !{!3, !4, !5, !6}
 !llvm.ident = !{!7}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project c79fd4194edd5a471ae7929e3d88d18526368902)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 13.0.0 (https://github.com/ngik2000/llvm-project 621cf8e749383b451cc159082d7f6795c058f2f5)", isOptimized: true, runtimeVersion: 0, emissionKind: NoDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "test_addarray.c", directory: "/home/t2000/llvm-project/test")
 !2 = !{}
 !3 = !{i32 2, !"Debug Info Version", i32 3}
 !4 = !{i32 1, !"wchar_size", i32 4}
 !5 = !{i32 1, !"target-abi", !"lp64"}
 !6 = !{i32 1, !"SmallDataLimit", i32 8}
-!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project c79fd4194edd5a471ae7929e3d88d18526368902)"}
+!7 = !{!"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 621cf8e749383b451cc159082d7f6795c058f2f5)"}
 !8 = distinct !DISubprogram(name: "add", scope: !1, file: !1, line: 5, type: !9, scopeLine: 5, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !0, retainedNodes: !2)
 !9 = !DISubroutineType(types: !2)
 !10 = !DILocation(line: 7, column: 2, scope: !8)
