@@ -1,45 +1,44 @@
 	.text
 	.attribute	4, 16
-	.attribute	5, "rv64i2p0_v0p10"
+	.attribute	5, "rv32i2p0_v0p10"
 	.file	"test_addarray.c"
 	.globl	add                             # -- Begin function add
-	.p2align	1
+	.p2align	2
 	.type	add,@function
 add:                                    # @add
 # %bb.0:                                # %entry
 	lui	a3, 1
-	addiw	a3, a3, -100
+	addi	a3, a3, -100
 	add	a4, a2, a3
 	add	a5, a0, a3
 	add	a6, a1, a3
 	sltu	a5, a2, a5
 	sltu	a3, a0, a4
-	and	a3, a3, a5
+	and	a3, a5, a3
 	sltu	a5, a2, a6
 	sltu	a4, a1, a4
-	and	a4, a4, a5
+	and	a4, a5, a4
 	or	a3, a3, a4
 	mv	a6, zero
 	bnez	a3, .LBB0_3
 # %bb.1:                                # %vector.body.preheader
-	addi	a6, zero, 960
-	addi	a7, zero, 64
-	mv	t0, a0
-	mv	a3, a1
-	mv	a4, a2
-	addi	a5, zero, 960
+	addi	a6, zero, 996
+	mv	a7, a0
+	mv	a5, a1
+	mv	a3, a2
+	addi	a4, zero, 996
 .LBB0_2:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	vsetvli	zero, a7, e32, m8, ta, mu
-	vle32.v	v8, (t0)
-	vle32.v	v16, (a3)
-	vadd.w	v8, v16, v8
-	vse32.v	v8, (a4)
-	addi	a5, a5, -64
-	addi	a4, a4, 256
-	addi	a3, a3, 256
-	addi	t0, t0, 256
-	bnez	a5, .LBB0_2
+	vsetivli	zero, 4, e32, m1, ta, mu
+	vle32.v	v25, (a7)
+	vle32.v	v26, (a5)
+	vadd.w	v25, v26, v25
+	vse32.v	v25, (a3)
+	addi	a4, a4, -4
+	addi	a3, a3, 16
+	addi	a5, a5, 16
+	addi	a7, a7, 16
+	bnez	a4, .LBB0_2
 .LBB0_3:                                # %for.body.preheader
 	addi	a4, a6, -999
 	slli	a3, a6, 2
@@ -64,7 +63,7 @@ add:                                    # @add
 	.size	add, .Lfunc_end0-add
                                         # -- End function
 	.globl	main                            # -- Begin function main
-	.p2align	1
+	.p2align	2
 	.type	main,@function
 main:                                   # @main
 # %bb.0:                                # %entry
@@ -73,5 +72,5 @@ main:                                   # @main
 .Lfunc_end1:
 	.size	main, .Lfunc_end1-main
                                         # -- End function
-	.ident	"clang version 13.0.0 (https://github.com/ngik2000/llvm-project 621cf8e749383b451cc159082d7f6795c058f2f5)"
+	.ident	"clang version 13.0.0 (git@github.com:ngik2000/llvm-project.git c04ce614e1fb23da8fdcd8238a57c86c9ee44ed2)"
 	.section	".note.GNU-stack","",@progbits

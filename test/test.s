@@ -7,97 +7,68 @@
 	.type	add,@function
 add:                                    # @add
 # %bb.0:                                # %entry
-	lui	a3, 98
-	addiw	a3, a3, -1408
+	lui	a3, 1
+	addiw	a3, a3, -100
 	add	a4, a2, a3
-	add	a7, a1, a3
-	add	a3, a3, a0
-	sltu	a6, a2, a7
-	sltu	a5, a1, a4
-	and	a6, a6, a5
-	sltu	a5, a2, a3
-	sltu	a4, a0, a4
-	and	a4, a4, a5
-	or	a4, a6, a4
-	sltu	a3, a1, a3
-	sltu	a5, a0, a7
+	add	a5, a0, a3
+	add	a6, a1, a3
+	sltu	a5, a2, a5
+	sltu	a3, a0, a4
 	and	a3, a3, a5
+	sltu	a5, a2, a6
+	sltu	a4, a1, a4
+	and	a4, a4, a5
 	or	a3, a3, a4
 	mv	a6, zero
 	bnez	a3, .LBB0_3
 # %bb.1:                                # %vector.body.preheader
-	lui	a3, 24
-	addiw	a6, a3, 1664
+	addi	a6, zero, 896
 	addi	a7, zero, 64
 	mv	t1, a0
-	mv	a3, a2
-	mv	a4, a1
-	mv	t0, a6
+	mv	a3, a1
+	mv	a4, a2
+	addi	t0, zero, 896
 .LBB0_2:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
 	vsetvli	zero, a7, e32, m8, ta, mu
+	vle32.v	v8, (t1)
 	addi	a5, t1, 256
-	vle32.v	v8, (a5)
-	vle32.v	v16, (t1)
-	vadd.w	v24, v16, v8
-	vsub.w	v24, v16, v8
-	vaddi.w	v24, 9
-	vsubi.w	v24, 9
-	vand.w  v24, v16, v8
-	vor.w   v24, v16, v8
-	vxor.w  v24, v16, v8
-	vori.w	v16, 9
-	vandi.w	v16, 9
-	vxori.w	v16, 9
-	vse32.v	v0, (a3)
+	vle32.v	v16, (a5)
 	addi	a5, a3, 256
-	vse32.v	v24, (a5)
-	vori.w	v16, 9
-	vori.w	v8, 9
+	vle32.v	v24, (a5)
+	vle32.v	v0, (a3)
+	vadd.w	v16, v24, v16
+	vadd.w	v8, v0, v8
+	vse32.v	v8, (a4)
 	addi	a5, a4, 256
-	vse32.v	v8, (a5)
-	vse32.v	v16, (a4)
+	vse32.v	v16, (a5)
 	addi	t0, t0, -128
 	addi	a4, a4, 512
 	addi	a3, a3, 512
 	addi	t1, t1, 512
 	bnez	t0, .LBB0_2
 .LBB0_3:                                # %for.body.preheader
-	lui	a3, 1048552
-	addiw	a3, a3, -1696
-	add	a3, a3, a6
+	addi	a3, a6, -999
 	slli	a4, a6, 2
-	add	a1, a1, a4
 	add	a2, a2, a4
+	add	a1, a1, a4
 	add	a0, a0, a4
 .LBB0_4:                                # %for.body
                                         # =>This Inner Loop Header: Depth=1
-	lw	a4, 0(a0)
-	addi	a4, a4, -9
-	sw	a4, 0(a2)
-	lw	a4, 0(a0)
-	mv	a5, a3
-	ori	a3, a4, 9
-	sw	a3, 0(a1)
-	addi	a3, a5, 1
-	addi	a1, a1, 4
+	lw	a6, 0(a0)
+	lw	a5, 0(a1)
+	mv	a4, a3
+	add	a3, a5, a6
+	sw	a3, 0(a2)
+	addi	a3, a4, 1
 	addi	a2, a2, 4
+	addi	a1, a1, 4
 	addi	a0, a0, 4
-	bgeu	a3, a5, .LBB0_4
+	bgeu	a3, a4, .LBB0_4
 # %bb.5:                                # %for.cond.cleanup
 	ret
 .Lfunc_end0:
 	.size	add, .Lfunc_end0-add
                                         # -- End function
-	.globl	main                            # -- Begin function main
-	.p2align	1
-	.type	main,@function
-main:                                   # @main
-# %bb.0:                                # %entry
-	mv	a0, zero
-	ret
-.Lfunc_end1:
-	.size	main, .Lfunc_end1-main
-                                        # -- End function
-	.ident	"clang version 13.0.0 (https://github.com/ngik2000/llvm-project bc6a8e38f3c2d3df7c82431f238b21c52f22488e)"
+	.ident	"clang version 13.0.0 (git@github.com:ngik2000/llvm-project.git c04ce614e1fb23da8fdcd8238a57c86c9ee44ed2)"
 	.section	".note.GNU-stack","",@progbits

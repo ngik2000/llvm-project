@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #define N 999
 
 void add(int a[], int b[], int c[]){
